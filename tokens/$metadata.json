@@ -1,5 +1,8 @@
 {
   "tokenSetOrder": [
-    "global"
+    "primitives/core",
+    "usage/traton-light",
+    "usage/traton-dark",
+    "usage/scania-dark"
   ]
 }
