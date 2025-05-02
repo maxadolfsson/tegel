@@ -1,373 +1,139 @@
 {
-  "background": {
-    "elevation": {
-      "base": {
-        "value": "{traton.color.blue.1000}",
-        "type": "color"
-      },
-      "layer-01": {
-        "value": "{traton.color.blue.950}",
-        "type": "color"
-      },
-      "layer-02": {
-        "value": "{traton.color.blue.900}",
-        "type": "color"
-      },
-      "layer-03": {
-        "value": "{traton.color.blue.850}",
-        "type": "color"
-      },
-      "scrim": {
-        "value": "#00000080",
-        "type": "color"
-      },
-      "background – inverse": {
-        "value": "{traton.color.blue.50}",
-        "type": "color"
-      },
-      "layer-01  – inverse": {
-        "value": "{traton.color.blue.100}",
-        "type": "color"
-      },
-      "layer-02 – inverse": {
-        "value": "{traton.color.blue.150}",
-        "type": "color"
-      },
-      "layer-03 – inverse": {
-        "value": "{traton.color.blue.200}",
-        "type": "color"
-      },
-      "top": {
-        "value": "{traton.color.blue.900}",
-        "type": "color"
-      },
-      "top – inverse": {
-        "value": "{traton.color.blue.50}",
-        "type": "color"
-      }
-    },
-    "clickable": {
-      "primary": {
-        "primary": {
-          "value": "{traton.color.warm-grey.300}",
+  "color": {
+    "background": {
+      "elevation": {
+        "base": {
+          "value": "{traton.color.blue.1000}",
           "type": "color"
         },
-        "disabled": {
-          "value": "{traton.color.warm-grey.900}",
+        "layer-01": {
+          "value": "{traton.color.blue.950}",
           "type": "color"
         },
-        "resting": {
-          "value": "{traton.color.warm-grey.900}",
-          "type": "color"
-        },
-        "primary-hover": {
-          "value": "{traton.color.warm-grey.200}",
-          "type": "color"
-        },
-        "pressed": {
-          "value": "{traton.color.warm-grey.400}",
-          "type": "color"
-        },
-        "focus": {
-          "value": "{traton.color.warm-grey.100}",
-          "type": "color"
-        }
-      },
-      "danger": {
-        "danger": {
-          "value": "{traton.color.extended-red.300}",
-          "type": "color"
-        },
-        "danger-hover": {
-          "value": "{traton.color.extended-red.400}",
-          "type": "color"
-        },
-        "pressed": {
-          "value": "{traton.color.extended-red.600}",
-          "type": "color"
-        },
-        "focus": {
-          "value": "{traton.color.extended-red.400}",
-          "type": "color"
-        },
-        "disabled": {
-          "value": "{traton.color.extended-red.900}",
-          "type": "color"
-        },
-        "resting": {
-          "value": "{traton.color.extended-red.900}",
-          "type": "color"
-        }
-      },
-      "primary-inverse": {
-        "primary": {
-          "value": "{traton.color.blue.800}",
-          "type": "color"
-        },
-        "primary-hover": {
-          "value": "{traton.color.blue.850}",
-          "type": "color"
-        },
-        "pressed": {
+        "layer-02": {
           "value": "{traton.color.blue.900}",
           "type": "color"
         },
-        "focus": {
-          "value": "{traton.color.blue.850}",
+        "layer-03": {
+          "value": "{850}",
           "type": "color"
         },
-        "disabled": {
-          "value": "{traton.color.blue.100}",
+        "scrim": {
+          "value": "#00000080",
           "type": "color"
         },
-        "resting": {
-          "value": "{traton.color.blue.150}",
-          "type": "color"
-        }
-      }
-    },
-    "elements": {
-      "100": {
-        "value": "{traton.color.blue.900}",
-        "type": "color"
-      },
-      "200": {
-        "value": "{traton.color.blue.850}",
-        "type": "color"
-      },
-      "300": {
-        "value": "{traton.color.blue.800}",
-        "type": "color"
-      },
-      "400": {
-        "value": "{traton.color.blue.700}",
-        "type": "color"
-      },
-      "500": {
-        "value": "{traton.color.blue.600}",
-        "type": "color"
-      },
-      "600": {
-        "value": "{traton.color.blue.500}",
-        "type": "color"
-      },
-      "700": {
-        "value": "{traton.color.blue.400}",
-        "type": "color"
-      },
-      "800": {
-        "value": "{traton.color.blue.300}",
-        "type": "color"
-      },
-      "900": {
-        "value": "{traton.color.blue.200}",
-        "type": "color"
-      },
-      "1000": {
-        "value": "{traton.color.blue.150}",
-        "type": "color"
-      }
-    }
-  },
-  "system": {
-    "warning - default": {
-      "value": "{traton.color.yellow.300}",
-      "type": "color"
-    },
-    "success - default": {
-      "value": "{traton.color.extended-green.300}",
-      "type": "color"
-    },
-    "info - default": {
-      "value": "{traton.color.blue.500}",
-      "type": "color"
-    },
-    "danger - default": {
-      "value": "{traton.color.extended-red.300}",
-      "type": "color"
-    },
-    "success - discrete": {
-      "value": "{traton.color.extended-green.850}",
-      "type": "color"
-    },
-    "info - subtle": {
-      "value": "{traton.color.blue.850}",
-      "type": "color"
-    },
-    "warning - subtle": {
-      "value": "{traton.color.yellow.800}",
-      "type": "color"
-    },
-    "danger - subtle": {
-      "value": "{traton.color.extended-red.850}",
-      "type": "color"
-    },
-    "success - strong": {
-      "value": "{traton.color.extended-green.50}",
-      "type": "color"
-    },
-    "info - strong": {
-      "value": "{traton.color.blue.100}",
-      "type": "color"
-    },
-    "warning - strong": {
-      "value": "{traton.color.yellow.100}",
-      "type": "color"
-    },
-    "danger - strong": {
-      "value": "{traton.color.extended-red.50}",
-      "type": "color"
-    }
-  },
-  "foreground": {
-    "text": {
-      "clickable": {
-        "Link": {
-          "value": "{traton.color.blue.400}",
-          "type": "color"
-        },
-        "Link brand": {
+        "background – inverse": {
           "value": "{traton.color.blue.50}",
           "type": "color"
         },
-        "Link brand inverse": {
-          "value": "{traton.color.blue.500}",
+        "layer-01  – inverse": {
+          "value": "{traton.color.blue.100}",
           "type": "color"
         },
-        "Link visited": {
-          "value": "{traton.color.blue.150}",
+        "layer-02 – inverse": {
+          "value": "{150}",
+          "type": "color"
+        },
+        "layer-03 – inverse": {
+          "value": "{traton.color.blue.200}",
+          "type": "color"
+        },
+        "top": {
+          "value": "{traton.color.blue.900}",
+          "type": "color"
+        },
+        "top – inverse": {
+          "value": "{traton.color.blue.50}",
           "type": "color"
         }
       },
-      "strong": {
-        "value": "{traton.color.transparent-inverse.950}",
-        "type": "color"
-      },
-      "defined": {
-        "value": "{traton.color.transparent-inverse.700}",
-        "type": "color"
-      },
-      "subtle": {
-        "value": "{traton.color.transparent-inverse.500}",
-        "type": "color"
-      },
-      "inverse": {
-        "strong": {
-          "value": "{traton.color.transparent.950}",
-          "type": "color"
+      "interactive": {
+        "primary": {
+          "primary": {
+            "value": "{traton.color.grey.warm.300}",
+            "type": "color"
+          },
+          "disabled": {
+            "value": "{traton.color.grey.warm.900}",
+            "type": "color"
+          },
+          "resting": {
+            "value": "{traton.color.grey.warm.900}",
+            "type": "color"
+          },
+          "primary-hover": {
+            "value": "{traton.color.grey.warm.200}",
+            "type": "color"
+          },
+          "pressed": {
+            "value": "{traton.color.grey.warm.400}",
+            "type": "color"
+          },
+          "focus": {
+            "value": "{traton.color.grey.warm.100}",
+            "type": "color"
+          },
+          "inverse": {
+            "primary": {
+              "value": "{traton.color.blue.800}",
+              "type": "color"
+            },
+            "primary-hover": {
+              "value": "{850}",
+              "type": "color"
+            },
+            "pressed": {
+              "value": "{traton.color.blue.900}",
+              "type": "color"
+            },
+            "focus": {
+              "value": "{850}",
+              "type": "color"
+            },
+            "disabled": {
+              "value": "{traton.color.blue.100}",
+              "type": "color"
+            },
+            "resting": {
+              "value": "{150}",
+              "type": "color"
+            }
+          }
         },
-        "soft": {
-          "value": "{traton.color.transparent.600}",
-          "type": "color"
-        },
-        "subtle": {
-          "value": "{traton.color.transparent.500}",
-          "type": "color"
-        },
-        "defined": {
-          "value": "{traton.color.transparent.700}",
-          "type": "color"
-        },
-        "disabled": {
-          "value": "{traton.color.transparent.400}",
-          "type": "color"
-        },
-        "supertype": {
-          "value": "{traton.color.transparent.950}",
-          "type": "color"
+        "danger": {
+          "danger": {
+            "value": "{traton.color.red.extended.300}",
+            "type": "color"
+          },
+          "danger-hover": {
+            "value": "{traton.color.red.extended.400}",
+            "type": "color"
+          },
+          "pressed": {
+            "value": "{traton.color.red.extended.600}",
+            "type": "color"
+          },
+          "focus": {
+            "value": "{traton.color.red.extended.400}",
+            "type": "color"
+          },
+          "disabled": {
+            "value": "{scania.color.red.extended.900}",
+            "type": "color"
+          },
+          "resting": {
+            "value": "{scania.color.red.extended.900}",
+            "type": "color"
+          }
         }
       },
-      "supertype": {
-        "value": "{traton.color.base.neutral-white}",
-        "type": "color"
-      },
-      "disabled": {
-        "value": "{traton.color.transparent-inverse.400}",
-        "type": "color"
-      },
-      "soft": {
-        "value": "{traton.color.transparent-inverse.600}",
-        "type": "color"
-      },
-      "strong 2": {
-        "value": "{traton.color.transparent-inverse.950}",
-        "type": "color"
-      }
-    },
-    "border": {
-      "inverse": {
-        "strong": {
-          "value": "{traton.color.transparent.950}",
-          "type": "color"
-        },
-        "soft": {
-          "value": "{traton.color.transparent.600}",
-          "type": "color"
-        },
-        "subtle": {
-          "value": "{traton.color.transparent.500}",
-          "type": "color"
-        },
-        "discrete": {
-          "value": "{traton.color.transparent.200}",
-          "type": "color"
-        },
-        "defined": {
-          "value": "{traton.color.transparent.700}",
-          "type": "color"
-        },
-        "disabled": {
-          "value": "{traton.color.transparent.400}",
-          "type": "color"
-        }
-      },
-      "strong": {
-        "value": "{traton.color.transparent-inverse.950}",
-        "type": "color"
-      },
-      "soft": {
-        "value": "{traton.color.transparent-inverse.600}",
-        "type": "color"
-      },
-      "subtle": {
-        "value": "{traton.color.transparent-inverse.500}",
-        "type": "color"
-      },
-      "discrete": {
-        "value": "{traton.color.transparent-inverse.200}",
-        "type": "color"
-      },
-      "clickable": {
-        "Link": {
-          "value": "{traton.color.yellow.300}",
-          "type": "color"
-        },
-        "focus": {
-          "value": "{traton.color.yellow.400}",
-          "type": "color"
-        },
-        "focus-width": {
-          "value": 4,
-          "type": "number"
-        }
-      },
-      "defined": {
-        "value": "{traton.color.transparent-inverse.700}",
-        "type": "color"
-      },
-      "disabled": {
-        "value": "{traton.color.transparent-inverse.400}",
-        "type": "color"
-      }
-    },
-    "elements": {
-      "solid": {
+      "elements": {
         "100": {
           "value": "{traton.color.blue.900}",
           "type": "color"
         },
         "200": {
-          "value": "{traton.color.blue.850}",
+          "value": "{850}",
           "type": "color"
         },
         "300": {
@@ -399,24 +165,410 @@
           "type": "color"
         },
         "1000": {
-          "value": "{traton.color.blue.150}",
+          "value": "{150}",
+          "type": "color"
+        }
+      }
+    },
+    "system": {
+      "warning": {
+        "default": {
+          "value": "{traton.color.yellow.300}",
+          "type": "color"
+        },
+        "subtle": {
+          "value": "{traton.color.yellow.800}",
+          "type": "color"
+        },
+        "strong": {
+          "value": "{traton.color.yellow.100}",
+          "type": "color"
+        }
+      },
+      "success": {
+        "default": {
+          "value": "{traton.color.green.extended.300}",
+          "type": "color"
+        },
+        "discrete": {
+          "value": "{traton.color.green.extended.850}",
+          "type": "color"
+        },
+        "strong": {
+          "value": "{traton.color.green.extended.50}",
+          "type": "color"
+        }
+      },
+      "information": {
+        "default": {
+          "value": "{traton.color.blue.500}",
+          "type": "color"
+        },
+        "subtle": {
+          "value": "{850}",
+          "type": "color"
+        },
+        "strong": {
+          "value": "{traton.color.blue.100}",
+          "type": "color"
+        }
+      },
+      "danger": {
+        "default": {
+          "value": "{traton.color.red.extended.300}",
+          "type": "color"
+        },
+        "subtle": {
+          "value": "{traton.color.red.extended.850}",
+          "type": "color"
+        },
+        "strong": {
+          "value": "{traton.color.red.extended.50}",
+          "type": "color"
+        }
+      }
+    },
+    "foreground": {
+      "interactive": {
+        "link": {
+          "value": "{traton.color.blue.400}",
+          "type": "color"
+        },
+        "link-brand": {
+          "value": "{traton.color.blue.50}",
+          "type": "color",
+          "inverse": {
+            "value": "{traton.color.blue.500}",
+            "type": "color"
+          }
+        },
+        "link-visited": {
+          "value": "{150}",
+          "type": "color"
+        }
+      },
+      "text": {
+        "strong": {
+          "value": "{traton.color.transparent.inverse.950}",
+          "type": "color"
+        },
+        "defined": {
+          "value": "{traton.color.transparent.inverse.700}",
+          "type": "color"
+        },
+        "subtle": {
+          "value": "{traton.color.transparent.inverse.500}",
+          "type": "color"
+        },
+        "inverse": {
+          "strong": {
+            "value": "{950}",
+            "type": "color"
+          },
+          "soft": {
+            "value": "{traton.color.transparent.600}",
+            "type": "color"
+          },
+          "subtle": {
+            "value": "{traton.color.transparent.500}",
+            "type": "color"
+          },
+          "defined": {
+            "value": "{traton.color.transparent.700}",
+            "type": "color"
+          },
+          "disabled": {
+            "value": "{traton.color.transparent.400}",
+            "type": "color"
+          },
+          "supertype": {
+            "value": "{950}",
+            "type": "color"
+          }
+        },
+        "supertype": {
+          "value": "{neutral-white}",
+          "type": "color"
+        },
+        "disabled": {
+          "value": "{traton.color.transparent.inverse.400}",
+          "type": "color"
+        },
+        "soft": {
+          "value": "{traton.color.transparent.inverse.600}",
+          "type": "color"
+        }
+      },
+      "border": {
+        "inverse": {
+          "strong": {
+            "value": "{950}",
+            "type": "color"
+          },
+          "soft": {
+            "value": "{traton.color.transparent.600}",
+            "type": "color"
+          },
+          "subtle": {
+            "value": "{traton.color.transparent.500}",
+            "type": "color"
+          },
+          "discrete": {
+            "value": "{traton.color.transparent.200}",
+            "type": "color"
+          },
+          "defined": {
+            "value": "{traton.color.transparent.700}",
+            "type": "color"
+          },
+          "disabled": {
+            "value": "{traton.color.transparent.400}",
+            "type": "color"
+          }
+        },
+        "strong": {
+          "value": "{traton.color.transparent.inverse.950}",
+          "type": "color"
+        },
+        "soft": {
+          "value": "{traton.color.transparent.inverse.600}",
+          "type": "color"
+        },
+        "subtle": {
+          "value": "{traton.color.transparent.inverse.500}",
+          "type": "color"
+        },
+        "discrete": {
+          "value": "{traton.color.transparent.inverse.200}",
+          "type": "color"
+        },
+        "interactive": {
+          "Link": {
+            "value": "{traton.color.yellow.300}",
+            "type": "color"
+          },
+          "focus": {
+            "value": "{traton.color.yellow.400}",
+            "type": "color"
+          },
+          "focus-width": {
+            "value": 4,
+            "type": "number"
+          }
+        },
+        "defined": {
+          "value": "{traton.color.transparent.inverse.700}",
+          "type": "color"
+        },
+        "disabled": {
+          "value": "{traton.color.transparent.inverse.400}",
+          "type": "color"
+        }
+      },
+      "elements": {
+        "transparent": {
+          "strong": {
+            "value": "{traton.color.transparent.inverse.950}",
+            "type": "color",
+            "inverse": {
+              "value": "{950}",
+              "type": "color"
+            }
+          },
+          "defined": {
+            "value": "{traton.color.transparent.inverse.700}",
+            "type": "color",
+            "inverse": {
+              "value": "{traton.color.transparent.700}",
+              "type": "color"
+            }
+          },
+          "soft": {
+            "value": "{traton.color.transparent.inverse.600}",
+            "type": "color",
+            "inverse": {
+              "value": "{traton.color.transparent.600}",
+              "type": "color"
+            }
+          },
+          "subtle": {
+            "value": "{traton.color.transparent.inverse.500}",
+            "type": "color",
+            "inverse": {
+              "value": "{traton.color.transparent.500}",
+              "type": "color"
+            }
+          },
+          "disabled": {
+            "value": "{traton.color.transparent.inverse.400}",
+            "type": "color",
+            "inverse": {
+              "value": "{traton.color.transparent.400}",
+              "type": "color"
+            }
+          },
+          "discrete": {
+            "value": "{traton.color.transparent.inverse.200}",
+            "type": "color",
+            "inverse": {
+              "value": "{traton.color.transparent.200}",
+              "type": "color"
+            }
+          }
+        },
+        "solid": {
+          "100": {
+            "value": "{traton.color.blue.900}",
+            "type": "color"
+          },
+          "200": {
+            "value": "{850}",
+            "type": "color"
+          },
+          "300": {
+            "value": "{traton.color.blue.800}",
+            "type": "color"
+          },
+          "400": {
+            "value": "{traton.color.blue.700}",
+            "type": "color"
+          },
+          "500": {
+            "value": "{traton.color.blue.600}",
+            "type": "color"
+          },
+          "600": {
+            "value": "{traton.color.blue.500}",
+            "type": "color"
+          },
+          "700": {
+            "value": "{traton.color.blue.400}",
+            "type": "color"
+          },
+          "800": {
+            "value": "{traton.color.blue.300}",
+            "type": "color"
+          },
+          "900": {
+            "value": "{traton.color.blue.200}",
+            "type": "color"
+          },
+          "1000": {
+            "value": "{150}",
+            "type": "color"
+          }
+        }
+      }
+    },
+    "brand": {
+      "permanent": {
+        "white": {
+          "value": "#ffffff",
+          "type": "color"
+        },
+        "black": {
+          "value": "#000000",
+          "type": "color"
+        }
+      },
+      "primary": {
+        "50": {
+          "value": "{traton.color.blue.50}",
+          "type": "color"
+        },
+        "100": {
+          "value": "{traton.color.blue.100}",
+          "type": "color"
+        },
+        "200": {
+          "value": "{traton.color.blue.200}",
+          "type": "color"
+        },
+        "300": {
+          "value": "{traton.color.blue.300}",
+          "type": "color"
+        },
+        "400": {
+          "value": "{traton.color.blue.400}",
+          "type": "color"
+        },
+        "500": {
+          "value": "{traton.color.blue.500}",
+          "type": "color"
+        },
+        "600": {
+          "value": "{traton.color.blue.600}",
+          "type": "color"
+        },
+        "700": {
+          "value": "{traton.color.blue.700}",
+          "type": "color"
+        },
+        "800": {
+          "value": "{traton.color.blue.800}",
+          "type": "color"
+        },
+        "900": {
+          "value": "{traton.color.blue.900}",
+          "type": "color"
+        }
+      },
+      "secondary": {
+        "50": {
+          "value": "{scania.color.yellow.extended.50}",
+          "type": "color"
+        },
+        "100": {
+          "value": "{scania.color.yellow.extended.100}",
+          "type": "color"
+        },
+        "200": {
+          "value": "{scania.color.yellow.extended.200}",
+          "type": "color"
+        },
+        "300": {
+          "value": "{scania.color.yellow.extended.300}",
+          "type": "color"
+        },
+        "400": {
+          "value": "{scania.color.yellow.extended.400}",
+          "type": "color"
+        },
+        "500": {
+          "value": "{scania.color.yellow.extended.500}",
+          "type": "color"
+        },
+        "600": {
+          "value": "{scania.color.yellow.extended.600}",
+          "type": "color"
+        },
+        "700": {
+          "value": "{scania.color.yellow.extended.700}",
+          "type": "color"
+        },
+        "800": {
+          "value": "{scania.color.yellow.extended.800}",
+          "type": "color"
+        },
+        "900": {
+          "value": "{scania.color.yellow.extended.900}",
           "type": "color"
         }
       }
     }
   },
-  "overrides": {
+  "_component": {
     "table": {
       "header-fill": {
         "value": "{traton.color.blue.800}",
         "type": "color"
       },
       "column-header-fill": {
-        "value": "{traton.color.blue.850}",
+        "value": "{850}",
         "type": "color"
       },
       "pagination-fill": {
-        "value": "{traton.color.blue.850}",
+        "value": "{850}",
         "type": "color"
       },
       "cell-fill-hover": {
@@ -428,7 +580,7 @@
         "type": "color"
       },
       "border": {
-        "value": "{foreground.border.discrete}",
+        "value": "{color.foreground.border.discrete}",
         "type": "color"
       }
     },
@@ -459,11 +611,11 @@
           "type": "color"
         },
         "foreground": {
-          "value": "{foreground.text.strong}",
+          "value": "{color.foreground.text.strong}",
           "type": "color"
         },
         "foreground inverse": {
-          "value": "{foreground.text.inverse.strong}",
+          "value": "{color.foreground.text.inverse.strong}",
           "type": "color"
         }
       },
@@ -515,7 +667,7 @@
           "type": "color"
         },
         "pressed": {
-          "value": "{traton.color.blue.900}",
+          "value": "{traton.color.blue.1000}",
           "type": "color"
         },
         "selected": {
@@ -535,20 +687,8 @@
           "type": "color"
         },
         "header-element": {
-          "value": "{units.radius.transparparent.strong}",
+          "value": "{color.foreground.elements.transparent.strong}",
           "type": "color"
-        }
-      },
-      "dropdown": {
-        "list item": {
-          "hover": {
-            "value": "{traton.color.blue.900}",
-            "type": "color"
-          },
-          "focus": {
-            "value": "{traton.color.blue.1000}",
-            "type": "color"
-          }
         }
       },
       "typography": {
@@ -572,7 +712,7 @@
     },
     "logo": {
       "Fill": {
-        "value": "{traton.color.base.neutral-white}",
+        "value": "{neutral-white}",
         "type": "color"
       },
       "TDS Right Logo": {
@@ -603,11 +743,11 @@
     "button": {
       "text": {
         "white": {
-          "value": "{permanent.black}",
+          "value": "{color.brand.permanent.black}",
           "type": "color"
         },
         "dark comp in light mode": {
-          "value": "{permanent.white}",
+          "value": "{color.brand.permanent.white}",
           "type": "color"
         }
       },
@@ -617,22 +757,24 @@
           "type": "color"
         }
       },
-      "radius": {
-        "value": 100,
-        "type": "number"
+      "inline": {
+        "gap": {
+          "value": "{border.radius.narrow}",
+          "type": "number"
+        }
       }
     },
     "footer": {
       "subtle": {
-        "value": "{traton.color.transparent-inverse.950}",
+        "value": "{traton.color.transparent.inverse.950}",
         "type": "color"
       },
       "soft": {
-        "value": "{traton.color.transparent-inverse.600}",
+        "value": "{traton.color.transparent.inverse.600}",
         "type": "color"
       }
     },
-    "side menu": {
+    "side-menu": {
       "states": {
         "default": {
           "value": "{traton.color.blue.1000}",
@@ -672,7 +814,7 @@
         }
       },
       "padding": {
-        "sub menu item": {
+        "sub-item": {
           "top and bottom": {
             "value": "{scania.unit.8}",
             "type": "number"
@@ -680,6 +822,16 @@
           "left": {
             "value": "{scania.unit.12}",
             "type": "number"
+          },
+          "collapsed": {
+            "left + right inner icon padding": {
+              "value": 12,
+              "type": "number"
+            },
+            "top + bottom inner icon padding": {
+              "value": 12,
+              "type": "number"
+            }
           },
           "chevron right padding": {
             "value": 12,
@@ -704,7 +856,7 @@
             "type": "number"
           }
         },
-        "top level": {
+        "top-level": {
           "left": {
             "value": "{scania.unit.16}",
             "type": "number"
@@ -722,17 +874,7 @@
             "type": "number"
           }
         },
-        "collapsed item": {
-          "left + right inner icon padding": {
-            "value": 12,
-            "type": "number"
-          },
-          "top + bottom inner icon padding": {
-            "value": 12,
-            "type": "number"
-          }
-        },
-        "sub page": {
+        "sub-page": {
           "top + bottom": {
             "value": 8,
             "type": "number"
@@ -776,7 +918,7 @@
         "type": "color"
       },
       "text": {
-        "value": "{permanent.black}",
+        "value": "{color.brand.permanent.black}",
         "type": "color"
       }
     },
@@ -798,14 +940,14 @@
     },
     "spinner": {
       "color": {
-        "value": "{traton.color.warm-grey.300}",
+        "value": "{traton.color.grey.warm.300}",
         "type": "color"
       }
     },
     "input-field": {
       "border": {
         "color": {
-          "value": "{foreground.border.discrete}",
+          "value": "{color.foreground.border.discrete}",
           "type": "color"
         },
         "width": {
@@ -864,7 +1006,19 @@
         }
       }
     },
-    "content switcher": {
+    "dropdown": {
+      "list-item": {
+        "hover": {
+          "value": "{traton.color.blue.900}",
+          "type": "color"
+        },
+        "focus": {
+          "value": "{traton.color.blue.1000}",
+          "type": "color"
+        }
+      }
+    },
+    "content-switcher": {
       "background": {
         "default": {
           "value": "{traton.color.blue.900}",
@@ -875,208 +1029,288 @@
           "type": "color"
         },
         "focus": {
-          "value": "{traton.color.blue.850}",
+          "value": "{850}",
           "type": "color"
         }
       }
     },
-    "link": {
-      "default icon": {
-        "value": "{traton.color.blue.400}",
+    "icon-test": {
+      "Fill": {
+        "value": "{neutral-white}",
         "type": "color"
       },
-      "visited icon": {
-        "value": "{traton.color.blue.150}",
-        "type": "color"
+      "Scania Icon": {
+        "value": "false",
+        "type": "boolean"
+      },
+      "Traton icon": {
+        "value": "true",
+        "type": "boolean"
       }
     }
   },
-  "permanent": {
-    "white": {
-      "value": "#ffffff",
-      "type": "color"
-    },
-    "black": {
-      "value": "#000000",
-      "type": "color"
-    },
-    "brand": {
-      "primary": {
-        "50": {
-          "value": "{traton.color.blue.50}",
-          "type": "color"
-        },
-        "100": {
-          "value": "{traton.color.blue.100}",
-          "type": "color"
-        },
-        "200": {
-          "value": "{traton.color.blue.200}",
-          "type": "color"
-        },
-        "300": {
-          "value": "{traton.color.blue.300}",
-          "type": "color"
-        },
-        "400": {
-          "value": "{traton.color.blue.400}",
-          "type": "color"
-        },
-        "500": {
-          "value": "{traton.color.blue.500}",
-          "type": "color"
-        },
-        "600": {
-          "value": "{traton.color.blue.600}",
-          "type": "color"
-        },
-        "700": {
-          "value": "{traton.color.blue.700}",
-          "type": "color"
-        },
-        "800": {
-          "value": "{traton.color.blue.800}",
-          "type": "color"
-        },
-        "900": {
-          "value": "{traton.color.blue.900}",
-          "type": "color"
-        }
+  "_typography__to_be_replaced": {
+    "family": {
+      "headline": {
+        "value": "TRATON Type Display",
+        "type": "text"
       },
-      "secondary": {
-        "50": {
-          "value": "{traton.color.yellow.50}",
-          "type": "color"
-        },
-        "100": {
-          "value": "{traton.color.yellow.100}",
-          "type": "color"
-        },
-        "200": {
-          "value": "{traton.color.yellow.200}",
-          "type": "color"
-        },
-        "300": {
-          "value": "{traton.color.yellow.300}",
-          "type": "color"
-        },
-        "400": {
-          "value": "{traton.color.yellow.400}",
-          "type": "color"
-        },
-        "500": {
-          "value": "{traton.color.yellow.500}",
-          "type": "color"
-        },
-        "600": {
-          "value": "{traton.color.yellow.600}",
-          "type": "color"
-        },
-        "700": {
-          "value": "{traton.color.yellow.700}",
-          "type": "color"
-        },
-        "800": {
-          "value": "{traton.color.yellow.800}",
-          "type": "color"
-        },
-        "900": {
-          "value": "{traton.color.yellow.900}",
-          "type": "color"
-        }
+      "body": {
+        "value": "TRATON Type Text",
+        "type": "text"
+      },
+      "condensed": {
+        "value": "TRATON Type Text",
+        "type": "text"
+      },
+      "regular headline": {
+        "value": "TRATON Type Display",
+        "type": "text"
+      },
+      "body text headline": {
+        "value": "Traton type text",
+        "type": "text"
+      }
+    },
+    "weight": {
+      "flowing": {
+        "value": "Regular",
+        "type": "text"
+      },
+      "expressive": {
+        "value": "medium",
+        "type": "text"
+      },
+      "semi expressive": {
+        "value": "semi bold",
+        "type": "text"
+      },
+      "paragraph": {
+        "value": "medium",
+        "type": "text"
+      },
+      "expressive detail": {
+        "value": "Regular",
+        "type": "text"
+      },
+      "button and small detail": {
+        "value": "medium",
+        "type": "text"
+      },
+      "component links": {
+        "value": "medium",
+        "type": "text"
+      }
+    },
+    "line-height": {
+      "super-type-01": {
+        "value": 227,
+        "type": "number"
+      },
+      "super-type-02": {
+        "value": 164,
+        "type": "number"
+      },
+      "super-type-03": {
+        "value": 118,
+        "type": "number"
+      },
+      "expressive-headline-01": {
+        "value": 84,
+        "type": "number"
+      },
+      "expressive-headline-02": {
+        "value": 59,
+        "type": "number"
+      },
+      "headline-01": {
+        "value": 42,
+        "type": "number"
+      },
+      "headline-02": {
+        "value": 40,
+        "type": "number"
+      },
+      "headline-03": {
+        "value": 30,
+        "type": "number"
+      },
+      "headline-04": {
+        "value": 25,
+        "type": "number"
+      },
+      "headline-05": {
+        "value": 22,
+        "type": "number"
+      },
+      "headline-06": {
+        "value": 20,
+        "type": "number"
+      },
+      "headline-07": {
+        "value": 18,
+        "type": "number"
+      },
+      "paragraph-01": {
+        "value": 30,
+        "type": "number"
+      },
+      "paragraph-02": {
+        "value": 25,
+        "type": "number"
+      },
+      "body-01": {
+        "value": 22,
+        "type": "number"
+      },
+      "body-02": {
+        "value": 20,
+        "type": "number"
+      },
+      "detail-01": {
+        "value": 22,
+        "type": "number"
+      },
+      "detail-02": {
+        "value": 16,
+        "type": "number"
+      },
+      "detail-03": {
+        "value": 20,
+        "type": "number"
+      },
+      "detail-04": {
+        "value": 17,
+        "type": "number"
+      },
+      "detail-05": {
+        "value": 17,
+        "type": "number"
+      },
+      "detail-06": {
+        "value": 14,
+        "type": "number"
+      },
+      "detail-07": {
+        "value": 14,
+        "type": "number"
+      }
+    },
+    "kerning": {
+      "super-type-01": {
+        "value": 1.08,
+        "type": "number"
+      },
+      "super-type-02": {
+        "value": 0.78,
+        "type": "number"
+      },
+      "super-type-03": {
+        "value": 0.56,
+        "type": "number"
+      },
+      "expressive-headline-01": {
+        "value": 0.4,
+        "type": "number"
+      },
+      "expressive-headline-02": {
+        "value": 0.28,
+        "type": "number"
+      },
+      "headline-01": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-02": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-03": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-04": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-05": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-06": {
+        "value": 0,
+        "type": "number"
+      },
+      "headline-07": {
+        "value": 0,
+        "type": "number"
+      },
+      "paragraph-01": {
+        "value": 0,
+        "type": "number"
+      },
+      "paragraph-02": {
+        "value": 0,
+        "type": "number"
+      },
+      "body-01": {
+        "value": 0,
+        "type": "number"
+      },
+      "body-02": {
+        "value": 0,
+        "type": "number"
+      },
+      "detail-01": {
+        "value": 0,
+        "type": "number"
+      },
+      "detail-02": {
+        "value": 0,
+        "type": "number"
+      },
+      "detail-03": {
+        "value": 0,
+        "type": "number"
+      },
+      "detail-04": {
+        "value": 0.48,
+        "type": "number"
+      },
+      "detail-05": {
+        "value": 0,
+        "type": "number"
+      },
+      "detail-06": {
+        "value": 0.4,
+        "type": "number"
+      },
+      "detail-07": {
+        "value": 0,
+        "type": "number"
       }
     }
   },
-  "units": {
-    "radius": {
-      "transparparent": {
-        "strong": {
-          "value": "{traton.color.transparent-inverse.950}",
-          "type": "color"
-        },
-        "defined": {
-          "value": "{traton.color.transparent-inverse.700}",
-          "type": "color"
-        },
-        "soft": {
-          "value": "{traton.color.transparent-inverse.600}",
-          "type": "color"
-        },
-        "subtle": {
-          "value": "{traton.color.transparent-inverse.500}",
-          "type": "color"
-        },
-        "disabled": {
-          "value": "{traton.color.transparent-inverse.400}",
-          "type": "color"
-        },
-        "discrete": {
-          "value": "{traton.color.transparent-inverse.200}",
-          "type": "color"
-        },
-        "strong – inverse": {
-          "value": "{traton.color.transparent.950}",
-          "type": "color"
-        },
-        "defined – inverse": {
-          "value": "{traton.color.transparent.700}",
-          "type": "color"
-        },
-        "soft – inverse": {
-          "value": "{traton.color.transparent.600}",
-          "type": "color"
-        },
-        "subtle – inverse": {
-          "value": "{traton.color.transparent.500}",
-          "type": "color"
-        },
-        "disabled – inverse": {
-          "value": "{traton.color.transparent.400}",
-          "type": "color"
-        },
-        "discrete – inverse": {
-          "value": "{traton.color.transparent.200}",
-          "type": "color"
-        }
-      },
-      "for-surface": {
-        "clickable": {
-          "value": 100,
-          "type": "number"
-        },
-        "field": {
-          "value": 2,
-          "type": "number"
-        }
-      },
-      "narrow": {
-        "value": "{scania.unit.4}",
-        "type": "number"
-      },
-      "soft": {
-        "value": "{scania.unit.8}",
-        "type": "number"
-      },
-      "rounded": {
-        "value": "{scania.unit.32}",
-        "type": "number"
-      },
-      "circle": {
-        "value": 500,
-        "type": "number"
-      },
-      "for-area": {
-        "large area": {
-          "value": 8,
-          "type": "number"
-        },
-        "small": {
-          "value": 4,
-          "type": "number"
-        }
-      }
-    },
-    "space": {
+  "_content": {
+    "Typography String": {
+      "value": "Transportation Powerhouse",
+      "type": "text"
+    }
+  },
+  "background-clickable-primary": {
+    "value": "C2BFB6",
+    "type": "text"
+  },
+  "foreground-text-strong": {
+    "value": "#000000",
+    "type": "text"
+  },
+  "button-radius": {
+    "value": "24px",
+    "type": "text"
+  },
+  "space": {
+    "gap": {
       "tiny": {
         "value": "{scania.unit.4}",
         "type": "number"
@@ -1099,626 +1333,66 @@
       }
     }
   },
-  "Typography String": {
-    "value": "Transportation Powerhouse",
-    "type": "text"
-  },
-  "text": {
-    "display": {
-      "01": {
-        "text-transform": {
-          "value": "uppercase",
-          "type": "text"
-        },
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "letter-spacing": {
-          "value": 1.08,
+  "border": {
+    "radius": {
+      "for-surface": {
+        "clickable": {
+          "value": 100,
           "type": "number"
         },
-        "font-size": {
-          "value": 216,
-          "type": "number"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "line-height": {
-          "value": 227,
+        "field": {
+          "value": 2,
           "type": "number"
         }
       },
-      "02": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "uppercase",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
+      "narrow": {
+        "value": "{traton.unit.2}",
+        "type": "number"
+      },
+      "soft": {
+        "value": "{scania.unit.8}",
+        "type": "number"
+      },
+      "rounded": {
+        "value": "{scania.unit.32}",
+        "type": "number"
+      },
+      "full": {
+        "value": 9999,
+        "type": "number"
+      },
+      "for-area": {
+        "large area": {
+          "value": 8,
           "type": "number"
         },
-        "font-size": {
-          "value": 156,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 164,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0.78,
+        "small": {
+          "value": 4,
           "type": "number"
         }
       },
-      "03": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "uppercase",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 112,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 118,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0.56,
-          "type": "number"
-        }
-      },
-      "04": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "uppercase",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 80,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 84,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0.4,
-          "type": "number"
-        }
-      },
-      "05": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "uppercase",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 56,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 59,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0.28,
-          "type": "number"
-        }
+      "none": {
+        "value": 0,
+        "type": "number"
       }
     },
-    "headline": {
-      "01": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 40,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 42,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
+    "width": {
+      "none": {
+        "value": 0,
+        "type": "number"
       },
-      "02": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 32,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 40,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
+      "soft": {
+        "value": 1,
+        "type": "number"
       },
-      "03": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 24,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 30,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "04": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 20,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 25,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "05": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.semi bold}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 16,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 22,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "06": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.semi bold}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 14,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 20,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      }
-    },
-    "paragraph": {
-      "01": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 24,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 30,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "02": {
-        "font-family": {
-          "value": "{traton.font.family.display}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.medium}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 20,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 25,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      }
-    },
-    "body": {
-      "01": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.regular}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 16,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 22,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "02": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.regular}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 14,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 20,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      }
-    },
-    "component": {
-      "text": {
-        "01": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "text-transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.regular}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 14,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 16,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0,
-            "type": "number"
-          }
-        },
-        "02": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "text-transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.regular}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 14,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 20,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0,
-            "type": "number"
-          }
-        }
-      },
-      "label": {
-        "01": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "text-transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.medium}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 12,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 17,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0,
-            "type": "number"
-          }
-        },
-        "02": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.medium}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 10,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 14,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0,
-            "type": "number"
-          }
-        }
-      },
-      "title": {
-        "01": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "text-transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.semi bold}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 14,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 18,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0,
-            "type": "number"
-          }
-        },
-        "02": {
-          "font-family": {
-            "value": "{traton.font.family.default}",
-            "type": "text"
-          },
-          "text-transform": {
-            "value": "none",
-            "type": "text"
-          },
-          "font-weight": {
-            "value": "{traton.font.weight.semi bold}",
-            "type": "number"
-          },
-          "font-size": {
-            "value": 10,
-            "type": "number"
-          },
-          "line-height": {
-            "value": 14,
-            "type": "number"
-          },
-          "letter-spacing": {
-            "value": 0.4,
-            "type": "number"
-          }
-        }
-      }
-    },
-    "link": {
-      "01": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.regular}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 16,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 22,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
-      },
-      "02": {
-        "font-family": {
-          "value": "{traton.font.family.default}",
-          "type": "text"
-        },
-        "text-transform": {
-          "value": "none",
-          "type": "text"
-        },
-        "font-weight": {
-          "value": "{traton.font.weight.regular}",
-          "type": "number"
-        },
-        "font-size": {
-          "value": 14,
-          "type": "number"
-        },
-        "line-height": {
-          "value": 20,
-          "type": "number"
-        },
-        "letter-spacing": {
-          "value": 0,
-          "type": "number"
-        }
+      "defined": {
+        "value": "{scania.unit.2}",
+        "type": "number"
       }
     }
+  },
+  "btn-radius": {
+    "value": 200,
+    "type": "number"
   }
 }

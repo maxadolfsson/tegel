@@ -1,0 +1,14 @@
+{
+  "header-background-01": {
+    "value": "#bbbbbb",
+    "type": "color"
+  },
+  "button": {
+    "inline": {
+      "gap": {
+        "value": "{_component.button.inline.gap}",
+        "type": "number"
+      }
+    }
+  }
+}
