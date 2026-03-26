@@ -73,3 +73,12 @@ packages/styles/dist/
 
 #Claude
 .claude/
+
+# Token audit output (generated)
+tokens/audit/*
+!tokens/audit/.gitkeep
+!tokens/audit/audit-cluster.json
+!tokens/audit/audit-ignore.json
+!tokens/audit/latest-run.json
+!tokens/audit/overlap-assumptions.json
+!tokens/audit/quick-audit-covered.json

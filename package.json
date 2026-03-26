@@ -27,7 +27,17 @@
     "lint:css:tl:fix": "stylelint \"packages/core/src/tegel-lite/**/*.scss\" --fix",
     "lint": "npx eslint ./",
     "tsc": "npx tsc --noEmit",
-    "lint:check": "npm run lint && npm run tsc"
+    "lint:check": "npm run lint && npm run tsc",
+    "audit:tokens": "node tokens/scripts/run-full-audit.js",
+    "audit:tokens:quick": "node tokens/scripts/run-quick-audit.js",
+    "audit:tokens:cluster": "node tokens/scripts/run-cluster-audit.js",
+    "audit:tokens:prune": "node tokens/scripts/prune-audit-runs.js",
+    "audit:tokens:prune:all": "node tokens/scripts/prune-audit-runs.js 0",
+    "audit:tokens:palette": "node tokens/scripts/compare-palette-to-tokens.js",
+    "audit:tokens:hardcoded": "node tokens/scripts/scan-hardcoded-values.js",
+    "audit:tokens:report": "node tokens/scripts/generate-audit-report.js",
+    "audit:figma:colors": "node tokens/scripts/fetch-figma-colors.js",
+    "audit:status": "node tokens/scripts/status.js"
   },
   "repository": {
     "type": "git",

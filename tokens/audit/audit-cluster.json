@@ -1,0 +1,4 @@
+{
+  "componentSlugs": ["tooltip", "spinner", "badge", "tag", "chip", "button"],
+  "_comment": "Optional. List component slugs to audit together (e.g. [\"button\", \"text-field\", \"chip\"]). Run: npm run audit:tokens:cluster. If empty or missing, pass slugs via CLI: npm run audit:tokens:cluster -- button text-field chip"
+}

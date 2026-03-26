@@ -1,0 +1,2 @@
+# Audit output: each run creates tokens/audit/YYYYMMDD-HHmmss/ (and latest-run.json).
+# See tokens/docs/README.md.

@@ -1,0 +1,15 @@
+{
+  "_description": "Used by analyze-overlap.js. componentSlugAliases: merge inventory components under a canonical slug (prefer dashed names, e.g. radiobutton -> radio-button). componentAliases: first segment of variable name -> canonical. propertyEquivalences: last segment alternatives (e.g. color <-> text).",
+  "componentSlugAliases": {
+    "radiobutton": "radio-button"
+  },
+  "componentAliases": {
+    "btn": "button",
+    "chips": "chip",
+    "radiobutton": "radio-button"
+  },
+  "propertyEquivalences": {
+    "color": ["text"],
+    "text": ["color"]
+  }
+}

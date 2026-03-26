@@ -1,0 +1,6 @@
+{
+  "ignoredSlugs": [
+    "beta"
+  ],
+  "_comment": "Component slugs to exclude from quick-audit selection and from full audit (e.g. experimental, deprecated, or out of scope). Add one slug per line above."
+}
