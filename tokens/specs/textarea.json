@@ -41,8 +41,8 @@
       "dark": "color/icon/strong",
       "scania-light": "color/icon/strong",
       "scania-dark": "color/icon/strong",
-      "confidence": "Proposed",
-      "comment": "Readonly state indicator icon (Icon: Read only / Edit_inactive). Strong neutral — communicates 'not editable' without using validation colour. Scania VERIFIED from web component 2026-07-05 (textarea-vars.scss: grey-950 light / grey-100 dark = icon/strong; readonly + hideReadonlyIcon in component API). Remaining before Confirmed: TRATON canvas check only. Scoped to textarea; promote to -input if reused across dropdown/datepicker/etc."
+      "confidence": "Confirmed",
+      "comment": "Readonly state indicator icon (Icon: Read only / Edit_inactive). Strong neutral — communicates 'not editable' without using validation colour. MIXED ROUTING: Scania verified via web component 2026-07-05 (textarea-vars.scss: grey-950 light / grey-100 dark = icon/strong); TRATON verified via canvas boundVariables 2026-08-05 (Textarea set 34279:126066, both brand-swap glyph vectors fill-bound to this token → color/icon/strong, both modes). Scoped to textarea; promote to -input if reused across dropdown/datepicker/etc."
     }
   ]
 }
