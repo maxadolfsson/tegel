@@ -2,6 +2,7 @@
   "_description": "Shared input field tokens. Layered structural (shape + per-corner/side) + colour bucket with implicit category (no /color/ prefix). Used by text-field, textarea, dropdown, datepicker.",
   "_cluster": 6,
   "_figmaBranch": "Rx4ynvFnhjhX5bAxNdEP7X",
+  "_verification": "TRATON modes verified via REST 2026-08-05 for the 28 cluster-6 tokens — all exist in the TRATON collection, every Light/Dark value matches this spec. NOT covered: icon/control-default + icon/control-hover (added later by cluster #11a work). Scania modes pending for all tokens (REST cannot read child-collection variables; verify via Plugin API or Variables panel), so confidence stays Proposed until then. border/focus-* (4 tokens, Deprecate) confirmed absent in Figma and removed from this spec 2026-08-07 — focus is owned by the -focus helper.",
   "component": "-input",
   "variables": [
     {
@@ -124,47 +125,6 @@
       "scania-dark": "component/-input/border/width-none",
       "confidence": "Proposed",
       "comment": "PER-SIDE — TRATON default, Scania none."
-    },
-
-    {
-      "name": "component/-input/border/focus-top",
-      "type": "FLOAT",
-      "light": "traton/unit/2",
-      "dark": "traton/unit/2",
-      "scania-light": "scania/unit/2",
-      "scania-dark": "scania/unit/2",
-      "confidence": "Deprecate",
-      "comment": "To be removed — focus handled by -focus helper."
-    },
-    {
-      "name": "component/-input/border/focus-right",
-      "type": "FLOAT",
-      "light": "traton/unit/2",
-      "dark": "traton/unit/2",
-      "scania-light": "scania/unit/2",
-      "scania-dark": "scania/unit/2",
-      "confidence": "Deprecate",
-      "comment": "To be removed — focus handled by -focus helper."
-    },
-    {
-      "name": "component/-input/border/focus-bottom",
-      "type": "FLOAT",
-      "light": "traton/unit/2",
-      "dark": "traton/unit/2",
-      "scania-light": "scania/unit/2",
-      "scania-dark": "scania/unit/2",
-      "confidence": "Deprecate",
-      "comment": "To be removed — focus handled by -focus helper."
-    },
-    {
-      "name": "component/-input/border/focus-left",
-      "type": "FLOAT",
-      "light": "traton/unit/2",
-      "dark": "traton/unit/2",
-      "scania-light": "scania/unit/2",
-      "scania-dark": "scania/unit/2",
-      "confidence": "Deprecate",
-      "comment": "To be removed — focus handled by -focus helper."
     },
 
     {
@@ -308,6 +268,26 @@
       "scania-dark": "color/text/defined",
       "confidence": "Proposed",
       "comment": "Suffix icon/text (trailing). Same level as prefix — unified treatment for all prefix/suffix content."
+    },
+    {
+      "name": "component/-input/icon/control-default",
+      "type": "COLOR",
+      "light": "color/icon/subtle",
+      "dark": "color/icon/subtle",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Proposed",
+      "comment": "Interactive icon hosted in an input slot, as opposed to a static adornment. Named for its role, matching prefix/suffix/error, rather than for any one affordance. The system already draws this line: adornments carry default + disabled (datetime's calendar and clock icons), controls carry default + hover. First consumer is the Dropdown clear affordance ('x' emptying the filter text or selection), which lives in the Input/Slot/Suffix helper as a boolean, hidden by default. Brand-mode-split per convention-brand-mode-split-single-token: TRATON path color/icon/subtle (tegel-lite --dropdown-clear-icon), Scania path color/icon/strong (Scania core --tds-dropdown-clear-icon-color, its ink-scale treatment). Note this is the first brand-split icon token in -input; prefix, suffix and error are all brand-uniform."
+    },
+    {
+      "name": "component/-input/icon/control-hover",
+      "type": "COLOR",
+      "light": "component/-input/icon/control-default",
+      "dark": "component/-input/icon/control-default",
+      "scania-light": "component/-input/icon/control-default",
+      "scania-dark": "component/-input/icon/control-default",
+      "confidence": "Proposed",
+      "comment": "Value-coincident with control-default today — both bridges confirm no hover divergence (Scania core: identical hex both states; tegel-lite: no hover override, only a focus outline). Ships as a separate token because carrying a hover state is what distinguishes a control from an adornment; the lever needs to exist even while the values match."
     },
     {
       "name": "component/-input/icon/error-default",
