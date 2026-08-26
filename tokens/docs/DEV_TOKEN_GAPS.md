@@ -80,8 +80,39 @@ _User (Max) to confirm which of the above should be filed as active dev bugs vs 
 
 ---
 
-## Tracking
+### 2. Dropdown option rows do not respond to the dropdown's size (tegel-lite)
 
-- Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
-- Spec source: [tokens/specs/](../specs/)
-- Figma libraries registry: [tokens/audit/figma-libraries.json](../audit/figma-libraries.json)
+**Found** 2026-08-08 during cluster #11a Dropdown, while checking whether Figma's option row
+was missing a Medium size.
+
+`packages/core/src/tegel-lite/components/tl-dropdown/tl-dropdown.scss:656` pins the option row:
+
+```scss
+.tl-dropdown__option {
+  height: 48px;   // fixed — no per-size override found
+}
+```
+
+No `.tl-dropdown--lg/--md/--sm` override for the option row was found in that file. Scania core
+does implement a size ladder for the same element — `dropdown-option.scss` sets per-size padding
+which, with the 16px `--tds-detail-02` line-height, renders **55 / 47 / 39px** for lg / md / sm
+(single-select). So the two brands disagree: Scania core scales option rows with the dropdown's
+size, tegel-lite does not.
+
+**Design intent, confirmed by Max 2026-08-08: the sizes SHOULD differ in height.** That makes the
+fixed 48px a bug rather than a deliberate simplification.
+
+Note the option's size is not settable by a consumer in either brand — in Scania core it is
+`@State`, assigned from `parentDropdown.size` at load — so this is about the row responding to the
+dropdown it sits in, not about exposing a new control.
+
+**Caveat on the evidence:** the "no per-size override" claim rests on a grep of that one file and
+was not exhaustively verified; confirm before fixing.
+
+**Proposed change**: give `.tl-dropdown__option` per-size heights under the existing
+`.tl-dropdown--lg/--md/--sm` modifiers, matching whichever ladder the brands agree on. Note Scania
+core's ladder (55/47/39) matches neither tegel-lite's 48 nor the TRATON Figma file's rows, so the
+target values are a design decision, not a straight port.
+
+**Out of scope for #11a** — that cluster is colour tokens, and its spec scopes sizing out to the
+CDEP-2019 typography track.
