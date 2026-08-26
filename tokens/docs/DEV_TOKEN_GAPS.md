@@ -260,3 +260,363 @@ Worth noting the queue overlap — Table and Dropdown are both on that list, so 
 claims on those clusters have no test backstop either.
 
 **Proposed change**: add `tl-stepper` coverage mirroring the core Stepper's e2e suite.
+
+---
+
+## Table
+
+Found during cluster #9 token analysis, 2026-08-25. Read-only investigation — no code was changed.
+Items 1–4 are accessibility defects in the markup. Items 5–6 are design-architecture questions rather
+than outright bugs, and 5 in particular **may be intentional from an earlier design** — worth checking
+against Tegel UI coverage before treating it as a defect.
+
+### 1. `<caption>` is nested inside a box that is already `display: table-caption`
+
+`table-toolbar/table-toolbar.scss:6` sets the host to `display: table-caption`, and
+`table-toolbar/table-toolbar.tsx:136` then renders a `<caption>` inside a
+`<div class="tds-table__upper-bar-flex">` inside that host. A `<caption>` must be a direct child of
+`<table>`, and a table may have only one.
+
+**Proposed change**: pick one mechanism. Either the host *is* the caption (drop the inner `<caption>`
+element and keep `display: table-caption`), or the inner element is the caption and the host is a plain
+box. TRATON already takes the first route — see item 4.
+
+---
+
+### 2. `aria-labelledby` points at an element that usually does not exist
+
+`table-toolbar.tsx` sets `aria-labelledby="table-toolbar-title"` on the Host unconditionally, but the
+element carrying that id renders only when the `tableTitle` prop is non-empty — and it defaults to
+`''`. So in the default configuration the toolbar's accessible name references a missing element.
+
+**Proposed change**: render `aria-labelledby` only when `tableTitle` is set.
+
+---
+
+### 3. No row groups anywhere in the table markup
+
+Across the 11 table components the markup emits `<table>`, `<tr>`, `<th>`, `<td>` and a single
+`role="row"`, but **no `<thead>`, `<tbody>` or `<tfoot>`**. Assistive technology gets rows and cells
+with no grouping, so "this is a header row" is conveyed only by `<th>` and, on the sortable column,
+`aria-sort`.
+
+**Proposed change**: introduce the three row groups, or the equivalent `role="rowgroup"` on the
+existing wrappers.
+
+---
+
+### 4. The two brands disagree about what the caption is
+
+- core (Scania): a `<caption>` holding just the title, nested inside the toolbar host
+- tegel-lite (TRATON): the whole toolbar **is** the caption — `<caption class="tl-table__toolbar">`
+
+**Proposed change**: converge on one structure. The TRATON form is the one that is valid HTML.
+
+---
+
+### 5. The pagination nav buttons have no visible hover, in either mode — PARKED, may be intentional
+
+```
+light:  --tds-table-footer-background: grey-150   --tds-table-footer-btn-hover: grey-150
+dark:   --tds-table-footer-background: grey-700   --tds-table-footer-btn-hover: grey-700
+```
+
+In both modes the hover value equals the background the button sits on, so hovering a page-nav button
+produces no visible change. `table-footer/table-footer.scss:89` applies it.
+
+**Deliberately parked, not asserted as a bug** — this may be intentional from an earlier design, e.g.
+if the affordance was meant to come from the icon rather than a background. **To verify:** check the
+pagination hover treatment in the Tegel UI Library against these values.
+
+> **MOOT 2026-08-26.** Max ruled that the nav buttons become icon-only `tds-button` instances (see
+> item 6). Button ships `component/button/background/standard/tertiary-hover`, a real hover, so
+> `--tds-table-footer-btn-hover` retires rather than being fixed. Note this **moots** the question
+> rather than answering it — the Tegel UI check above was never run, so whether the invisible hover was
+> once intentional is still unknown. It stops mattering because the variable goes away.
+
+---
+
+### 6. The pagination nav buttons bypass the Button component entirely
+
+`table-footer.tsx:346–376` renders four raw `<button type="button" class="tds-table__footer-btn">`
+elements wrapping `<tds-icon>`, with the native `disabled` attribute. `tds-button` appears nowhere
+inside the table components — only in stories, as consumer-slotted content. Figma matches: the
+`Table Pagination` set's page controls are plain FRAMEs (`Page controls` → `_Page control Light` →
+`First last`), with no Button instance.
+
+So a set of icon buttons carries its own hover, icon and disabled treatment instead of inheriting
+Button's. Two consequences:
+
+- **`--tds-table-footer-page-selector-icon-disabled: grey-500` expresses disabled as a colour.** The
+  system rule is one `opacity/disabled` per component, not a per-property disabled colour.
+- This is the **second** instance of the same question. Cluster #15 Tabs parked "Scroll→Button" for its
+  scroll-affordance buttons. Pagination's nav buttons are the same pattern, so it is a system question
+  rather than a Table-local one.
+
+**Proposed change**: nothing in this cluster. Flagged so the Button-adoption question is decided once,
+across Tabs' scroll controls and Pagination's nav controls together.
+
+> **DECIDED for Table, 2026-08-26 (Max): adopt Button.** The nav controls become icon-only `tds-button`
+> instances on both sides. Verified during cluster #9 that **neither** source uses a Button today —
+> Figma's `Table/Footer/Selector` `Type=Page` holds four bare icon instances (`skip_backward`,
+> `chevron_left`, `chevron_right`, `skip_forward`), each just a VECTOR, and code hand-rolls
+> `<button class="tds-table__footer-btn">`. So there is no icon-only Button variant being inherited from
+> anywhere; the icons are naked.
+>
+> Adopting Button supplies all three treatments Table would otherwise have to own —
+> `icon/standard/tertiary-{default,hover,active}` for the icon, `opacity/disabled` for disabled, and a
+> working hover that retires the broken variable in item 5. **This is why Pagination contributes only
+> one Table-owned token** (`component/table/text/footer-default`).
+>
+> **Tabs' scroll controls are NOT covered by this ruling** — that remains open, and the "decide it once"
+> framing above still holds for it.
+>
+> **Naming caveat carried into the spec:** code says `variant="ghost"` (`button.tsx:24`) while Button's
+> tokens say `standard/tertiary`. Mapped by elimination — three non-danger variants, three standard
+> tiers — not from anything documented.
+
+---
+
+### 7. `--tds-table-zebra-mode-backround` is both misspelled and redundant
+
+Two problems, and the second changes what should be done about the first.
+
+**Misspelled.** Missing the `g` in "background". Consistent between light and dark and between
+`table-vars.scss` and its consumers, so nothing renders wrong — but it is part of the public CSS
+custom property surface, so renaming it is a breaking change.
+
+**Redundant.** Zebra is a swap between the two mode variants' row backgrounds, not a third colour:
+
+| Scania light | primary | secondary |
+|---|---|---|
+| `--tds-table-body-row-background` | grey-50 | white |
+| `--tds-table-zebra-mode-backround` | white | grey-50 |
+
+The same two values, swapped. Dark behaves the same way (grey-850 / grey-900 against grey-900 /
+grey-850). So the zebra variable never holds a value that the *other* variant's row background does not
+already hold. Figma's `Table/Column` set expresses this directly — its `Zebra mode=True` variants bind
+`component/table/secondary/cell` under Mode Variant=Primary and `component/table/cell` under
+Secondary, i.e. it points at the other variant's token rather than at a zebra token. There is no
+zebra token in the design system, by design.
+
+**Proposed change**: do **not** fix the spelling in place — that would preserve a variable that should
+not exist. Deprecate `--tds-table-zebra-mode-backround` and have zebra rows consume the opposite mode
+variant's row background directly. If an interim alias is needed for consumers, alias the misspelling
+to the opposite variant's value rather than minting a corrected third variable.
+
+---
+
+### 8. `tds-expendable-row-icon` — misspelled, and missing the block prefix
+
+`table-body-row-expandable/table-body-row-expandable.tsx:275` renders:
+
+```jsx
+<span class="tds-expendable-row-icon">
+```
+
+Two defects in one class name:
+
+- **"expendable" instead of "expandable."** Expendable means disposable.
+- **Missing the `tds-table__` prefix.** Every other class in this file follows the block convention —
+  `tds-table__row`, `tds-table__cell-expand`, `tds-table__expand-control-container`,
+  `tds-table__expand-input`. This one is `tds-` plus a bare name.
+
+Low risk to change: unlike `--tds-table-zebra-mode-backround` this is an internal class inside a
+`shadow: true` component, not a published custom property, so no consumer can be targeting it.
+
+**Proposed change**: rename to `tds-table__expand-icon`, matching tegel-lite's `tl-table__expand-icon`,
+which already uses the correct spelling and the block prefix.
+
+---
+
+### 9. No example or test combines a toolbar with multiselect
+
+Across both harnesses, no case renders a table that has *both* a toolbar and row selection:
+
+| | has a toolbar | has multiselect |
+|---|---|---|
+| Storybook | `batch-actions` · `filtering` · `horizontal-scroll` · `sorting` | `multiselect` · `multiselect-expandable` |
+| e2e | `batch` · `filtering` · `sorting` | `pagination-multiselect` · `pagination-multiselect-expandable` |
+
+**Zero overlap in either.** A table with a title *and* row selection is an ordinary combination and it
+is neither demonstrated nor tested.
+
+**Proposed change**: add a story and an e2e case combining a toolbar with multiselect.
+
+> **Revised 2026-08-25.** This entry originally also predicted a title/column misalignment in that
+> combination — the toolbar's leading padding is a fixed `var(--tds-spacing-element-16)` and
+> `table-toolbar` never receives `multiselect`, so the column headers shift when selection is enabled
+> and the caption title cannot follow. **That is no longer filed as a defect.** Max's ruling: the
+> toolbar is a `<caption>` and is not part of the column grid, `start` and `end` are the supported
+> content slots, and a select-all checkbox belongs in the column that holds all the other checkboxes —
+> not in the toolbar. So the caption title staying at the table's padding regardless of selection is
+> intended behaviour, not drift.
+>
+> The design side is being corrected to match: Figma's `Table/Toolbar` carries a stray
+> `Table/Row/Prefix` instance at x=0, 48px wide, set to `Action=Multi select`. It draws a checkbox code
+> does not render there and reserves a column the caption does not belong to. It is being removed rather
+> than switched to `Action=Empty` — the column should not be reserved at all.
+>
+> The coverage gap above stands on its own merits and is worth closing regardless.
+
+---
+
+### 10. The header cell's bottom border is painted with a hover colour
+
+`table-header-cell.scss:15` draws the rule under every column header with the *hover* variable rather
+than the divider one:
+
+```scss
+border-bottom: 1px solid var(--tds-table-header-background-hover);   /* grey-200 / grey-650 */
+```
+
+Every other divider in the table uses `--tds-table-divider` (grey-150 / grey-600), including the
+header's own bottom edge one level up at `table-header.scss:15`. So two adjacent rules use two
+different variables.
+
+**Why this is a bug and not a heavier-rule design choice.** Tegel UI, the Scania source of truth, shows
+header cell and body cell sharing **one** divider colour — `grey/200` `#d1d7e0` Light, `grey/600`
+`#4e5e75` Dark, across all 84 header-cell and 108 body-cell variants. There is no heavier thead rule in
+the design source. And the borrowed value lands accidentally right in Light (grey-200 matches) and one
+rung off in Dark (grey-650 against `grey/600`) — an intentional treatment would be consistent in both.
+
+**Proposed change**: point `table-header-cell.scss:15` at the divider variable. Also couples the header
+rule to hover, so any future hover change silently moves it.
+
+---
+
+### 11. `table-body-row`'s `disabled` prop styles nothing on the row
+
+`table-body-row.tsx:33–34` declares it, documented as *"Marks the row as disabled, used for multiselect
+table"*, and `:156` passes it to the checkbox. **There is no `disabled` rule in
+`table-body-row.scss` at all.**
+
+So a disabled row renders identically to an enabled one — only its checkbox greys out. The row keeps
+its hover treatment, its pointer cursor when `clickable`, and full text contrast.
+
+**Accessibility angle:** the prop reflects to the host, so assistive tech may surface a disabled state
+that is visually undetectable. Sighted users get no signal at all.
+
+**Proposed change**: either apply `opacity/disabled` to the row (the system rule — see item 13), or
+narrow the prop's documentation to say it disables the checkbox only. The current name and JSDoc
+promise more than the implementation delivers.
+
+---
+
+### 12. `--tds-table-footer-page-selector-input-color-disabled` is used but never defined
+
+`table-footer.scss:58` sets `color: var(--tds-table-footer-page-selector-input-color-disabled)` on the
+disabled page-number input. **Zero definitions anywhere in the repo** — not in `table-vars.scss`, not
+in `_tl-table-vars.scss`, not in the bridge.
+
+Note the near-miss that hides it: `table-vars.scss:108` defines
+`--tds-table-footer-page-selector-input-background-disabled`. Same prefix, different property —
+`background` versus `color`. So the name looks defined at a glance.
+
+With no fallback the declaration is invalid and the property is dropped, so the disabled input keeps
+its enabled text colour.
+
+**Proposed change**: define it, or delete the declaration. Same shape as Stepper's item 1
+(`--tds-stepper-label-text-opacity-upcoming`) — the second undefined-variable instance in this file, so
+worth a lint rule rather than case-by-case discovery.
+
+---
+
+### 13. Disabled is expressed as a background colour, in both brands
+
+| Brand | Source | Declarations |
+|---|---|---|
+| Scania | `table-vars.scss:32, 99` | `--tds-table-input-background-disabled` |
+| TRATON | `_tl-table-vars.scss:20` | `--table-input-disabled: var(--color-background-layer-01)` |
+
+**The system rule is opacity, and among shipped specs it is unanimous.** Eleven components own
+`opacity/disabled` — `-input`, accordion, button, checkbox, chip, dropdown, link, popover,
+radio-button, tabs, toggle — and **no shipped spec has a background-disabled token at all.** (One
+exists in `_menu-item-DRAFT.json`; draft specs are not precedent.)
+
+Two brands making the same choice independently is still a departure from the system rule rather than
+evidence for it. Item 6's `--tds-table-footer-page-selector-icon-disabled` is the same pattern
+expressed as an icon colour.
+
+**Proposed change**: route disabled to `component/-input/opacity/disabled` once the table's inline
+fields become `Text Field` instances (item 15). **No Table-owned disabled token** — and note the canvas
+could not bind one anyway: neither `Table/Column/Cell` nor `Table/Row` carries a disabled axis, so the
+state is unmodelled in Figma entirely.
+
+---
+
+### 14. Two Scania values in code diverge from Tegel UI
+
+Max's ruling is that **Tegel UI decides Scania design intent**, with the web component authoritative
+for state and a11y behaviour. Probed 2026-08-26 across every table surface; two disagree:
+
+| Surface | Tegel UI | `table-vars.scss` |
+|---|---|---|
+| Body row, secondary — **Dark** | `grey/800` `#242c37` | grey-**900** |
+| Row selected — **Light** | `grey/150` `#e0e5eb` | grey-**100** |
+
+Everywhere else the two agree exactly — primary row, row hover, header row and toolbar all match in
+both modes — so this is two specific values, not a systematic offset.
+
+**Not filed for the divider**, although it looks like a third case. Tegel UI's stroke is an opaque
+colour style; the canvas semantic (`color/border/discrete`) is translucent — `#303c61` at 17% in Scania
+Light, which composites over a `grey/50` row to roughly `#d4d7df` against Tegel UI's `#d1d7e0`. Not
+comparable, and they agree in rendered result.
+
+**Proposed change**: align the two values above. Low risk — both are single-rung.
+
+---
+
+### 15. Every input inside the table is hand-rolled instead of using `tds-text-field`
+
+Four sites, none of them a Text Field:
+
+| Site | Code |
+|---|---|
+| Toolbar search | built-in `<input class="tds-table__searchbar-input">`, `table-toolbar.tsx:143–155` |
+| Page-number field | raw `<input class="tds-table__page-selector-input">`, `table-footer.tsx:335` |
+| Filter cell | `tds-table-header-input-wrapper` around a slotted `<input>` |
+| Cell edit | `table-body-input-wrapper` around a slotted `<input>` |
+
+**This is why the six `--tds-table-input-*` and `--tds-table-input-header-*` variables exist.** A
+`tds-text-field` would inherit `component/-input/*` for text, placeholder, icons and disabled opacity,
+and the table would need none of them.
+
+Figma is inconsistent in the same area but leans the other way: the page-number field **is** a real
+`Text Field` instance, while the filter cell and cell-edit are hand-built frames.
+
+Note the cross-component borrowing already happening: `table-body-input-wrapper.scss` uses
+`var(--tds-text-field-bar)` for the focus bar — Text Field's own variable, reached into from Table.
+
+**Proposed change**: migrate the four sites to `tds-text-field`. Sizeable, and not this cluster's work
+— but it is the root cause behind items 12, 13 and the six orphan variables.
+
+---
+
+### 16. The pagination token renames orphan four tegel-lite call sites
+
+`component/table/pagination/base` → `component/table/background/footer-default` and
+`component/table/pagination/dropdown` → `component/table/background/popover-default`, renamed on the
+Figma branch 2026-08-26 to put the property before the scope per `convention-naming-shape`.
+
+`_tl-table-vars.scss` consumes the old CSS names at `:29`, `:30`, `:44`, `:45`:
+
+```scss
+--table-footer:                  var(--component-table-pagination-base);
+--table-footer-page-selector-input: var(--component-table-pagination-dropdown);
+--table-toolbar-searchbar:       var(--component-table-pagination-dropdown);
+--table-toolbar-searchbar-hover: var(--component-table-pagination-base);
+```
+
+**Max's ruling: the rename stands.** Orphaned CSS variables are a dev-side concern, not a constraint on
+token naming — if the old names must stay in the token contract, devs alias them.
+
+**Proposed change**: repoint the four call sites, or add aliases from the old names to the new.
+
+---
+
+## Tracking
+
+- Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
+- Spec source: [tokens/specs/](../specs/)
+- Figma libraries registry: [tokens/audit/figma-libraries.json](../audit/figma-libraries.json)
