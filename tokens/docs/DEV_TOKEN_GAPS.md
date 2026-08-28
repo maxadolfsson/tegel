@@ -713,6 +713,79 @@ anyone reading the file.
 
 ---
 
+### 19. The editable cell's focus bar references a variable that is out of scope, and has never rendered
+
+`table-body-input-wrapper.scss` styles the focused editable cell with two declarations in one rule:
+
+```scss
+::slotted(input:focus) {
+  background-color: var(--tds-table-input-background-focus);  // applies
+  border-bottom: 2px solid var(--tds-text-field-bar);          // never applies
+}
+```
+
+`--tds-text-field-bar` is declared **only inside the `tds-text-field` selector** (`text-field-vars.scss:25`).
+Table's wrapper is `tds-table-body-input-wrapper` and is never a descendant of `tds-text-field`, so the
+variable is undefined at that point. A declaration containing an undefined `var()` is invalid at
+computed-value time, so all three `border-bottom` longhands reset to their initial values —
+`border-bottom-style: none`. No border is drawn.
+
+**Confirmed visually, not just by reading.** In Storybook (Scania light, `@scania/tegel` 1.62.0) the
+focused cell shows its white focus background, so the rule *is* matching and `:focus` *is* active. The bar
+is simply absent. `table-header-input-wrapper.scss` references the same variable and has the same defect.
+
+The canvas disagrees: Tegel UI `[New] Table/Table Cell` (`35259:125409`) draws this bar on all 24
+`Cell Edit=True` variants — `#2a6ecf` light, `#4a89f3` dark — alongside the white focus background and the
+edit icon. So the design source has always shown a focus affordance the code has never produced.
+
+**Combined with item 20, focus is currently indistinguishable from hover in light mode**: the bar does not
+render, and `--tds-table-input-background-focus` and `--tds-table-input-background-hover` are both
+`var(--tds-white)` in the light block (`table-vars.scss:30–31`). Hovering and focusing an editable cell
+produce identical pixels. That is a focus-visibility concern, not only a token one.
+
+**Proposed change**: delete the declaration rather than repair the variable. The design-lead direction
+(2026-08-28) is that the focus indicator comes from the global focus helper, so Table should not own a
+focus border at all. If that direction changes, the repair is to route it to a Table-owned token — not to
+reach into `tds-text-field`'s private scope, which would break again the moment that component is
+refactored.
+
+---
+
+### 20. Dark-mode input hover points at a non-existent step of a deprecated scale
+
+`table-vars.scss:98`, in the `.tds-mode-dark` block:
+
+```scss
+--tds-table-input-background-hover: var(--tds-white-50);
+```
+
+There is no `--tds-white-50`. The white scale documented in
+`packages/core/src/stories/foundations/color/colors.mdx` is `100 / 87 / 48 / 38 / 05`, and the heading
+above it reads **"White Scale (deprecated)"**. So the reference is wrong twice over: `50` is not a member
+of the ramp, and the ramp itself is retired.
+
+Repo-wide, `--tds-white-50` appears in exactly **one** source line — this one — plus two archived audit
+inventories that recorded that same line.
+
+**Scope limit on this evidence**: no colour primitive is defined anywhere in this working tree
+(`--tds-white` itself has 178 references and zero definitions), and `node_modules` carries no built
+palette, so the variable could not be resolved locally. That it is undefined is inferred from the
+documented ramp, not read from a value.
+
+**Corroborated in Storybook.** Light mode: the hovered cell lifts to white, visibly distinct from its
+row. Dark mode: the hovered *row* lifts, but the cell inside it does not change at all. That asymmetry is
+what an unresolvable `background-color` looks like.
+
+It is also the only white-alpha hover in the component — every other dark hover here uses an opaque grey,
+e.g. `--tds-table-body-row-background-hover: var(--tds-grey-800)` (`table-vars.scss:75`).
+
+**Proposed change**: do not simply correct the digit — any `--tds-white-*` target lands on the deprecated
+scale. Route dark input hover to a live token consistent with the rest of the file. Note that the light
+and dark values here are different mechanisms (opaque `--tds-white` vs a translucent overlay), which is
+worth resolving deliberately rather than by matching one to the other.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
