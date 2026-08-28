@@ -834,6 +834,48 @@ Treat the brand-disagreement claim as needing confirmation before it reaches a d
 
 ---
 
+### 22. Placeholder text renders identically to typed text in both of the table's inputs
+
+The design system distinguishes the two. `tokens/specs/-input.json`, all four modes:
+
+```
+component/-input/text/value-default        → color/text/strong
+component/-input/text/placeholder-default  → color/text/subtle
+```
+
+Neither table input follows it.
+
+**Header filter** (`table-header-input-wrapper.scss`) sends the placeholder to
+`--tds-table-input-header-placeholder`, which resolves to `--tds-grey-950` light and `--tds-grey-50` dark
+(`table-vars.scss:34`, `:101`) — **the same values as `--tds-table-color`** (`:4`, `:68`), the colour the
+input's own value is painted with.
+
+**Body editable cell** (`table-body-input-wrapper.scss:52`) skips the indirection entirely and sets
+`::placeholder { color: var(--tds-table-color); }` — literally the value colour, with no placeholder token
+in between.
+
+So in both fields an empty input is indistinguishable from a filled one. That is a usability problem
+before it is a token problem: the affordance that tells a user "nothing is typed here yet" does not exist.
+
+**The canvas is not the offender here** — it agrees with the system. The Figma filter cell binds
+`color/text/subtle`, the correct target. (It additionally carries a stray 50% opacity on top, which is
+being removed separately as a canvas task; that is a different defect and it does not change which token
+is right.)
+
+**Wider pattern in the same component.** The header input's three colours —
+`--tds-table-input-header-icon`, `--tds-table-input-header-placeholder`, and the value via
+`--tds-table-color` — are **all** `grey-950` light and `grey-50` dark. The whole field is one colour with
+no internal hierarchy. This is the same shape as item 19, where the editable cell's focus and hover
+resolve to the same value in light mode: distinct states and roles collapsed onto a single literal.
+
+**Proposed change**: point both placeholders at the system's placeholder semantic rather than at the value
+colour — `component/-input/text/placeholder-default`, or whatever the build emits for it — and delete
+`--tds-table-input-header-placeholder` if it has no job left once it stops duplicating
+`--tds-table-color`. The icon variable is **not** part of this: `grey-950` is correct there, confirmed
+against Tegel UI, and an adornment has no value text to be confused with.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
