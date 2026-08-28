@@ -786,6 +786,54 @@ worth resolving deliberately rather than by matching one to the other.
 
 ---
 
+### 21. The editable cell paints its states as backgrounds where the system uses a ring, a row colour and opacity
+
+`table-vars.scss` publishes six variables for the table's own inputs — three in each mode block:
+
+```scss
+--tds-table-input-background-focus       // :30 light, :97 dark
+--tds-table-input-background-hover       // :31 light, :98 dark
+--tds-table-input-background-disabled    // :32 light, :99 dark
+--tds-table-input-header-icon            // :33 light, :100 dark
+--tds-table-input-header-placeholder     // :34 light, :101 dark
+--tds-table-input-header-background-focus // :35 light, :102 dark
+```
+
+**Four of the six paint an interaction state as a surface.** The system does not resolve these states
+that way anywhere else:
+
+| State | How the system does it | What Table's input does |
+|---|---|---|
+| Focus | the shared ring — `component/-focus/ring/*`; **no shipped spec gives any component a focus background**, and `-focus` has zero precedent as a state suffix | paints an opaque background |
+| Hover | the row's own colour change plus the pointer — `component/table/background/cell/{primary\|selected\|secondary}-hover`, all shipped and bound | paints a second background *inside* the already-hovered cell |
+| Disabled | opacity — `component/-input/opacity/disabled`; **zero shipped specs carry a background-disabled token** (the only matches are two drafts, plus `dropdown.json:58`, which is `field/opacity-disabled` → an opacity) | paints a background |
+
+**This is a ruling, not a preference.** The design lead settled it in cluster #9 ("Round D") and
+re-confirmed it 2026-08-28 after a reversal was proposed and withdrawn: **Table owns zero input tokens.**
+The editable cell needs no surface treatment, because it can sit on nine distinct surfaces across four
+modes and no single value reads correctly against all of them. Hover is the row's colour plus the pointer;
+focus is the shared ring; the edit icon is an affordance, not a surface.
+
+So these six cannot be given Table tokens — and should not be. They are the code-side half of a drift
+whose canvas half is being corrected separately on the branch (the `Cell Edit=True` variants of
+`Table/Column/Cell` paint a fill and a bar for the same reason, and are being removed).
+
+**Two of the four are already inert**, which is its own evidence that nothing depends on them: the focus
+*bar* has never rendered (item 19) and the dark hover background has never rendered (item 20).
+
+**Proposed change**: remove the four state backgrounds and let the states resolve the system way — the
+shared focus ring, the row's existing hover colour, and `-input/opacity/disabled`. A disabled editable
+cell is then simply a cell, which is what it is; a denied cursor and an inactive edit icon carry the
+meaning. `--tds-table-input-header-icon` and `--tds-table-input-header-placeholder` are ordinary content
+colours and are not part of this — they stay.
+
+**Unverified, carried from `token-table-draft.md:1007`**: that note records tegel-lite as already doing
+focus the system way, making the two brands disagree in code. It could not be checked here — the
+`tegel-lite` package in this working tree contains no `src` directory and no Table implementation at all.
+Treat the brand-disagreement claim as needing confirmation before it reaches a developer.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
