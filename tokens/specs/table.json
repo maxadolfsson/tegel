@@ -1,0 +1,156 @@
+{
+  "_description": "Cluster #9 Table. 14 tokens. Numbering follows tokens/audit/20260807-table-cluster-9-scope/token-table-draft.md, which keeps gaps at 7, 8, 11, 12, 14, 15 and 21 so earlier cross-references stay readable.",
+  "_notes": [
+    "The surface ladder exists ONLY as INTERNAL/color__wip/UNSORTED/background/surface/* — there is no promoted color/background/surface-N variable on the branch. layer-01/02/03 ARE promoted semantics. Every surface-based token here therefore binds brand primitives per mode rather than a shared semantic, per the standing rule that nothing ships aliased to INTERNAL.",
+    "A rung number carries NO cross-brand correspondence. surface/300 resolves to TRATON grey/300 but Scania grey/200 Light and grey/750 Dark — the 300 is not a shared step, and reading it as one is a trap. This is why no rung could produce the Scania pair the cluster imports: surface/200 gives Scania grey/150 Light but grey/800 Dark, where the header and selected surfaces want grey/150 / grey/700.",
+    "The INTERNAL surface ladder is NOT a semantic link, and binding away from it costs nothing. Surface sits under INTERNAL precisely because it has no real semantic meaning; it is scaffolding, and it will be dropped entirely once every binding across the system has been solved — cluster by cluster, each clearing its own. So binding brand primitives is the exit route, not a compromise against a link worth keeping.",
+    "TRATON values are the resolved values of the INTERNAL rung each token replaces, so TRATON renders identically. Same move as Folder Tabs' 2026-07-05 promotion off INTERNAL surface/300, to the same two primitives.",
+    "Tokens 1 and 5 keep their existing promoted semantics (layer-01, layer-02) — they were never on INTERNAL and need no repoint, only their missing Scania modes filled.",
+    "Hover splits per mode variant (tokens 2 and 6) because TRATON Dark Secondary carries a different value and one variable cannot hold two values in one mode. Selected does NOT split (tokens 3 and 4): it is a far state designed to sit apart from every surface, and Table has no wrapper-surface topology.",
+    "Hover converges on a destination rather than moving a fixed distance — primary rows travel one step and secondary rows two, and both land on the same colour. That is what makes hover read correctly on a zebra table. Selected-hover inherits the property.",
+    "LEAF SHAPE: fused, {qualifier}-{state} under the cell/ scope — design-lead ruling 2026-08-28, following shipped Popover (background/link/primary-default). NOT Tabs' nested background/item/primary/default. Reason specific to Table: selected does not split per mode variant, so it cannot take a variant sub-scope, and the nested shape would leave selected-default fused beside nested siblings inside one scope. Fusing makes all six uniform and puts primary, secondary and selected as peers in one slot — which matches rendering, since a selected row's surface overrides its zebra variant. Note the two shipped precedents genuinely disagree (Tabs nested, Popover fused) and convention-leaf-shape-mode-variant-state contains both its 2026-07-04 revision and the superseded text it reversed, so this was a fresh call rather than a lookup. Flagged to the hub as a system-level question."
+  ],
+  "component": "table",
+  "variables": [
+    {
+      "name": "component/table/background/cell/primary-default",
+      "type": "COLOR",
+      "light": "color/background/layer-01",
+      "dark": "color/background/layer-01",
+      "scania-light": "scania/color/grey/50",
+      "scania-dark": "scania/color/grey/850",
+      "confidence": "Confirmed — TRATON keeps its existing promoted semantic (read from the branch, layer-01 on both modes, no change). Scania measured on the Tegel UI canvas 2026-08-26 by per-variant read of Table/Table Row: grey/50 Light, grey/850 Dark, and code agrees on both.",
+      "comment": "Primary body row and its cells at rest. A row's background IS its cells' background, so Table/Row and Table/Column/Cell share this token. Rename source: component/table/background/cell (VariableID:14121:107525) — moved under background/ by the design lead 2026-08-28, from component/table/cell. This spec takes it the rest of the way; the leaf must not remain at background/cell once background/cell/* siblings exist, or the panel shows cell as both a variable and a group."
+    },
+    {
+      "name": "component/table/background/cell/primary-hover",
+      "type": "COLOR",
+      "light": "traton/color/grey/200",
+      "dark": "traton/color/blue/850",
+      "scania-light": "scania/color/grey/100",
+      "scania-dark": "scania/color/grey/750",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL binding this token replaces (surface/200 resolves traton/color/grey/200 Light, traton/color/blue/850 Dark), so TRATON renders identically. Scania measured on Tegel UI 2026-08-26 and independently reconfirmed 2026-08-28: hover is grey/100 / grey/750 and is IDENTICAL across both mode variants in the source of truth.",
+      "comment": "Primary body row hover. Rename source: component/table/background/cell-hover (VariableID:14121:107523) — moved under background/ by the design lead 2026-08-28, from component/table/cell-hover. It aliases INTERNAL on all four modes: the only pre-existing Table variable with complete mode coverage, and every mode of it INTERNAL."
+    },
+    {
+      "name": "component/table/background/cell/selected-default",
+      "type": "COLOR",
+      "light": "traton/color/grey/300",
+      "dark": "traton/color/blue/800",
+      "scania-light": "scania/color/grey/150",
+      "scania-dark": "scania/color/grey/700",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL surface/300 rung the selected row uses today. Scania measured 2026-08-28 by per-variant probe of Tegel UI Table/Table Row: 40 Light variants at grey/150 and 40 Dark at grey/700, unanimous within mode. Code ships grey-100 in Light and is wrong; Tegel UI decides Scania intent, and that divergence is logged as a dev gap rather than followed here.",
+      "comment": "Selected row surface, BOTH mode variants — selected does not split. NO CANVAS BINDING YET: the Active axis is inverted, so the variants painting a selected-looking surface today are the Multiselect=False ones, which have no checkbox and are not the selected state. Binding waits on the Active-to-Selected restructure. Documented-unbound per convention-document-unused-tokens. The justification is the live consumer in the web component, not precedent: the state exists and ships, so the token owns it now rather than being re-derived later. Design-lead ruling 2026-08-28. (radio-button border/radius-full-default is the only prior instance of a documented-unbound token, but it is a simpler component and was not treated as deciding this.) Absorbed old token 7 (the secondary selected pair) on 2026-08-26."
+    },
+    {
+      "name": "component/table/background/cell/selected-hover",
+      "type": "COLOR",
+      "light": "traton/color/grey/400",
+      "dark": "traton/color/blue/700",
+      "scania-light": "scania/color/grey/200",
+      "scania-dark": "scania/color/grey/650",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL surface/400 rung. Scania is a design-lead ruling of 2026-08-27, NOT a measurement, and the 2026-08-28 probe established why no measurement is possible: Tegel UI has ZERO State=Hover x Multiselect=True variants and ZERO Dark Active=True hover variants, so it never draws a checkbox-selected row being hovered. The canonical source has no opinion on this token. One step from selected, in the same direction as every other hover.",
+      "comment": "Selected row hovered. One step from selected so the transition travels the same distance as an unselected row's hover — at equal duration and easing, a two-step move would read as a visibly different speed for the same gesture. Tegel UI paints its Active=True hover at grey/100, but on Multiselect=False rows only, so it is not this state at a different value. NO CANVAS BINDING YET, same reason as selected-default: the inverted Active axis offers no correct target. Documented-unbound per convention-document-unused-tokens. Absorbed old token 8 on 2026-08-26."
+    },
+    {
+      "name": "component/table/background/cell/secondary-default",
+      "type": "COLOR",
+      "light": "color/background/layer-02",
+      "dark": "color/background/layer-02",
+      "scania-light": "scania/color/base/white",
+      "scania-dark": "scania/color/grey/800",
+      "confidence": "Confirmed — TRATON keeps its existing promoted semantic (layer-02, both modes, read from the branch). Scania measured on Tegel UI: white Light, grey/800 Dark, reconfirmed by the 2026-08-28 probe (4 variants at #ffffff, 4 at #242c37). Code ships grey-900 in Dark and is wrong; logged as a dev gap.",
+      "comment": "Secondary body row at rest — the zebra alternate. Renamed from component/table/secondary/cell, which was 2-mode with no Scania values at all."
+    },
+    {
+      "name": "component/table/background/cell/secondary-hover",
+      "type": "COLOR",
+      "light": "traton/color/grey/200",
+      "dark": "traton/color/blue/800",
+      "scania-light": "scania/color/grey/100",
+      "scania-dark": "scania/color/grey/750",
+      "confidence": "Confirmed — TRATON Light matches primary hover; TRATON Dark is the documented exception, read from the surface/300 rung tegel-lite assigns to secondary rows in dark only. Scania is identical to primary hover, measured on Tegel UI across both mode variants.",
+      "comment": "Secondary body row hover. Exists as a separate token ONLY because TRATON Dark gives the secondary row a different hover value than the primary row — in that one mode a single variable would need to hold two values at once. Scania carries the same value as primary hover in both modes; the split is driven by keeping TRATON unchanged, not by a Scania requirement. Hover still converges: secondary travels two steps against primary's one and both land on the same colour."
+    },
+    {
+      "name": "component/table/background/header-default",
+      "type": "COLOR",
+      "light": "traton/color/grey/300",
+      "dark": "traton/color/blue/800",
+      "scania-light": "scania/color/grey/150",
+      "scania-dark": "scania/color/grey/700",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL surface/300 binding the header carries today, so no visual change. Scania measured on Tegel UI: grey/150 / grey/700, and code agrees on both. Matches Folder Tabs' 2026-07-05 promotion off the same rung to the same primitives.",
+      "comment": "Header row and header cell surface. Same values as the selected row by design in both brands — the two never touch, so no disambiguation is required."
+    },
+    {
+      "name": "component/table/background/header-hover",
+      "type": "COLOR",
+      "light": "traton/color/grey/400",
+      "dark": "traton/color/blue/700",
+      "scania-light": "scania/color/grey/200",
+      "scania-dark": "scania/color/grey/650",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL surface/400 rung. Scania measured on Tegel UI: grey/200 / grey/650, code agrees.",
+      "comment": "Header cell hover, for sortable columns. Header rows do not take the body-row hover treatment."
+    },
+    {
+      "name": "component/table/background/toolbar-default",
+      "type": "COLOR",
+      "light": "traton/color/grey/400",
+      "dark": "traton/color/blue/700",
+      "scania-light": "scania/color/grey/200",
+      "scania-dark": "scania/color/grey/650",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL surface/400 rung. Scania measured on Tegel UI: grey/200 / grey/650, code agrees.",
+      "comment": "Toolbar surface, above the header row. Shares its values with header-hover in both brands; the two are never adjacent, and an earlier proposal to separate them was withdrawn because the collision is structural rather than perceptual."
+    },
+    {
+      "name": "component/table/background/footer-default",
+      "type": "COLOR",
+      "light": "traton/color/grey/200",
+      "dark": "traton/color/blue/800",
+      "scania-light": "scania/color/grey/150",
+      "scania-dark": "scania/color/grey/700",
+      "confidence": "Confirmed — TRATON values read from the INTERNAL bindings this token replaces (surface/200 Light, surface/300 Dark). Scania measured on Tegel UI: grey/150 / grey/700.",
+      "comment": "The footer bar. Already carries this name on the branch — renamed from component/table/pagination/base by the design lead on 2026-08-26, moving it out of the pagination sub-namespace so the property leads the scope. It still aliased INTERNAL on all three modes it had, and was missing Scania Light entirely; this spec repoints and completes it. Pagination contributes only this token and text/footer-default: the rows-per-page control delegates to Dropdown, the page field to -input, and the navigation controls to Button."
+    },
+    {
+      "name": "component/table/border/divider-default",
+      "type": "COLOR",
+      "light": "color/border/discrete",
+      "dark": "color/border/discrete",
+      "scania-light": "color/border/discrete",
+      "scania-dark": "color/border/discrete",
+      "confidence": "Confirmed — one promoted semantic across all four modes. Each brand resolves it to its own alpha (TRATON 0.15 / 0.33, Scania 0.17 / 0.40), so the token carries no per-brand split.",
+      "comment": "Cell and row dividers at rest. Translucent, which is why Tegel UI's opaque stroke is not comparable to it — an earlier reading treated the two as a code-versus-canvas divergence and was withdrawn; they agree in rendered result. Table is the only component whose dividers form a grid, so compositing where they cross is a watch item rather than a known defect; a heavier stroke weight or a higher-alpha divider would surface it."
+    },
+    {
+      "name": "component/table/border/divider-hover",
+      "type": "COLOR",
+      "light": "traton/color/transparent/400",
+      "dark": "traton/color/transparent/inverse/400",
+      "scania-light": "scania/color/transparent/250",
+      "scania-dark": "scania/color/transparent/inverse/500",
+      "confidence": "Confirmed — revised 2026-08-27 after the design lead reviewed the rendered Scania treatment. Aliases brand primitives directly, one rung above discrete in each brand's own ladder: alphas 0.36 / 0.49 TRATON, 0.35 / 0.49 Scania.",
+      "comment": "Row border on hover. Aliases primitives rather than a semantic because the nearest semantic sat too high: the border was moving three rungs where the background tint moves one, and only on the row's lower edge — the hovered row's upper edge is the previous row's border, still at rest. Loud below, silent above. TRATON follows Scania here for interactive consistency rather than taking its own treatment, per the design lead's brand weighting. A selected row picks this up too, since row hover fires regardless of selection, so the selected states need no border token of their own."
+    },
+    {
+      "name": "component/table/border/radius-default",
+      "type": "FLOAT",
+      "light": "traton/unit/4",
+      "dark": "traton/unit/4",
+      "scania-light": "scania/unit/4",
+      "scania-dark": "scania/unit/4",
+      "confidence": "Confirmed — measured across 61 source nodes carrying per-corner [4, 4, 0, 0]. An earlier census recorded radius 4 on 6 nodes; that was wrong in kind, having flattened per-corner radii to a single number, and five of those six nodes have since been deleted. Aliases the unit primitives rather than carrying a literal: the shipped corpus aliases radius 19 times against 3 literals, and Dropdown's border/radius-default uses these exact two targets.",
+      "comment": "Unitless. TOP CORNERS ONLY — the table clips its upper corners and leaves the lower ones square. Flat border/radius-{variant} shape per convention-border-radius-naming, matching shipped Block, Card, Modal and Popover, not the nested border/radius/{variant}."
+    },
+    {
+      "name": "component/table/text/footer-default",
+      "type": "COLOR",
+      "light": "color/text/strong",
+      "dark": "color/text/strong",
+      "scania-light": "color/text/strong",
+      "scania-dark": "color/text/strong",
+      "confidence": "Confirmed 2026-08-28 — the semantic already bound on canvas, and its Scania resolutions were verified to match the measured target exactly: scania-light resolves through scania/color/transparent/950 to scania/color/grey/950, scania-dark through scania/color/transparent/inverse/50 to scania/color/grey/50. All four modes populated. TRATON resolves to traton/color/blue/950 Light and traton/color/base/white Dark.",
+      "comment": "Footer text — the rows-per-page label and the page count. Aliases a promoted semantic rather than brand primitives, unlike divider-hover; the semantic already resolves to the intended Scania greys, so there is nothing to bypass. The only token Table's footer owns besides the bar itself."
+    }
+  ]
+}
