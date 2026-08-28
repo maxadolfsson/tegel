@@ -613,6 +613,104 @@ token naming — if the old names must stay in the token contract, devs alias th
 
 **Proposed change**: repoint the four call sites, or add aliases from the old names to the new.
 
+⚠ **ESCALATED 2026-08-28 — two of these four now have no target at all, not merely an old name.**
+`component/table/background/popover-default` (which `pagination/dropdown` had been renamed to) was
+**deleted from the branch** on 2026-08-28, after a branch-wide sweep confirmed zero bindings across
+145,342 nodes and no code consumer. Its purpose was superseded: the pagination dropdown's interior now
+resolves to Dropdown's own tokens.
+
+Consequence once the bridge is regenerated: `--component-table-pagination-dropdown` will not be emitted,
+so these two call sites resolve to nothing —
+
+```scss
+--table-footer-page-selector-input: var(--component-table-pagination-dropdown);  /* :30 */
+--table-toolbar-searchbar:          var(--component-table-pagination-dropdown);  /* :44 */
+```
+
+meaning the page-selector input and the toolbar search field lose their background in TRATON. The other
+two (`:29`, `:45`) still have a live target — `background/footer-default` survives and is in the Table
+spec.
+
+**Proposed change, revised**: repoint `:30` and `:44` to Dropdown's own background tokens rather than
+aliasing a name that no longer exists. Aliasing is not available for these two.
+
+---
+
+### 17. `row-extend--active` and `row-expendable` — two typos that cancel into an always-true condition
+
+`table-header/table-header.tsx:105-121`, `bodyExpandClicked()`:
+
+```ts
+const numberOfExtendRowsActive = parentBody.getElementsByClassName(
+  'tds-table__row-extend--active',    // nothing sets this class -> always 0
+).length;
+const numberOfExtendRows = parentBody.getElementsByTagName(
+  'tds-table-body-row-expendable',    // real tag is ...-expandable -> always 0
+).length;
+
+if (numberOfExtendRows === numberOfExtendRowsActive) {
+  this.mainExpendSelected = true;
+}
+```
+
+**Two independent misspellings, and they mask each other.**
+
+- **`row-extend--active` does not exist.** The component sets `tds-table__row-expand--active`
+  (`table-body-row-expandable.tsx:237`, from `this.isExpanded`). `extend` versus `expand`.
+- **`tds-table-body-row-expendable` is not the tag.** It is `tds-table-body-row-expandable`
+  (`table-body-row-expandable.tsx:35`). Same `expendable` defect already logged as item 8, different
+  location.
+
+Both counts are therefore always `0`, `0 === 0` is always true, and **`mainExpendSelected` is set true
+unconditionally** — the header's all-expanded state is permanently on regardless of row state. A single
+typo would have made the condition always *false*, which is why this survived: it takes both to make it
+silently always true.
+
+**Third instance, same spelling:** `table-body-row-expandable.scss:10` and `:27` style
+`.tds-table__row-extend`, a class nothing applies (the expand row uses `tds-table__row-expand`,
+`table-body-row-expandable.tsx:292`). The `:hover` background at `:27` is a dead selector.
+
+Confirmed by exhaustive search: `row-extend` occurs in exactly three places repo-wide, none of them an
+assignment.
+
+**Not a token gap** — no token is wrong and nothing in the Table spec depends on it. Logged here because
+it surfaced while mapping the Figma `Active` variant axis against code, and because the header's
+expand-all state is a real user-facing behaviour.
+
+**Proposed change**: fix both spellings at `table-header.tsx:109` and `:112`, and the two SCSS selectors.
+Verify the all-expanded behaviour afterwards — it has never actually run.
+
+---
+
+### 18. A 2-mode token silently emits the other brand's primitive into the Scania theme
+
+Found on the four `component/table/icon/accent/*` variables before they were deleted 2026-08-28. **The
+Table instance is resolved; the mechanism is system-wide and unguarded.**
+
+Those four had no Scania mode values. The generated bridge emitted:
+
+```scss
+:root, .tds-mode-light, .scania .tds-mode-light, .scania.tds-mode-light, … {
+  --component-table-icon-accent-default: var(--traton-color-blue-700);
+```
+
+A `traton/*` primitive under `.scania` selectors, in both light and dark — the cross-brand inheritance
+`convention-brand-primitive-aliases` forbids. **Style Dictionary does not error on a missing mode; it
+falls back to the other brand's value.**
+
+**The leak condition is precise: a 2-mode token leaks only when its fallback value is a brand-namespaced
+primitive.** `component/table/cell` and `secondary/cell` are also 2-mode but alias
+`color/background/layer-01` and `layer-02` — brand-aware semantics, which resolve correctly per theme and
+do not leak. So mode count alone is not the predictor; mode count *plus* the fallback's namespace is.
+
+This is the concrete mechanism behind 4-mode universal being locked, and it is worth a pipeline guard
+rather than per-cluster vigilance: nothing in the chain currently fails a build, or even warns, when a
+brand's theme block resolves a foreign brand's primitive.
+
+**Proposed change**: a build-time check that no `.scania` selector block emits a `--traton-*` value and
+no `.traton` block emits a `--scania-*` value. Cheap, mechanical, and it would have caught this without
+anyone reading the file.
+
 ---
 
 ## Tracking
