@@ -588,8 +588,25 @@ Figma is inconsistent in the same area but leans the other way: the page-number 
 Note the cross-component borrowing already happening: `table-body-input-wrapper.scss` uses
 `var(--tds-text-field-bar)` for the focus bar — Text Field's own variable, reached into from Table.
 
-**Proposed change**: migrate the four sites to `tds-text-field`. Sizeable, and not this cluster's work
-— but it is the root cause behind items 12, 13 and the six orphan variables.
+**⚠ Qualified 2026-08-29 — the focus ring geometry is a precondition, not a detail.** Text Field's focus
+ring sits **outside** the field: on the canvas its `Helper/Focus visible` instance is the `Inset=False`
+variant, measuring 210×58 around a 208×56 field — 1px proud on every side. A table cell sits flush against
+its neighbours with 1px dividers, so an outset ring overlaps the adjacent cell and is clipped by the
+column. The table cells use the `Inset=True` variant, sized exactly to the cell.
+
+That is a DOM problem as much as a canvas one: migrating these sites to `tds-text-field` would import
+Text Field's outset focus treatment into a container that cannot accommodate it. **Resolve how a Text
+Field renders its focus ring in a flush container before acting on the proposal below.**
+
+**The Figma half of this is withdrawn** (design lead, 2026-08-29): the filter cell and cell-edit will
+**not** become real `Text Field` instances on canvas. Reasons — the override count required, the outset
+focus ring above, and Round D leaving Table with zero input tokens so nothing pulls toward it. Note the
+page-number field **is** already a real Text Field instance and stays one; it sits in the footer with
+space around it, where an outset ring is fine. The distinction is the container, not the component.
+
+**Proposed change**: migrate the four sites to `tds-text-field`, **after** the focus-ring question above
+is settled. Sizeable, and not this cluster's work — but it is the root cause behind items 12, 13 and the
+six orphan variables.
 
 ---
 
