@@ -893,6 +893,71 @@ against Tegel UI, and an adornment has no value text to be confused with.
 
 ---
 
+### 23. An expanded row is pinned to the selected background and cannot be hovered at all
+
+Found 2026-08-31 from a Storybook inspection of the multiselect + expandable row story: DevTools showed
+`.tds-table__row--selected:hover`'s `background-color` struck through on a row that was both expanded and
+selected. The cause is not that one case — it is every hover on every expanded row.
+
+Three rules in `table-body-row-expandable.scss` resolve to the **same specificity, (0,3,0)**:
+
+| Rule | Line |
+|---|---|
+| `:host .tds-table__row:hover` | 26 |
+| `:host .tds-table__row--selected:hover` | 31 |
+| `:host(.tds-table__row-expand--active) .tds-table__row` | 106 |
+
+`:host(.X)` counts as (0,2,0) — the pseudo-class plus its argument — and the descendant `.tds-table__row`
+adds (0,1,0), which ties both hover rules exactly. The tie is then broken by source order, and the
+expanded rule is last. There is no `:hover` handling inside the `--active` block; the file ends at 153.
+
+**So an expanded row sits permanently on `--tds-table-body-row-background-selected` and does not respond
+to the pointer.** Both hover treatments are unreachable in that state:
+
+- `--tds-table-body-row-background-hover` — an expanded, unselected row
+- `--tds-table-body-row-background-selected-hover` — an expanded, selected row
+
+The second is the more costly one, because its Figma counterpart
+`component/table/background/cell/selected-hover` already ships documented-unbound: the canvas has no
+correct target for it and now the code path is dead as well. A state that exists in the spec renders
+nowhere in either place.
+
+**Why it is easy to miss.** `tds-table__row-expand--active` and `tds-table__row--expanded` are set from
+the *same* boolean, `this.isExpanded`
+(`table-body-row-expandable.tsx:237` and `:246`), and `tds-table__row-expand--expanded` from it a third
+time at `:293`. So the block at line 106 reads as if it governs a different state from the `--expanded`
+rules above it, when it is the same state under another name. Anyone scanning for what overrides hover
+would not expect a rule named `--active` to be the answer. Related to item 17, which records a different
+pair of `active`/`expand` naming defects in the same component.
+
+Worth stating plainly because it came up while mapping the Figma `Active` axis: **`--active` here is not a
+press or focus state.** It is an alias for expanded. Nothing in the rendered DOM carries an active state —
+the row's own classes are `--expanded` and `--selected`.
+
+**Proposed change**: give the expanded row its hover states back, either by adding `:hover` rules inside
+the `:host(.tds-table__row-expand--active)` block or by moving the block above the hover rules it
+currently ties with. Reordering is the smaller edit; adding explicit rules is the one that survives a
+future reorder. Separately, collapsing `--active` into `--expanded` would remove the reason the override
+is invisible, but that is a public class name and a breaking change, so it is a bigger call than this fix
+needs.
+
+---
+
+### Correction to item 22, same date
+
+Item 22 states that "the canvas is not the offender here — it agrees with the system", on the grounds that
+the Figma filter cell binds `color/text/subtle`. That is true of the **TRATON** canvas only. A Tegel UI
+probe on 2026-08-31 found Scania draws `Search...` at `grey/950` light and `grey/50` dark — identical to
+body text — across all 24 of its filter variants, and holds **no mid-grey text tier in Table at all** (its
+only text colours are `grey/50`, `grey/950`, `white`, `blue/200`, `blue/700`).
+
+So two of the three sources render the placeholder at the value colour, and the TRATON canvas is the
+outlier rather than the reference. Item 22's proposed change is unaffected — the placeholder should still
+point at the system's placeholder semantic — but the Scania canvas needs the same correction as the code,
+which item 22 as written implies it does not.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
