@@ -1,5 +1,5 @@
 {
-  "_description": "Cluster #9 Table. 14 tokens. Numbering follows tokens/audit/20260807-table-cluster-9-scope/token-table-draft.md, which keeps gaps at 7, 8, 11, 12, 14, 15 and 21 so earlier cross-references stay readable.",
+  "_description": "Cluster #9 Table. 24 tokens. Numbering follows tokens/audit/20260807-table-cluster-9-scope/token-table-draft.md, which keeps gaps at 7, 8, 11, 12, 14, 15 and 21 so earlier cross-references stay readable. The ten foreground tokens (five text, five icon) were added 2026-08-31 in a second binding pass and are deliberately left out of that numbering, which predates them.",
   "_notes": [
     "The surface ladder exists ONLY as INTERNAL/color__wip/UNSORTED/background/surface/* — there is no promoted color/background/surface-N variable on the branch. layer-01/02/03 ARE promoted semantics. Every surface-based token here therefore binds brand primitives per mode rather than a shared semantic, per the standing rule that nothing ships aliased to INTERNAL.",
     "A rung number carries NO cross-brand correspondence. surface/300 resolves to TRATON grey/300 but Scania grey/200 Light and grey/750 Dark — the 300 is not a shared step, and reading it as one is a trap. This is why no rung could produce the Scania pair the cluster imports: surface/200 gives Scania grey/150 Light but grey/800 Dark, where the header and selected surfaces want grey/150 / grey/700.",
@@ -8,7 +8,13 @@
     "Tokens 1 and 5 keep their existing promoted semantics (layer-01, layer-02) — they were never on INTERNAL and need no repoint, only their missing Scania modes filled.",
     "Hover splits per mode variant (tokens 2 and 6) because TRATON Dark Secondary carries a different value and one variable cannot hold two values in one mode. Selected does NOT split (tokens 3 and 4): it is a far state designed to sit apart from every surface, and Table has no wrapper-surface topology.",
     "Hover converges on a destination rather than moving a fixed distance — primary rows travel one step and secondary rows two, and both land on the same colour. That is what makes hover read correctly on a zebra table. Selected-hover inherits the property.",
-    "LEAF SHAPE: fused, {qualifier}-{state} under the cell/ scope — design-lead ruling 2026-08-28, following shipped Popover (background/link/primary-default). NOT Tabs' nested background/item/primary/default. Reason specific to Table: selected does not split per mode variant, so it cannot take a variant sub-scope, and the nested shape would leave selected-default fused beside nested siblings inside one scope. Fusing makes all six uniform and puts primary, secondary and selected as peers in one slot — which matches rendering, since a selected row's surface overrides its zebra variant. Note the two shipped precedents genuinely disagree (Tabs nested, Popover fused) and convention-leaf-shape-mode-variant-state contains both its 2026-07-04 revision and the superseded text it reversed, so this was a fresh call rather than a lookup. Flagged to the hub as a system-level question."
+    "LEAF SHAPE: fused, {qualifier}-{state} under the cell/ scope — design-lead ruling 2026-08-28, following shipped Popover (background/link/primary-default). NOT Tabs' nested background/item/primary/default. Reason specific to Table: selected does not split per mode variant, so it cannot take a variant sub-scope, and the nested shape would leave selected-default fused beside nested siblings inside one scope. Fusing makes all six uniform and puts primary, secondary and selected as peers in one slot — which matches rendering, since a selected row's surface overrides its zebra variant. Note the two shipped precedents genuinely disagree (Tabs nested, Popover fused) and convention-leaf-shape-mode-variant-state contains both its 2026-07-04 revision and the superseded text it reversed, so this was a fresh call rather than a lookup. Flagged to the hub as a system-level question.",
+    "FOREGROUND PASS, 2026-08-31: the text and icon layers were bound, but bound to semantics rather than to the component layer. A sweep that asks only whether a paint carries a variable returns PASS on a semantic alias, so cell, header, toolbar and placeholder text and all five icon roles survived the first pass untouched. These nine tokens move them onto the component layer. None changes a rendered value in either brand — every one aliases the semantic the canvas already resolved through.",
+    "Placeholder is the single token whose intent and rendering disagree. The canvas draws the filter placeholder one tier below body text; the shipped component paints it at the body-text value, so a placeholder currently cannot be told apart from a typed value. The token carries the canvas intent, which states the disagreement rather than encoding the defect. The body editable cell has no placeholder depiction on canvas at all and therefore gets no token here.",
+    "HELPER FURNITURE, excluded by kind — design-lead ruling 2026-08-31. Paints on Helper/* instances are not any component's to own: the slot placeholders and the focus-visible markers render only inside the library, never in consumer output, and no designer binds them. Same class as the fill a COMPONENT_SET paints behind its own variant grid. In Table this covers 32 slot-marker paints and 48 focus-helper paints across the source sets. They are excluded rather than counted as debt, so they stop reappearing as a gap in every future sweep. Identity comes from the component set, never the layer name — the toolbar's two markers are renamed Slot #1 and Slot #2, so a name test misses them.",
+    "AFTER THE BINDING PASS, the source tree carries no semantic and no unbound colour: the 49 semantic text sites move onto the four text tokens here, and the only stray left is the 16 INTERNAL Active fills, which are held pending the developers' answer on what Active means. Recording that so the close-out can state the remainder as one blocked item rather than an unquantified list.",
+    "CROSS-BRAND CHECK, Tegel UI 2026-08-31: Scania draws every Table text and icon at grey/950 Light and grey/50 Dark at full opacity, across all 20 of its Table sets — which is precisely what the strong text and icon semantics resolve to in the Scania modes. So the nine strong-tier tokens here are confirmed against the Scania source of truth, not only against the branch they were read from. Tegel UI holds NO mid-grey text tier in Table at all — its only other text colours are white and two blues — which is why placeholder-default is the one token of the ten that Scania's source does not already render as specified.",
+    "Icon splits five ways against one shared value. Canvas evidence is uniform — every icon resolves to the same semantic at full opacity — so this departs from letting icon follow canvas evidence. Taken because the roles are independently addressable outside Figma and the filter icon already has its own hook there. Design-lead ruling 2026-08-31. Table/Row/Prefix draws its two expand affordances from two different icon namespaces, one brand-scoped and one shared; expand-default covers both and the namespace split is flagged separately as a library question."
   ],
   "component": "table",
   "variables": [
@@ -151,6 +157,106 @@
       "scania-dark": "color/text/strong",
       "confidence": "Confirmed 2026-08-28 — the semantic already bound on canvas, and its Scania resolutions were verified to match the measured target exactly: scania-light resolves through scania/color/transparent/950 to scania/color/grey/950, scania-dark through scania/color/transparent/inverse/50 to scania/color/grey/50. All four modes populated. TRATON resolves to traton/color/blue/950 Light and traton/color/base/white Dark.",
       "comment": "Footer text — the rows-per-page label and the page count. Aliases a promoted semantic rather than brand primitives, unlike divider-hover; the semantic already resolves to the intended Scania greys, so there is nothing to bypass. The only token Table's footer owns besides the bar itself."
+    },
+    {
+      "name": "component/table/text/cell-default",
+      "type": "COLOR",
+      "light": "color/text/strong",
+      "dark": "color/text/strong",
+      "scania-light": "color/text/strong",
+      "scania-dark": "color/text/strong",
+      "confidence": "Confirmed — 24 canvas sites measured 2026-08-31 by a namespace-resolved source-tree scan of Table/Column/Cell: 12 Type=Default and 12 Type=Edit, all on the same semantic at full opacity, no state or variant split anywhere in the set. The semantic's four-mode resolutions need no fresh verification: text/footer-default already established them (scania-light through scania/color/transparent/950 to scania/color/grey/950, scania-dark through scania/color/transparent/inverse/50 to scania/color/grey/50). Code paints all table text one value per theme and agrees.",
+      "comment": "Body cell text, both the read-only and the editable cell. Takes no state variants because the canvas carries one value across all 24 variants and text follows canvas evidence per convention-variant-axis-preservation — unlike the cell surfaces above, which split per mode variant. The editable cell's typed value uses this token; Table owns no other input token, per the standing ruling."
+    },
+    {
+      "name": "component/table/text/header-default",
+      "type": "COLOR",
+      "light": "color/text/strong",
+      "dark": "color/text/strong",
+      "scania-light": "color/text/strong",
+      "scania-dark": "color/text/strong",
+      "confidence": "Confirmed — 12 canvas sites on Table/Header/Cell measured 2026-08-31, all on the same semantic at full opacity. Four-mode resolutions as established by text/footer-default. Code paints header text from the same single table text value as body text and agrees.",
+      "comment": "Header cell label. A separate token from cell-default despite sharing every value, because the header is the one row whose surface, hover and text are all addressable independently of the body — the surfaces already split that way above, and leaving text fused would make it the only header property that cannot move alone."
+    },
+    {
+      "name": "component/table/text/toolbar-default",
+      "type": "COLOR",
+      "light": "color/text/strong",
+      "dark": "color/text/strong",
+      "scania-light": "color/text/strong",
+      "scania-dark": "color/text/strong",
+      "confidence": "Confirmed — 1 canvas site, Table/Toolbar Title, measured 2026-08-31 on the same semantic at full opacity. Four-mode resolutions as established by text/footer-default. The toolbar carries one variant, so one site is full coverage rather than a sample.",
+      "comment": "The toolbar title. Pairs with background/toolbar-default so the toolbar owns both its surface and its text, matching how the footer owns background/footer-default and text/footer-default. The toolbar's two content slots hold instances of other components and contribute no text of Table's."
+    },
+    {
+      "name": "component/table/text/placeholder-default",
+      "type": "COLOR",
+      "light": "color/text/subtle",
+      "dark": "color/text/subtle",
+      "scania-light": "color/text/subtle",
+      "scania-dark": "color/text/subtle",
+      "confidence": "Confirmed as bound, with a documented cross-brand divergence. The 12 canvas sites are measured (Table/Header/Cell Type=Filter, layer Search..., 2026-08-31, all on this semantic at full opacity after the opacity was corrected from 0.5 earlier in the cluster). Four-mode resolutions verified by extended-collection REST read, controlled in the same batch against text/footer-default's recorded values: scania-light through scania/color/transparent/350, scania-dark through scania/color/transparent/inverse/400, traton through traton/color/transparent/500 and transparent/inverse/500. THE DIVERGENCE: Tegel UI draws this placeholder at grey/950 Light and grey/50 Dark — the same tier as body text — across all 24 of its filter variants, and holds no mid-grey text tier in Table at all. The shipped component collapses it the same way. So two of three sources currently render strong; this token carries the subtle intent instead, matching the placeholder/value split the input namespace makes system-wide.",
+      "comment": "The column filter's placeholder. Ships alongside value-default so both treatments are addressable even though the canvas can only depict one of them: the filter cell has a single text layer and NO state axis in either brand, so empty and filled cannot both be rendered today. This token takes the binding because the layer it sits on depicts an empty field. Making Tegel UI and the shipped component follow the subtle intent is a downstream task, not a change this spec makes — and adding the missing state to the filter cell is the structural prerequisite for either source to express the distinction at all."
+    },
+    {
+      "name": "component/table/text/value-default",
+      "type": "COLOR",
+      "light": "color/text/strong",
+      "dark": "color/text/strong",
+      "scania-light": "color/text/strong",
+      "scania-dark": "color/text/strong",
+      "confidence": "Confirmed on value, documented-unbound on canvas. The tier is agreed by every source: Tegel UI draws filled table text at grey/950 Light and grey/50 Dark across all 20 of its Table sets, the shipped component paints the filter's typed value from the same single table text value as body text, and the semantic resolves to those exact primitives in the Scania modes (verified 2026-08-31 by extended-collection REST read, controlled against text/footer-default). NO CANVAS BINDING: the filter cell has one text layer and no state axis in either brand, so a filled field is not depicted anywhere and there is no correct target to bind to.",
+      "comment": "The column filter's typed value. Documented-unbound per convention-document-unused-tokens, on the same justification as cell/selected-default and cell/selected-hover above: the state exists and ships in the product, so the token owns it now rather than being re-derived later. Design-lead ruling 2026-08-31 — both filter treatments become available to developers even though only the placeholder can be bound, because the distinction is real in the product and only unexpressible in Figma. FOLLOW-UP, not resolved here: text/cell-default currently covers the editable body cell's typed value, so Table has two tokens describing a typed value in an input. Whether they should merge depends on whether the body cell gains a placeholder depiction, which it does not have today."
+    },
+    {
+      "name": "component/table/icon/filter-default",
+      "type": "COLOR",
+      "light": "color/icon/strong",
+      "dark": "color/icon/strong",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Confirmed — 12 canvas sites on Table/Header/Cell measured 2026-08-31, all on this semantic at full opacity. Code agrees and gives this icon its own value, distinct by name from every other table foreground, which is why it ships as its own token. Four-mode resolutions verified 2026-08-31 by extended-collection REST read, controlled against text/footer-default's recorded values: this semantic resolves to the same primitives as color/text/strong in all four brand modes (scania/color/transparent/950 and transparent/inverse/50, traton/color/transparent/950 and transparent/inverse/950). It also carries two legacy Scania-collection modes that the text semantics do not — a semantic-layer artefact, outside this cluster and not a blocker for aliasing.",
+      "comment": "The column filter's search affordance. Role-named rather than glyph-named per convention-icon-role-not-glyph. Its move to the strong tier at full opacity was made earlier in the cluster as a correction, not drift — the shipped component has always drawn it strong — and must not be reverted."
+    },
+    {
+      "name": "component/table/icon/edit-default",
+      "type": "COLOR",
+      "light": "color/icon/strong",
+      "dark": "color/icon/strong",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Confirmed — 12 canvas sites on Table/Column/Cell measured 2026-08-31, all on this semantic at full opacity. Four-mode resolutions verified 2026-08-31 in the same controlled REST batch as filter-default.",
+      "comment": "The editable cell's edit affordance. Sits on the cell rather than inside the input, so it is Table's rather than delegated, unlike the field interior."
+    },
+    {
+      "name": "component/table/icon/expand-default",
+      "type": "COLOR",
+      "light": "color/icon/strong",
+      "dark": "color/icon/strong",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Confirmed — 4 canvas sites on Table/Row/Prefix measured 2026-08-31, two collapsed and two expanded, all on this semantic at full opacity. Four-mode resolutions verified 2026-08-31 in the same controlled REST batch as filter-default.",
+      "comment": "The expandable row's disclosure affordance, covering both directions. One token rather than two because the two directions are one affordance in two states and the canvas gives them identical values. The two source glyphs come from different icon namespaces, one brand-scoped and one shared, which is a library inconsistency rather than a token one."
+    },
+    {
+      "name": "component/table/icon/sort-default",
+      "type": "COLOR",
+      "light": "color/icon/strong",
+      "dark": "color/icon/strong",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Confirmed — 3 canvas sites on Table/Column/Sorting measured 2026-08-31, one per variant, all on this semantic at full opacity. Four-mode resolutions verified 2026-08-31 in the same controlled REST batch as filter-default.",
+      "comment": "The sortable column's sort affordance across its three states — unsorted, ascending and descending. One token: the states differ by glyph, not by colour, and the canvas gives all three the same value. A sortable header only became reachable earlier in this cluster, when sorting moved to a boolean; before that the sort variants had no instances."
+    },
+    {
+      "name": "component/table/icon/prefix-default",
+      "type": "COLOR",
+      "light": "color/icon/strong",
+      "dark": "color/icon/strong",
+      "scania-light": "color/icon/strong",
+      "scania-dark": "color/icon/strong",
+      "confidence": "Confirmed — 4 canvas sites on Table/Row/Prefix measured 2026-08-31, all on this semantic at full opacity. Four-mode resolutions verified 2026-08-31 in the same controlled REST batch as filter-default.",
+      "comment": "The row prefix slot's placeholder icon. Named for the slot it occupies rather than a role, because the slot is what is fixed — consumers replace the glyph. This is the one name in the foreground pass worth a second look: convention-semantic-descriptor-over-positional prefers role over position, and prefix reads as position, though it is also the shipped component's own name."
     }
   ]
 }
