@@ -958,6 +958,93 @@ which item 22 as written implies it does not.
 
 ---
 
+### 24. The header row grew to 50 in Figma while the code holds it at a fixed 48
+
+**Logged 2026-09-02 at the design lead's call.** Figma's header row is now two pixels taller than the
+height the code renders.
+
+**The cause is two coupled changes, not one** — corrected here the same day, because this item first
+recorded only the second of them. Table's header text was **rebound off the remote `Headline/07` style
+onto the local `component/title/01`**, and that style's line-height was **raised to 18**. Per the design
+lead, *"one did not happen without the other."*
+
+**That ordering matters, and it inverts how this reads.** The rebind is the fix, not the fault: `Headline/07`
+is published by the Tegel UI Library, which holds **no variables at all**, so text on it carries static type
+that cannot follow brand or theme. Moving Table's text onto a local variable-driven style is the correct
+direction and it is what took Table from 4,785 remote-styled text nodes to **zero in its own source tree**,
+measured the same day.
+
+### ⚠ Correction, same day — the framing above was wrong and the gap is a different one
+
+**This item first asked "which side absorbs the two pixels".** That was the wrong question, and it treated
+correct brand variance as a defect.
+
+**`type/system/title/01` resolves to 18 in TRATON and 16 in Scania.** The two pixels are **a brand-split
+token doing exactly its job.** Per the design lead: *"Nothing is fixed, any brand should be able to adjust
+however they prefer"* — **the 48 / 32 row ladder is a nominal, not a contract.** The discriminator, now
+recorded in `convention-brand-mode-split-single-token`: a height difference tracing to a **brand-split
+token value** is brand variance and is left alone; one tracing to a **side effect** — a stroke reserved in
+layout, stray padding — is drift and gets fixed. **This is the first kind.**
+
+**So the Figma side is not wrong and must not be "corrected".** In particular: **do not pull TRATON's
+line-height from 18 to 16 to land the row on 48.** It trades a 1.29 line-height ratio for 1.14 — cramped
+exactly where text wraps, which is where a fixed height stops applying anyway, because
+`padding + line-height + padding` only holds for a single line.
+
+**The actual gap is on the code side, and it is sharper than a two-pixel mismatch: the code hard-codes one
+header height for both brands.** `height: 48px` cannot express a value that is legitimately 50 in one brand
+and 48 in the other. A brand-variable dimension is being rendered from a literal, so **no value of that
+literal is right for both.** That is the thing to fix — not the canvas, and not by picking a winner between
+48 and 50.
+
+⚠ **A related defect that is NOT this one, kept separate on purpose.** Inside the assembly, seven header
+cells hug to 50 while one — the cell wrapping the checkbox prefix — is pinned to 48 by a fixed `text-frame`.
+**That is a side effect, so by the discriminator above it IS drift**, and it is what the design lead was
+looking at. It is a canvas-side sizing matter rather than a code gap, so it is not filed here.
+
+**Measured on branch `gpzlcNarPhjiSCUJlNydXa`:** `Table/Row`, `Type=Header`, `Compact design=False` is
+**`HUG` vertically and resolves to 50**. Its text sits on `component/title/01` with a line-height of
+**18**, against **16** on the sibling `component/body/01` — both variable-driven, via
+`type/system/title/01/line-height` and `type/system/body/01/line-height` respectively. Because the row
+hugs, the extra two pixels grow the row rather than being absorbed inside it: 48 → 50.
+
+**The code does not follow.** `table-header-cell.scss:17` sets `height: 48px`; `table-header.scss` sets
+`height: 48px` at lines 16, 31 and 42, and `32px` at 64 and 69. **These are fixed heights, so the canvas
+change cannot propagate into rendered output** — the divergence is permanent until one side moves.
+
+**The line-height increase is intentional** — confirmed by the design lead — so this is not a request to
+revert it. The open question is which side holds: whether the code's 48 becomes 50, or whether Figma's
+header row is expected to stay on the ladder with the taller text sitting inside it.
+
+**Why the ladder matters here:** cluster #9 verified this component against a **48 / 32 row ladder**, and
+50 is off it. A prior measurement on `Table/Column/Cell` found the same mechanism from a different input —
+where a slot child fills, the frame holds and the child absorbs the extra pixel; **where the child hugs,
+the extra pixel grows the outer height instead**. This is that second case, with line-height as the input.
+
+⚠ **Not the padding-versus-stroke convention difference.** Figma reaches the ladder with symmetric padding
+plus an inside stroke and the code reaches it with asymmetric padding plus an outside border — same totals,
+two conventions, and that difference is explicitly not to be "corrected". **This is a divergence in the
+total itself**, which is a different thing.
+
+⚠ **Boundaries of this measurement, stated because the fix depends on them:**
+
+- **One variant measured** — Primary / Header / Default / Vertical dividers=True / Compact=False /
+  Multiselect=True / Active=False, of 112. **The compact rows are unverified**; if they behave the same
+  they would be 32 → 34, but that is unmeasured rather than expected.
+- **Per-mode values are unread.** `valuesByMode` came back empty for both line-height variables, which is
+  the documented child-collection getter behaviour rather than a missing value. So 18 and 16 are
+  single-mode resolutions and **the per-brand picture is not established.**
+- **Other components are unexamined.** Every fixed-height element consuming `component/title/01` is
+  potentially in the same position; only Table has been looked at.
+- **The previous value is unknown** — that it increased is the design lead's account; history is not
+  readable from the branch.
+
+**Separate and not investigated:** `table-header-cell.scss:107` carries `height: 33px`, which is on
+neither the 48 nor the 32 rung. Noted only so the next reader does not take it for a typo of 32 without
+checking.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
