@@ -271,6 +271,27 @@ export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
     // count is the SOURCE-TREE one. A single total conflates "4,785 places to fix"
     // with "N sources whose fix cascades", and those are different jobs.
     remoteByScope: { sourceTree: 0, nestedInstance: 0 },
+    // THE (B) CHECK. Figma's own panel writes `component/body/01 · 14/16(B)` when a
+    // text style is applied AND a local font sits on top of it. REST cannot read a
+    // style's own definition, so there is no expected value to compare against.
+    // What it CAN do is check consistency: one style id resolving to more than one
+    // font across the swept nodes means some of those nodes deviate.
+    //
+    // Measured 2026-09-02: 1,280 cell text nodes rendered Bold 700 on
+    // `component/body/01` while the same style rendered Regular 400 in the source.
+    // A weight-based rule cannot catch that without also flagging every designed
+    // SemiBold heading; a consistency rule catches it and ignores the headings.
+    //
+    // ⚠ ITS LIMIT, and it is a real one: if EVERY node on a style is overridden the
+    // same way, this sees one font and reports nothing. It detects disagreement,
+    // never wrongness.
+    //
+    // ⚠ Family names are compared CASE-INSENSITIVELY. Nodes in this file store
+    // `traton type text` where the installed family is `TRATON Type Text`, so a
+    // case-sensitive compare reported all 2,945 swept segments as deviations —
+    // every one false. That lowercase family is also why font writes on those nodes
+    // fail silently: the family cannot be loaded.
+    fontsByStyle: {},
   };
 
   function resolve(paint) {
@@ -387,6 +408,17 @@ export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
         }
         textStyles.byStyle[sid].count += 1;
         if (st.remote === true) textStyles.remoteByScope[scope] += 1;
+
+        // The (B) check's raw material: what font does this node actually render,
+        // per style id. Family lowercased; weight kept exact, since weight is the
+        // thing that deviates.
+        const ns = node.style || {};
+        if (ns.fontFamily || ns.fontWeight) {
+          const rendered = String(ns.fontFamily || '(unknown family)').toLowerCase()
+            + ' / weight ' + (ns.fontWeight === undefined ? '(unknown)' : ns.fontWeight);
+          if (!textStyles.fontsByStyle[sid]) textStyles.fontsByStyle[sid] = {};
+          textStyles.fontsByStyle[sid][rendered] = (textStyles.fontsByStyle[sid][rendered] || 0) + 1;
+        }
       } else {
         textStyles.missing += 1;
         // Capped, and the cap is stated in the report rather than silently applied.
@@ -648,6 +680,33 @@ function renderMarkdown({ fileKey, nodeId, slug, result, generatedAt }) {
     }
     L.push('');
   }
+  L.push('### The (B) check — one style, more than one rendered font');
+  L.push('');
+  L.push('Figma\'s panel writes `component/body/01 · 14/16(B)` when a style is applied AND a');
+  L.push('local font sits on top of it. There is no expected value to compare against here,');
+  L.push('so this checks consistency instead: a style resolving to more than one font across');
+  L.push('the swept nodes means some of them deviate. **It detects disagreement, never');
+  L.push('wrongness** — if every node on a style is overridden identically it reports nothing.');
+  L.push('');
+  const inconsistent = Object.entries(ts.fontsByStyle || {}).filter(([, m]) => Object.keys(m).length > 1);
+  if (!inconsistent.length) {
+    L.push(`_No style renders more than one font. ${Object.keys(ts.fontsByStyle || {}).length} style(s) checked._`);
+  } else {
+    L.push('| Style | Rendered font | Nodes |');
+    L.push('|---|---|---:|');
+    for (const [sid, fonts] of inconsistent) {
+      const label = (ts.byStyle[sid] && ts.byStyle[sid].name) || sid;
+      const sorted = Object.entries(fonts).sort((a, b) => b[1] - a[1]);
+      sorted.forEach(([font, n], i) => {
+        L.push(`| ${i === 0 ? '`' + label + '`' : ''} | ${font}${i === 0 ? ' _(most common)_' : ' **← deviates**'} | ${n} |`);
+      });
+    }
+    L.push('');
+    L.push('**The most common rendering is treated as the style\'s own and the rest as');
+    L.push('deviations.** That is a heuristic, not a reading of the style definition — check');
+    L.push('the majority is actually right before acting on the minority.');
+  }
+  L.push('');
   L.push('**A style name here is not proof the style binds variables.** A remote style can');
   L.push('carry static type that renders one brand\'s typeface in the other brand\'s modes,');
   L.push('and this tally cannot see inside it. Resolve per brand before any cross-brand');
@@ -842,6 +901,23 @@ function selfCheck() {
   assert.equal(collide.textStyles.byStyle['S:two'].remote, false, 'the local one is not tainted by its remote namesake');
   assert.equal(collide.textStyles.byStyle['S:one'].styleKey, 'aaaa1111', 'the published key is carried — the only thing that names a library');
   assert.equal(collide.textStyles.remoteByScope.sourceTree, 1, 'and only the remote one counts as remote');
+
+  // THE (B) CHECK. Two nodes on one style rendering different weights is the
+  // condition; the same weight under different family CASING is not.
+  const bCheck = analyse(
+    { id: 'b:1', name: 'R', type: 'FRAME', fills: [], children: [
+      { id: 'b:2', name: 'A', type: 'TEXT', fills: [], styles: { text: 'S:body' }, style: { fontFamily: 'TRATON Type Text', fontWeight: 400 } },
+      { id: 'b:3', name: 'B', type: 'TEXT', fills: [], styles: { text: 'S:body' }, style: { fontFamily: 'TRATON Type Text', fontWeight: 700 } },
+      // same style, same weight, family differs only by case -> NOT a deviation
+      { id: 'b:4', name: 'C', type: 'TEXT', fills: [], styles: { text: 'S:title' }, style: { fontFamily: 'TRATON Type Text', fontWeight: 600 } },
+      { id: 'b:5', name: 'D', type: 'TEXT', fills: [], styles: { text: 'S:title' }, style: { fontFamily: 'traton type text', fontWeight: 600 } },
+    ] },
+    names2, 'table', {},
+    { styles: { 'S:body': { name: 'component/body/01' }, 'S:title': { name: 'component/title/01' } } }
+  );
+  assert.equal(Object.keys(bCheck.textStyles.fontsByStyle['S:body']).length, 2, 'one style rendering two weights is flagged');
+  assert.equal(Object.keys(bCheck.textStyles.fontsByStyle['S:title']).length, 1, 'family casing alone is NOT a deviation — this produced 2,945 false positives once');
+  assert.equal(bCheck.textStyles.fontsByStyle['S:title']['traton type text / weight 600'], 2, 'and both casings fold into one bucket');
 
   // a family-aimed control: --control <nodeId>.<field>=<variableName>
   const famCtl = analyse(nc, names2, 'table', { '4:1.individualStrokeWeights': 'border-width/thin' });
