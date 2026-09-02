@@ -60,6 +60,16 @@
  *        --control <nodeId>=component/table/border/divider-default
  *   node tokens/scripts/audit-canvas-bindings.js --self-check
  *
+ * RUNTIME: one REST request per root, sequential. Measured on cluster #9 — all 12
+ * Table source sets exceeded a 2-minute shell timeout and was killed mid-run; the
+ * four sets touched by one pass finished comfortably. So either scope --node to the
+ * sets you actually changed, or give the call several minutes. Do NOT reach for
+ * --chunk to speed it up: chunking groups roots into one request and a dozen Table
+ * sets already exceeded the shared lib's 64 MB curl buffer, which fails as
+ * "maxBuffer length exceeded" rather than as a timeout. Chunk size 1 is the safe
+ * default for that reason, and slow-but-completing beats fast-but-truncated when
+ * the output is a debt count.
+ *
  * --control is a known-answer assertion: a node whose binding you already know.
  * It validates that the scan reads bindings correctly. It does NOT validate that
  * the scan read the right node — pass a node reached by traversal, and never an
