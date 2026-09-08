@@ -209,7 +209,9 @@ export function bucketOf(name, slug) {
  * Pure — no network, no env. `varNames` maps variable id to name.
  * Returns { buckets, sites, distinctNodes, controlResults }.
  */
-export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
+export function analyse(rootNode, varNames, slug, controls = {}, maps = {}, ignoreList = []) {
+  // Exact layer/section names to skip, alongside the `IGNORE/` prefix convention.
+  const ignoreNames = new Set(ignoreList);
   const components = maps.components || {};
   const componentSets = maps.componentSets || {};
   const styleNames = maps.styles || {};
@@ -254,6 +256,11 @@ export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
   // session: a parallel three-state table, not a histogram row. The state that a
   // single "typography: N" figure would hide is a component whose text is entirely
   // on shared styles and bound to no type variable at all.
+  // Subtrees excluded by the `IGNORE/` name prefix. Not a bucket -- these are not
+  // measured at all, so they cannot be a count of anything. Named so the report can
+  // state WHAT was skipped, which is the only way a reader can tell a scoped sweep
+  // from an incomplete one.
+  const ignored = { roots: [] };
   const textStyles = {
     // KEYED BY STYLE ID, NOT BY NAME. Style names collide across libraries at scale
     // -- `Headline/06` is published by nine of them, `Headline/07` by eight
@@ -303,6 +310,27 @@ export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
   }
 
   function visit(node, insideInstance, path) {
+    // `IGNORE/` prefix = the design lead has marked this subtree out of scope on the
+    // canvas itself (Max, 2026-09-08). Skipped whole, and RECORDED rather than
+    // silently dropped -- every other exclusion in this file is visible for the same
+    // reason: a discarded subtree that leaves no trace cannot be audited.
+    if (typeof node.name === 'string' && node.name.startsWith('IGNORE/')) {
+      ignored.roots.push({ id: node.id, name: node.name, type: node.type, why: 'IGNORE/ prefix' });
+      return;
+    }
+    // Named exclusions via --ignore. Same machinery as the prefix, different
+    // trigger: a section can be legitimately out of scope WITHOUT being renamed,
+    // because its name carries meaning elsewhere. `—— Review` is the case that
+    // prompted this (Max, 2026-09-08) -- it holds decision-log prose and WCAG
+    // research text, so its styles and bindings are documentation, not component
+    // debt, and it also hosts the `Internal/Decision Log` instance whose INTERNAL
+    // radius bindings would otherwise read as four gaps on Table.
+    // Passed at the call site rather than hardcoded: the name is per-cluster, and a
+    // shared gate must not carry one cluster's layer names.
+    if (ignoreNames.has(node.name)) {
+      ignored.roots.push({ id: node.id, name: node.name, type: node.type, why: '--ignore' });
+      return;
+    }
     const scope = insideInstance ? 'nestedInstance' : 'sourceTree';
     // A COMPONENT_SET carries a default fill that Figma paints behind the variant
     // grid. It is editor furniture, not part of the component, and no designer can
@@ -478,6 +506,7 @@ export function analyse(rootNode, varNames, slug, controls = {}, maps = {}) {
     buckets: out,
     families: famOut,
     textStyles,
+    ignored,
     sites: siteList,
     distinctNodes: Object.keys(distinct).length,
     controlResults,
@@ -496,6 +525,15 @@ function renderMarkdown({ fileKey, nodeId, slug, result, generatedAt }) {
   L.push('**A binding is bucketed by what it resolves to, never by whether it exists.**');
   L.push('Trust the distinct-node columns; REST can report one paint more than once.');
   L.push('');
+  const ign = (result.ignored && result.ignored.roots) || [];
+  if (ign.length) {
+    L.push(`**${ign.length} subtree(s) SKIPPED by the \`IGNORE/\` prefix**, whole and unmeasured:`);
+    for (const r of ign) L.push(`- \`${r.name}\` (${r.type} ${r.id})`);
+    L.push('');
+    L.push('They contribute to no figure below. A scoped sweep and an incomplete one');
+    L.push('read identically unless the skipped set is named, so it is named here.');
+    L.push('');
+  }
   L.push('| Binding target | Source tree (nodes) | Source tree (paints) | Nested instance (nodes) | Nested instance (paints) |');
   L.push('|---|---:|---:|---:|---:|');
   for (const b of BUCKETS) {
@@ -525,17 +563,26 @@ function renderMarkdown({ fileKey, nodeId, slug, result, generatedAt }) {
   const sourceGaps = gaps.filter((s) => s.scope === 'sourceTree');
   L.push(`## Source-tree gaps — ${sourceGaps.length} distinct sites`);
   L.push('');
-  L.push('Semantic, INTERNAL and unbound paints on the component\'s own nodes. These are');
-  L.push('the actionable ones; nested-instance repeats of the same source binding are not.');
+  L.push('Semantic, INTERNAL and unbound bindings on the component\'s own nodes — paints AND');
+  L.push('the non-colour families, which is why the Family column exists. These are the');
+  L.push('actionable ones; nested-instance repeats of the same source binding are not.');
   L.push('');
   if (!sourceGaps.length) {
     L.push('_None._');
   } else {
-    L.push('| Nodes | Bucket | Variable | Where |');
-    L.push('|---:|---|---|---|');
+    L.push('| Nodes | Family | Bucket | Variable | Where |');
+    L.push('|---:|---|---|---|---|');
     for (const s of sourceGaps.slice(0, 60)) {
       const where = s.where.split(' :: ').slice(2).join(' :: ');
-      L.push(`| ${s.count} | ${s.bucket} | \`${s.variable}\` | ${where} |`);
+      // A non-colour site carries `family`; a paint does not. Relabel through the
+      // same helper the family histogram uses, because the bucket VOCABULARY is
+      // shared and its fallback key is literally `color/* (semantic)` -- so an
+      // unrelabelled typography site printed here reads as a colour problem. It did:
+      // `type/system/body/01/*` bindings appeared under `color/* (semantic)` in the
+      // 2026-09-08 Table sweep and had to be explained rather than read.
+      const fam = s.family || 'colour';
+      const bucket = s.family ? familyLabel(s.bucket) : s.bucket;
+      L.push(`| ${s.count} | ${fam} | ${bucket} | \`${s.variable}\` | ${where} |`);
     }
     if (sourceGaps.length > 60) L.push('');
     if (sourceGaps.length > 60) L.push(`_${sourceGaps.length - 60} further sites in findings.json — not truncated there._`);
@@ -628,8 +675,36 @@ function renderMarkdown({ fileKey, nodeId, slug, result, generatedAt }) {
   L.push('so it cannot be bucketed by one and is deliberately NOT a histogram row — folding');
   L.push('it in would make `component/{slug}/*` meaningless. This is the parallel table.');
   L.push('');
-  L.push(`**${ts.textNodes} TEXT nodes · ${Object.keys(ts.byStyle).length} distinct styles · ${ts.missing} carrying no style.**`);
+  L.push(`**${ts.textNodes} TEXT nodes · ${Object.keys(ts.byStyle).length} distinct styles · ${ts.missing} with no style REPORTED BY REST.**`);
   L.push('');
+  if (ts.missing) {
+    L.push('> ⚠ **The no-style figure is a CANDIDATE LIST, not a finding. It requires Plugin');
+    L.push('> API confirmation before it is reported to anyone.** Measured 2026-09-08 on');
+    L.push('> `Table/Column #1`: REST reported 10 TEXT nodes with 4 carrying no style; a');
+    L.push('> Plugin API read of the same node returned 9 TEXT nodes with **0** missing —');
+    L.push('> 1 on `component/title/01`, 8 on `component/body/01`, which is exactly what the');
+    L.push('> shipped SCSS specifies. **Both the node count and the style count differed, so');
+    L.push('> the two transports are not reading the same subtree.**');
+    L.push('>');
+    L.push('> ⚠ **WHY they disagree is UNDECIDED, and two explanations survive. They are not');
+    L.push('> compatible and neither is established:**');
+    L.push('> 1. **REST cannot resolve instance internals** — so the four never existed and');
+    L.push('>    the record was wrong for five days.');
+    L.push('> 2. **The instance was reset in the UI on 2026-09-07** — so the four did exist,');
+    L.push('>    are now gone, and the record was right until the state changed. This fits');
+    L.push('>    the node-count difference (10 → 9) without further assumption.');
+    L.push('>');
+    L.push('> **Both retire the designer task; only one makes the earlier record wrong.**');
+    L.push('> Do not write either as settled. `[#9/g]` asserted the first while citing the');
+    L.push('> second as fitting — an observation and an explanation sharing a sentence when');
+    L.push('> only one of them was measured.');
+    L.push('>');
+    L.push('> This is the same class as the icon exclusion in the header: REST cannot be');
+    L.push('> trusted on instance internals, and text styles inside instances are instance');
+    L.push('> internals. **Four sessions treated the REST figure as a defect and it cost a');
+    L.push('> designer task, a proposed canvas fix and an hour of triage.**');
+    L.push('');
+  }
   L.push('### How each TEXT node gets its type');
   L.push('');
   L.push('The state a single "typography: N" figure would hide is the first row: text');
@@ -805,6 +880,41 @@ function selfCheck() {
   // without the maps, the renamed instance can only be caught by layer name
   const rNoMaps = analyse(helperTree, varNames, 'table', {}, {});
   assert.equal(rNoMaps.buckets['helper furniture (excluded)'].sourceTree.distinctNodes, 1, 'name fallback catches the un-renamed one only');
+
+  // `IGNORE/` subtrees are skipped WHOLE -- the prefix is a design-lead scope call
+  // made on the canvas. The assertions that matter are the two silent-failure modes:
+  // a skipped subtree must contribute NOTHING, and it must still be NAMED.
+  const ignoreTree = {
+    id: '4:1', name: 'Table', type: 'FRAME', fills: [],
+    children: [
+      { id: '4:2', name: 'Keep me', type: 'TEXT', fills: [{ type: 'SOLID', boundVariables: { color: { id: 'VariableID:2' } } }] },
+      {
+        id: '4:3', name: 'IGNORE/test: zebra + expandable', type: 'SECTION', fills: [],
+        children: [
+          { id: '4:4', name: 'Buried', type: 'TEXT', fills: [{ type: 'SOLID' }] },
+          { id: '4:5', name: 'Also buried', type: 'TEXT', fills: [{ type: 'SOLID', boundVariables: { color: { id: 'VariableID:9' } } }] },
+        ],
+      },
+    ],
+  };
+  const rIgn = analyse(ignoreTree, varNames, 'table', {}, {});
+  assert.equal(rIgn.ignored.roots.length, 1, 'the skipped subtree is recorded, not silently dropped');
+  assert.equal(rIgn.ignored.roots[0].name, 'IGNORE/test: zebra + expandable');
+  assert.equal(rIgn.ignored.roots[0].why, 'IGNORE/ prefix', 'the report must be able to say WHY it was skipped');
+  assert.equal(rIgn.buckets.UNBOUND.sourceTree.distinctNodes, 0, 'an unbound paint inside IGNORE/ is NOT a gap');
+  assert.equal(rIgn.textStyles.textNodes, 1, 'TEXT nodes inside IGNORE/ are not counted either');
+  assert.equal(rIgn.buckets['color/* (semantic)'].sourceTree.distinctNodes, 1, 'and the kept sibling still counts');
+
+  // --ignore does the same job by exact name, for a section that must keep its name.
+  // The kept sibling assertion is the one that matters: an exclusion that also drops
+  // in-scope nodes is indistinguishable from a correct one in the totals alone.
+  const rNamed = analyse(ignoreTree, varNames, 'table', {}, {}, ['Keep me']);
+  assert.equal(rNamed.ignored.roots.length, 2, 'prefix and named exclusions accumulate in one list');
+  assert.equal(rNamed.ignored.roots.some((r) => r.why === '--ignore'), true, 'and are distinguishable by reason');
+  assert.equal(rNamed.buckets['color/* (semantic)'].sourceTree.distinctNodes, 0, 'the named node is now excluded too');
+  const rNamedNoop = analyse(ignoreTree, varNames, 'table', {}, {}, ['Not on this canvas']);
+  assert.equal(rNamedNoop.ignored.roots.length, 1, 'an --ignore name that matches nothing excludes nothing');
+  assert.equal(rNamedNoop.buckets['color/* (semantic)'].sourceTree.distinctNodes, 1, 'and leaves the census intact');
 
   // several roots in one pass must sum, not overwrite
   const rMulti = analyse([setTree, tree], varNames, 'table');
@@ -1068,7 +1178,9 @@ async function main(argv) {
     process.exit(1);
   }
 
-  const result = analyse(roots, varNames, slug, controls, maps);
+  // --ignore "Name" or --ignore "A,B" — exact names, skipped whole and recorded.
+  const ignoreList = (arg('--ignore') || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const result = analyse(roots, varNames, slug, controls, maps, ignoreList);
   result.rootsSwept = roots.map((r) => ({ id: r.id, name: r.name, type: r.type }));
   const failed = result.controlResults.filter((c) => !c.pass);
 
