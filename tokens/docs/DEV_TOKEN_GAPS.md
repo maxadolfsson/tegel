@@ -1045,6 +1045,43 @@ checking.
 
 ---
 
+### 25. The action column's header cell has no accessible name
+
+**Logged 2026-09-08 during cluster #9 Table's QA round.** The multiselect and expandable-rows header
+cells carry no visible text — **which is the correct visual treatment and is not the gap.** Design-lead
+ruling the same day: space is limited and a label such as *"Select"* or *"Expand"* would be redundant.
+Figma renders it the same way, so the two sides agree.
+
+**The gap is that code gives the cell no programmatic name either.**
+
+`table-header/table-header.tsx`:
+
+- **`:162`** — with `multiselect`, the cell renders `<th class="tds-table__header-cell
+  tds-table__header-cell--checkbox">` wrapping a `<tds-checkbox>`. **No `aria-label` on the `th`, and no
+  label passed to the checkbox.** The select-all control is therefore unnamed as well as its column.
+- **`:174`** — with `expandableRows`, the cell renders `<th class="tds-table__header-cell
+  tds-table__header-cell--checkbox"></th>`. **Completely empty.**
+
+So a screen-reader user reaches a column with no name, and in the multiselect case a checkbox with no
+name inside it. **No visible text is a design decision; no accessible name is a separate consequence that
+nobody chose.** The two are easy to conflate, which is why the ruling is recorded above the gap rather
+than beside it.
+
+**Compare `table-header-cell.tsx`, which already carries `tdsAriaLabelSortButton`** — the pattern for
+naming a control that has no visible label exists in this component and is not applied here.
+
+**Not a token gap and not a Figma gap.** It is in this file because it is a code-side defect surfaced by
+token work and has nowhere better to go; the cluster's own record is `tokens/specs/table.json`
+`_divergence`, which carries the same finding from the design side.
+
+⚠ **Scope of what was checked:** `table-header.tsx` only, by reading those two render branches. **Not
+checked:** whether a consuming application supplies a name from outside, whether the shadow DOM exposes
+one by another route, whether tegel-lite's `tl-table` does the same, and whether an existing e2e or axe
+run already covers it. **Absence of an `aria-label` in that file is not by itself proof that no
+accessible name reaches the user** — it is the reason to look.
+
+---
+
 ## Tracking
 
 - Latest union scan: [tokens/audit/20260423-210513-figma-scan/_scan-summary.md](../audit/20260423-210513-figma-scan/_scan-summary.md)
