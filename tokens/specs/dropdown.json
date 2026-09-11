@@ -2,28 +2,35 @@
   "_description": "Dropdown component tokens — option list container + per-context option-row state matrix + dropdown-specific icons and divider. Field interior consumes -input fully (no dropdown-local field tokens). 4-mode universal (TRATON Light + Dark + Scania Light + Scania Dark) on every token per convention-4-mode-universal.",
   "_cluster": "11a",
   "_jira": "CDEP-1965",
-  "_status": "Draft — ready for spec-validator. Designer canvas tasks queued for INTERNAL promotion + Secondary-selected split + tick-icon raw-fill cleanup + Header Text Focus/Typing coverage.",
-  "_figmaBranch": "gPG2XdsVec0cqKjLX3VHYL",
+  "_status": "PUSHED + VERIFIED 2026-08-08 to branch BRANCH:dropdown-11a — 13 tokens live, all 4 modes, 0 mismatches, 0 orphan overrides. Cluster NOT complete: Phase 6 figjam-sync + Decision_log and Phase 7 roadmap move + retro remain, plus the designer canvas tasks listed in _designerHandover. ⚠ RESOLVED 2026-08-12 — the spec ran ahead of Figma from 2026-08-08 to 2026-08-12; Figma is now reconciled to match. On 2026-08-08 the option set was renamed to Dropdown/List/Option, gained a Medium size, and had its Mode Variant axis dropped (60 variants down to 30) because both codebases showed it redundant. This spec has been cleaned up to match: **11 tokens**, after removing background/item/secondary/{default,hover,selected-default}, dropping the now-meaningless primary qualifier from their three siblings, and adding component/dropdown/opacity/disabled on 2026-08-12 (Max's direction) so the disabled-option rule has a token to apply — closing variant-matrix-11a.md finding F9. RECONCILED 2026-08-12: three deletes (Scania child-collection overrides cleared first via removeOverrideForMode), three ID-preserving renames that carried their canvas bindings across, and one create. Figma now holds exactly 11 component/dropdown/* variables, REST-verified at 4 modes with 0 orphan overrides, and all 11 are bound on canvas — 404 bindings across the four cluster-owned sets, with nothing dropdown-owned left on a bare semantic. Close-out gates run 2026-08-12: spec-validator PASS-WITH-WARNINGS, architecture-verifier OK, figma-variable-audit all-11-conforming. THEN 11 to 12: the a11y research cross-check at close-out surfaced that Dropdown/List bound INTERNAL/border__wip/UNSORTED/medium on all four corners — an INTERNAL alias the policy forbids shipping, missed because every earlier sweep checked fills, strokes and opacity only and never radius, spacing, sizing or effects. Added component/dropdown/border/radius-default and rebound the container. Radius/spacing/sizing/effects remain unswept across the four sets — see _openQuestions.non-colour-bindings-unswept. Full reasoning, including the values the removed tokens carried, in _divergence.option-mode-variant-dropped. Running record: tokens/audit/20260806-dropdown-variant-reduction/variant-matrix-11a.md. 2026-08-25 — ONE TOKEN REPOINTED, PUSHED AND VERIFIED. Spec and Figma agree; nothing is pending on this spec. Branch BRANCH:dropdown-11a merged ~2026-08-20; the repoint below was pushed to branch BRANCH:dropdown-hover-repoint, which Max MERGED 2026-08-26 after a clean pre-merge sweep. No branch is open on this spec. `component/dropdown/background/item/hover` had both Dark values on color/background/layer-02, which is also what background/secondary resolves to, so the option-row hover step was invisible on Secondary lists in BOTH brands (TRATON #002429 on #002429, Scania #1C222B on #1C222B). Raised by the developers implementing Dropdown, not by QA — QA's own hover thread is about the trigger, which is border-only and correct. Root cause: the draft spec carried two hover tokens and the deleted one (component/dropdown/secondary/hover, VariableID:14121:114020) held the note \"Dark modes step deeper (layer-03) for secondary-context contrast against layer-02 surface\"; consolidating to a single token kept primary's values and lost that step. Repointed TRATON Dark to layer-03 and Scania Dark to grey/750 — Scania cannot use layer-03 because in Scania it resolves to grey/800, which background/item/selected-default already owns. Verified four ways: Plugin API getter for the TRATON modes, REST variableOverrides for the Scania modes, the Figma Variables panel, and a canvas render in both brands at Dark on Mode variant=Secondary + Size=Medium. Confidence went Confirmed to Proposed and back to Confirmed the same day, once Max checked Scania's hover-vs-selected gap (#2D3643 vs #242C37, the tightest value in the set) on canvas. Decision brief: tokens/audit/20260818-dropdown-qa-comment-responses/option-row-hover-brief.md.",
+  "_figmaBranch": "BRANCH:dropdown-hover-repoint",
   "_figmaFile": "6osYTOfd4MgDq7LO6BCoUO",
+  "_figmaBranchBackup": "BRANCH:dropdown-prewrap-backup",
+  "_figmaBranchNote": "FOUR KEYS ARE IN PLAY AND THEY LOOK ALIKE. BRANCH:dropdown-hover-repoint carried the option-row hover repoint plus Max's width/fill pass, and is MERGED as of 2026-08-26 — no longer a write target. THERE IS NO OPEN BRANCH ON THIS SPEC; confirm a new one with Max before any Plugin API write. BRANCH:dropdown-11a was the #11a cluster branch and is MERGED as of ~2026-08-20; it still carries the eight QA comment threads, so it stays useful for reading, but it is no longer a write target. BRANCH:dropdown-qa-exploration is a QA branch holding Flavio and Mateus's hover exploration frames (37443:1295 / 1352 / 2371 / 2374) — read-only reference, not ours. BRANCH:dropdown-prewrap-backup is a read-only backup Max created 2026-08-08 before the variant refactor — it preserves the pre-wrap variant state as a canvas reference and must never be written to, including for verification. Confirm the write target with Max in conversation before any Plugin API write; a key inherited from a handover message is not a satisfied branch gate (cluster #19 recorded one as satisfied when it was not).",
   "_figmaPage": {
     "tegel": "26537:59509",
     "traton": "26537:59509"
   },
   "_figmaSourceComponentSets": {
-    "Dropdown/Header": "33822:146185",
-    "Dropdown/List Item": "33822:144518"
+    "Dropdown": "33822:144727",
+    "Dropdown/Trigger": "33822:146185",
+    "Dropdown/List": "34217:140470",
+    "Dropdown/List/Option": "33822:144518"
   },
+  "_figmaSourceComponentSetsNote": "Corrected 2026-08-12 at close-out. Previously listed only two sets, one under its pre-rename name: Dropdown/Header is now Dropdown/Trigger (33822:146185) and Dropdown/List Item is now Dropdown/List/Option (33822:144518). Two cluster-owned sets were missing entirely although both carry live bindings — Dropdown/List (34217:140470) holds background/primary + background/secondary, and the combined top-level Dropdown set (33822:144727) holds the chevron's icon/default. All four are in cluster scope; the Examples and IGNORE/REF sections on the page are not.",
   "_scope": {
     "in": [
       "Option list container surface — Primary + Secondary contexts (background/primary, background/secondary).",
       "Option-row backgrounds — per-context (Primary/Secondary) × per-state (Default/Hover/Selected). Default at-rest aliases container surface (surface-on-surface).",
       "Option text — default + selected (selected ships value-coincident with default; future-lever).",
-      "Dropdown chevron icon (field trailing) — single token, covers Open=False (chevron_down) and Open=True (chevron_up); shape swap, no color change.",
+      "Field trailing disclosure icon — single token covering both Open states; shape swaps, colour does not.",
       "Per-option tick icon on Selected variants.",
-      "Per-option Nested-type chevron (the `>` indicator on Type=Nested item rows).",
-      "Per-option bottom-border divider (stroke on each item-row root)."
+      "Per-option bottom-border divider (stroke on each item-row root).",
+      "Disabled option row opacity — the row dims by opacity with all colour bindings left at their default values. Option row only; the field's own disabled treatment comes from component/-input."
     ],
     "out": [
+      "Filter/multiselect clear icon (the inline 'x' that empties the current filter text or selection) — MOVED to component/-input 2026-08-06 as icon/control-default + icon/control-hover. The affordance lives in the shared Input/Slot/Suffix helper as a boolean, hidden by default, so the tokens belong to the input family rather than to Dropdown. Renamed from 'clear' to 'control' because under -input the token describes the interactive icon in a slot — the role — matching prefix/suffix/error, rather than one affordance. Dropdown is simply its first consumer.",
+      "Per-option Nested-type chevron (the `>` on Type=Nested item rows) — REMOVED 2026-08-06. Type=Nested is inherited from the Tegel UI Library and has no counterpart in either codebase: no optgroup, submenu or grouping mechanism in Scania core or tegel-lite, and the option's only slot is label text. The affordance uses regular suffix-icon treatment rather than a dedicated variable. Variant parked on canvas, selectable per item row.",
       "Field interior — fully adopt component/-input/* (see _fieldInteriorAdoption).",
       "Focus ring — global -focus helper.",
       "Typography / sizing — CDEP-2019 typography track.",
@@ -57,19 +64,26 @@
     "-focus (helper)": "Item focus rendered as box-shadow ring using color/foreground/border/accent-focus; not dropdown-local."
   },
   "_divergence": {
-    "header-text-focus-typing": "Dropdown Header has State=Text Focus + State=Typing variants used in filter mode (field has keyboard focus while text input is active / user actively typing). These states are NOT covered by component/-input today. Spec ships without dropdown-local additions; designer/architecture call needed: extend -input to cover Text Focus / Typing, OR coin dropdown-local field-state tokens. Surfaced at handover.",
-    "item-selected-canvas-mismatch": "Canvas today binds both Primary and Secondary Selected variants to the same INTERNAL/color__wip/UNSORTED/background/surface/300 placeholder. Bridge SCSS values diverge per context on TRATON Light/Dark + Scania Dark. Spec ships per-context-split (item/primary-selected + item/secondary-selected); designer canvas task to (a) promote the INTERNAL placeholder, (b) rebind Secondary Selected variants to the new secondary token.",
-    "item-tick-icon-raw-fill": "Tick icon outer INSTANCE on Selected variants currently has raw #ffffff fill (not bound to any variable). Inner VECTORs (Traton + Scania) are correctly bound to color/icon/strong. Pre-existing canvas drift. Designer handover: clear the outer raw fill (or bind to component/dropdown/icon/item/checkmark-default if a wrapper-level binding is intentional).",
-    "hover-internal-promotion": "TRATON-Light values of component/dropdown/hover and component/dropdown/secondary/hover currently chain through INTERNAL/color__wip/UNSORTED/background/surface/100 (resolves to traton/color/grey/150). Spec ships with the INTERNAL chain replaced by a direct primitive alias; promotion happens at the rename step."
+    "header-text-focus-typing": "RESOLVED by canvas probe: Dropdown Header State=Text Focus + State=Typing (filter-mode field states) carry NO distinct field colours versus State=Default — background stays color/background/layer-01, value/label text stays color/text/strong, placeholder stays color/text/subtle. The only per-state change is the border, which swaps to the focus ring (INTERNAL/color__wip/border/accent/focus, owned by the -focus helper). No -input extension and no dropdown-local field-state tokens needed; these states are fully covered by -input + -focus already. INTERNAL focus-ring promotion is the -focus helper workstream's task, not dropdown's.",
+    "clear-icon-raw-fill": "The clear-icon INSTANCE ('Cross', on Dropdown Header filter-mode variants) has a raw #ffffff outer fill, same drift pattern as the tick-icon outer fill on Dropdown List Item (see item-tick-icon-raw-fill below). Inner Traton + Scania VECTORs are correctly bound TODAY to the underlying semantics (color/icon/subtle / color/icon/strong respectively). Designer handover: clear the outer raw fill. The inner VECTOR rebind now targets component/-input/icon/control-default, NOT a dropdown-local token — the clear affordance moved to the shared Input/Slot/Suffix helper on 2026-08-06 (see _scope.out).",
+    "item-selected-canvas-mismatch": "RESOLVED 2026-08-08. Canvas previously bound both Primary and Secondary Selected variants to the same INTERNAL/color__wip/UNSORTED/background/surface/300 placeholder. The push created the per-context split and rebound all 8 Selected=True nodes — 4 Primary, 4 Secondary — verified 0 remaining on the INTERNAL variable. surface/300 itself was deliberately NOT promoted: 395 bindings across five pages (Slider 257, Table 124, Dropdown 8, Segmented Control 5, Foundations 1). Each cluster clears its own usage in its own turn.",
+    "item-tick-icon-raw-fill": "Tick icon outer INSTANCE on Selected variants currently has raw #ffffff fill (not bound to any variable). Inner VECTORs (Traton + Scania) are correctly bound to color/icon/strong. Pre-existing canvas drift. Designer handover: clear the outer raw fill (or bind to component/dropdown/icon/item/selected-default if a wrapper-level binding is intentional).",
+    "hover-internal-promotion": "RESOLVED 2026-08-08. The TRATON-Light INTERNAL/color__wip/UNSORTED/background/surface/100 chain on both hover variables was replaced with a direct primitive alias (traton/color/grey/150) during the rename step. All 8 pre-existing component/dropdown/* variables aliased INTERNAL; that debt is now fully cleared for this component.",
+    "scania-selected-dark-code-vs-canvas": "Scania's two sources agree on the Light value and diverge on Dark. Tegel UI binds Dark per Mode Variant — grey/800 primary, grey/750 secondary — while Scania core code sets a single --tds-dropdown-option-background-selected: --tds-grey-700 for both. Light agrees exactly (Tegel UI grey/150, code --tds-grey-150). Spec follows Tegel UI per Max's call 2026-08-06. RESOLVED 2026-08-08 by the cross-brand palette check: the mismatch is REAL, not scale drift. The legacy --tds-grey-* map (color/_tokens.scss) and the scania/color/grey/* palette align 1:1 on numbering — grey-150 is #e0e5eb in both, matching the Tegel UI Light read exactly, as do grey-800 (#242c37) and grey-750 (#2d3643) against the Dark reads. So --tds-grey-700 (#3a4554) and Tegel UI's grey/800 (#242c37) are genuinely different colours: Scania's code and canvas disagree on the selected-option dark value. Canvas ships per Max's call; the code-side difference is a designer question, not a blocker.",
+    "option-mode-variant-dropped": "APPLIED to this spec 2026-08-08, NOT YET PUSHED. The option set's Mode Variant axis was removed on canvas (60 variants to 30) because both codebases show it redundant, and the mode treatment moves to the list container, where it pairs with the top-level Dropdown set. EVIDENCE: Scania core paints the list via --tds-dropdown-bg and the option via --tds-dropdown-option-background with byte-identical values in all four combinations — Light primary grey-50/grey-50, Light secondary white/white, Dark primary grey-900/grey-900, Dark secondary grey-850/grey-850 — so the option's mode background repainted exactly what the container already painted. tegel-lite had already reached the same place: --dropdown-option-background is defined in _tl-dropdown-vars.scss and never consumed anywhere in the package, so its options are transparent at rest and the list paints. Neither brand mode-splits the interactive states either: core's --tds-dropdown-option-background-selected is one value per theme rather than per mode variant, and core's hover sets no background at all. CONSEQUENCE: three tokens removed — background/item/secondary/{default,hover,selected-default} — and three renamed to drop a qualifier with no sibling left to distinguish from: background/item/primary/{default,hover,selected-default} became background/item/{default,hover,selected-default}. Spec 13 to 10. WHAT THE REMOVED TOKENS CARRIED, so it is recoverable rather than merely gone: secondary/default aliased background/secondary in all four modes and was never bound to anything; secondary/hover was traton/color/grey/150 Light, color/background/layer-03 Dark, scania/color/grey/100 Scania-Light, color/background/layer-03 Scania-Dark; secondary/selected-default was color/background/layer-02 in both TRATON modes, scania/color/grey/150 Scania-Light, scania/color/grey/750 Scania-Dark. The only thing genuinely lost is one step of primary-versus-secondary contrast on dark selected rows, which the Tegel UI Library does draw (grey/800 versus grey/750) but neither codebase implements. FIGMA STILL HOLDS THE OLD SHAPE: all 13 variables are live on branch BRANCH:dropdown-11a under their old names. Reconciling needs a push — three deletes, which must clear the Scania child-collection overrides first via removeOverrideForMode or the overrides strand, plus three renames that preserve variable IDs. RESOLVED 2026-08-10: background/item/default now points at color/background/none in all four modes — the row is invisible and the List container's surface shows through. An earlier pass left it aliasing background/primary, which would have painted Primary's colour on a Secondary list. This is a deliberate departure from convention-surface-on-surface, recorded on the token itself so an audit does not read it as a violation. Note it cannot be checked against the Figma canvas yet — the option rows still carry fills because the rework has not been done, so code is currently the only source showing the intended model. Running record: tokens/audit/20260806-dropdown-variant-reduction/variant-matrix-11a.md, findings F10 and F12.",
+    "cross-brand-palette-check-2026-08-08": "Phase 5 complete. All 13 legacy --tds-grey-* primitives referenced by Scania core's dropdown-vars.scss and dropdown-option-vars.scss exist in color/_tokens.scss — no missing primitives, no dropdown-specific gap. tegel-lite's _tl-dropdown-vars.scss references ZERO legacy primitives; it is entirely on semantic tokens and component tokens, which is the modern path. The legacy --tds-* scale itself has no TRATON counterpart — TRATON primitives are --traton-warm-grey-*, Scania's are --scania-neutral-solid-*, and --tds-* is a third, older, Scania-flavoured scale living only in the legacy map. That is the system-wide legacy-retirement target already logged at cluster #15 Tabs, not a Dropdown intent-gap."
   },
   "_designerHandover": [
-    "Rename existing variable component/dropdown/hover → component/dropdown/background/item/primary-hover. Plugin API name-only; IDs + bindings preserved.",
-    "Rename existing variable component/dropdown/secondary/hover → component/dropdown/background/item/secondary-hover. Same name-only rename.",
-    "Promote INTERNAL/color__wip/UNSORTED/background/surface/300: rename to component/dropdown/background/item/primary-selected. Add new variable component/dropdown/background/item/secondary-selected (4-mode, per-context divergence values per bridge SCSS).",
-    "Rebind canvas: Secondary Selected variants on Dropdown/List Item COMPONENT_SET (33822:144546 et al.) from the renamed primary-selected token to the new secondary-selected token. Plugin API source-only writes.",
-    "Clear raw #ffffff outer fill on `icon/shared/tick` INSTANCE on Selected variants of Dropdown/List Item. Inner VECTOR bindings on color/icon/strong are correct.",
-    "Header State=Text Focus + State=Typing coverage gap — call: extend -input or coin dropdown-local.",
-    "Promote TRATON-Light hover chain: drop INTERNAL/color__wip/UNSORTED/background/surface/100 indirection; alias directly to traton/color/grey/150 (or its established semantic equivalent)."
+    "[DONE 2026-08-08 — executed in the push, verified] Rename component/dropdown/hover (VariableID:14121:114024) -> component/dropdown/background/item/primary/hover. Name-only; IDs + bindings preserved. Replace the INTERNAL/color__wip/UNSORTED/background/surface/100 chain with a direct primitive alias at the same time.",
+    "[DONE 2026-08-08 — executed in the push, verified] Rename component/dropdown/secondary/hover (VariableID:14121:114020) -> component/dropdown/background/item/secondary/hover. Same treatment. No downstream consumer; zero-risk.",
+    "[DONE 2026-08-08 — executed in the push, verified] Rename component/dropdown/focus (VariableID:14121:114023) -> component/dropdown/background/item/primary/selected-default, and set 4-mode values per the Tegel UI read. The variable was misnamed — it drove tegel-lite's selected option background, not focus.",
+    "[DONE 2026-08-08 — executed in the push, verified] Rename component/dropdown/secondary/focus (VariableID:14121:114022) -> component/dropdown/background/item/secondary/selected-default, same treatment.",
+    "[DONE 2026-08-08 — executed in the push, verified] Rebind the 8 Selected=True nodes on Dropdown/List/Item off INTERNAL/color__wip/UNSORTED/background/surface/300 onto the two renamed selected tokens, split per Mode Variant. Do NOT rename or promote surface/300 — a read-only sweep 2026-08-06 found it on 395 nodes across five pages (Slider 257, Table 124, Dropdown 8, Segmented Control 5, Foundations 1). Each of those clusters removes its own usage in its own turn.",
+    "[DONE 2026-08-08 — executed in the push, verified] DELETE the four dead variables — component/dropdown/list-item/{hover,focus} and .../list-item/secondary/{hover,focus}. Unbound at three levels and consumed by nothing. Clear the Scania child-collection modes FIRST on list-item/focus (114018) and list-item/secondary/focus (114021), which carry Light + Dark overrides; deleting before clearing strands the override permanently. list-item/hover (114019) and list-item/secondary/hover (114017) carry none and can go directly.",
+    "[OPEN — designer canvas work] Retire State=Focus on Dropdown/List/Item entirely — replace with State=Default plus a Focus Visible BOOLEAN gating a nested Helper/Focus Visible INSTANCE (Path A). The variant's stroke currently draws the focus ring by hand off INTERNAL/color__wip/border/accent/focus; the helper owns that job and its own ring colour, so no dropdown token is needed for it. Apply the helper to Selected=True as well as Selected=False (Side Menu + Tabs precedent: selected is focusable, disabled is not).",
+    "[OPEN — designer canvas work] Clear the raw #ffffff outer fill on the icon/shared/tick INSTANCE on Selected variants of Dropdown/List/Item. Inner VECTOR bindings on color/icon/strong are correct.",
+    "[OPEN — designer canvas work] Clear the raw #ffffff outer fill on the 'Cross' clear-icon INSTANCE on Dropdown Header filter-mode variants. Inner VECTORs bind to component/-input/icon/control-default.",
+    "[OPEN — designer canvas work] Dropdown/List/Item's Size axis produces no height difference: Large and Small both render 48px. Max confirmed 2026-08-08 that they SHOULD differ. Five variants render 52px instead of 48 — two in Large/Default, one in Large/Multiselect, two in Small/Default — and since they appear in BOTH sizes the 52 is not size-driven, so that is separate drift to clear. Scania core renders 55/47/39 for lg/md/sm (padding plus a 16px line-height); tegel-lite pins the row at a fixed 48px and is logged as a dev gap in tokens/docs/DEV_TOKEN_GAPS.md. Target heights are a design decision, not a straight port, because no two sources currently agree. NOTE: an earlier handover item asked for a missing Medium variant to be added — withdraw that. It was premised on a size ladder that does not exist in Figma; there is no ladder to insert a middle step into until the Large/Small difference is real. Sizing is scoped OUT of #11a (see _scope.out, CDEP-2019 typography track) — this is logged for whoever owns that work."
   ],
   "component": "dropdown",
   "variables": [
@@ -80,7 +94,7 @@
       "dark": "color/background/layer-01",
       "scania-light": "color/background/layer-01",
       "scania-dark": "color/background/layer-01",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Option list container — Primary surface. Leaf-level per Popover precedent (component/popover/background/primary)."
     },
     {
@@ -90,68 +104,38 @@
       "dark": "color/background/layer-02",
       "scania-light": "color/background/layer-02",
       "scania-dark": "color/background/layer-02",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Option list container — Secondary surface."
     },
     {
-      "name": "component/dropdown/background/item/primary-default",
+      "name": "component/dropdown/background/item/default",
       "type": "COLOR",
-      "light": "component/dropdown/background/primary",
-      "dark": "component/dropdown/background/primary",
-      "scania-light": "component/dropdown/background/primary",
-      "scania-dark": "component/dropdown/background/primary",
-      "confidence": "Proposed",
-      "comment": "Item at-rest on Primary container. Surface-on-surface per convention-surface-on-surface — value-coincident with container, real fill paint guarantees click-target geometry."
+      "light": "color/background/none",
+      "dark": "color/background/none",
+      "scania-light": "color/background/none",
+      "scania-dark": "color/background/none",
+      "confidence": "Confirmed",
+      "comment": "Item at rest — invisible, so the List container's surface shows through. The row carries no colour of its own; the primary/secondary treatment lives on the List, which is why the option set no longer needs a Mode Variant axis. This is how tegel-lite already ships it: --dropdown-option-background is defined in _tl-dropdown-vars.scss and never consumed anywhere in the package, so its rows are transparent and the list paints. The token is kept rather than dropped so the row still has a named at-rest state to sit beside hover and selected-default, and so a future decision to give rows their own surface has somewhere to land. DELIBERATE DEPARTURE from convention-surface-on-surface, which says an at-rest surface should alias its container rather than background/none: that rule assumes the child knows which container it is on, and after the Mode Variant drop this one does not. Resolved 2026-08-10 by Max; an earlier pass wrongly left it aliasing background/primary, which would have painted Primary's colour on a Secondary list."
     },
     {
-      "name": "component/dropdown/background/item/secondary-default",
-      "type": "COLOR",
-      "light": "component/dropdown/background/secondary",
-      "dark": "component/dropdown/background/secondary",
-      "scania-light": "component/dropdown/background/secondary",
-      "scania-dark": "component/dropdown/background/secondary",
-      "confidence": "Proposed",
-      "comment": "Item at-rest on Secondary container. Surface-on-surface."
-    },
-    {
-      "name": "component/dropdown/background/item/primary-hover",
-      "type": "COLOR",
-      "light": "traton/color/grey/150",
-      "dark": "color/background/layer-02",
-      "scania-light": "scania/color/grey/150",
-      "scania-dark": "color/background/layer-02",
-      "confidence": "Proposed",
-      "comment": "Rename from existing component/dropdown/hover (VariableID:14121:114024). Light primitives unwrap INTERNAL/surface/100 indirection. Verify Scania-L primitive against bridge #edeff3 at push (Plugin API getter is blind to Scania modes — UI Variables panel canonical)."
-    },
-    {
-      "name": "component/dropdown/background/item/secondary-hover",
+      "name": "component/dropdown/background/item/hover",
       "type": "COLOR",
       "light": "traton/color/grey/150",
       "dark": "color/background/layer-03",
-      "scania-light": "scania/color/grey/150",
-      "scania-dark": "color/background/layer-03",
-      "confidence": "Proposed",
-      "comment": "Rename from existing component/dropdown/secondary/hover (VariableID:14121:114020). Light modes value-coincident with primary-hover (bridge intent); Dark modes step deeper (layer-03) for secondary-context contrast against layer-02 surface."
+      "scania-light": "scania/color/grey/100",
+      "scania-dark": "scania/color/grey/750",
+      "confidence": "Confirmed",
+      "comment": "Rename from existing component/dropdown/hover (VariableID:14121:114024). Light primitives unwrap INTERNAL/surface/100 indirection. VERIFIED live via Variables panel UI (2026-06): Scania-Light renders #EDEFF3, confirmed = scania/color/grey/100 (REST hex search against the Primitive collection, single exact match). DARK MODES REPOINTED 2026-08-25: both were color/background/layer-02, which is also what background/secondary resolves to — so on a Secondary list the hover step was invisible in both brands (TRATON #002429 on #002429, Scania #1C222B on #1C222B). Reported from the dev side, confirmed via the REST brand-mode path. TRATON now layer-03 (#003137); Scania cannot use layer-03 because in Scania it resolves to grey/800, which background/item/selected-default already owns, so Scania takes grey/750 (#2D3643) — clear of layer-01 #15181D, layer-02 #1C222B and selected #242C37. MIXED ALIAS STRATEGY IS DELIBERATE: Light aliases brand primitives because layer-03 in Light is #F6F3E9, identical to layer-01, so a semantic alias there would collide with the Primary surface. Do not harmonise. ONE TOKEN, NOT SPLIT PER VARIANT: QA proposed primary-hover/secondary-hover, but Dropdown/List/Option has no Mode variant property (its axes are Size x Type x State x Selected) — the axis lives on Dropdown/List, so a per-variant token would have nothing to bind against on the row that carries the fill. Cost of the single value is a two-step hover jump on Primary lists, accepted — 2 steps in TRATON (blue/950 to blue/850), 3 in Scania (grey/900 to grey/750, because grey/800 is occupied by selected-default), so the brands are not symmetric in step count. RENDER-VERIFIED 2026-08-25 on branch BRANCH:dropdown-hover-repoint, Mode variant=Secondary + Size=Medium open, in BOTH brands at Dark: TRATON hover reads clearly lighter than the layer-02 surface it sits on, and Scania's three rows separate as Default grey/850 < Selected grey/800 < Hover grey/750 with the hierarchy running hover-above-selected. Max confirmed the Scania gap (#2D3643 vs #242C37, the tightest pair in the set) reads adequately on canvas; confidence raised Proposed to Confirmed on that basis. NOTE the direction differs by brand: Scania's selected sits lighter than its list surface, TRATON's sits darker (selected-default aliases layer-01 regardless of container). That asymmetry is the selected treatment Max and Flavio already ruled intentional, not a defect of this change."
     },
     {
-      "name": "component/dropdown/background/item/primary-selected",
+      "name": "component/dropdown/background/item/selected-default",
       "type": "COLOR",
       "light": "color/background/layer-01",
       "dark": "color/background/layer-01",
       "scania-light": "scania/color/grey/150",
-      "scania-dark": "color/background/layer-02",
-      "confidence": "Proposed",
-      "comment": "Promotion target for INTERNAL/color__wip/UNSORTED/background/surface/300 on Primary Selected variants. Values per bridge SCSS intent. Designer canvas task: rebind Primary Selected variants from INTERNAL placeholder to this token."
-    },
-    {
-      "name": "component/dropdown/background/item/secondary-selected",
-      "type": "COLOR",
-      "light": "color/background/layer-02",
-      "dark": "color/background/layer-02",
-      "scania-light": "scania/color/grey/150",
-      "scania-dark": "color/background/layer-03",
-      "confidence": "Proposed",
-      "comment": "NEW token — splits Selected per context (canvas today collapses to one INTERNAL token; bridge SCSS encodes per-context divergence on TRATON L/D + Scania D). Designer canvas task: rebind Secondary Selected variants from the promoted primary-selected to this secondary token."
+      "scania-dark": "scania/color/grey/800",
+      "confidence": "Confirmed",
+      "comment": "Option row at Selected on the Primary container. Scania values taken from the Tegel UI Library (Scania canvas source of truth, file d8bTgEx7h694MSesi2CTLF, Dropdown/List Item 33822:144518), read 2026-08-06: Mode=Light bound to grey/150 (#E0E5EB), Mode=Dark Primary bound to grey/800 (#242C37). Confirmed by direct fill-binding probe, not inferred. Scania core code independently agrees on Light (--tds-dropdown-option-background-selected: --tds-grey-150). TRATON values keep the container surface, so the selected row carries no background distinction in TRATON today — the tick is the only marker. RENAMED from the existing variable component/dropdown/focus (VariableID:14121:114023) rather than created new — the variable ID and its history are preserved. That variable was misnamed: it painted a canvas Focus variant while its bridge property drove tegel-lite's SELECTED option background. Renaming puts the name where the behaviour already was. The old CSS custom property name disappears; whether code keeps an alias for contract reasons is the consumers' call, not this cluster's. The INTERNAL surface/300 placeholder currently bound on the Selected=True nodes is NOT promoted — those 8 nodes rebind to this token."
     },
     {
       "name": "component/dropdown/text/item/default",
@@ -160,48 +144,38 @@
       "dark": "color/text/strong",
       "scania-light": "color/text/strong",
       "scania-dark": "color/text/strong",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Option text at rest. Canvas-confirmed across all probed variants (Default + Hover + Selected text all bind to color/text/strong)."
     },
     {
-      "name": "component/dropdown/text/item/selected",
+      "name": "component/dropdown/text/item/selected-default",
       "type": "COLOR",
       "light": "color/text/strong",
       "dark": "color/text/strong",
       "scania-light": "color/text/strong",
       "scania-dark": "color/text/strong",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Option text when Selected. Value-coincident with default today; ships as separate token to reserve future lever (e.g. selected emphasis treatment)."
     },
     {
-      "name": "component/dropdown/icon/chevron-default",
+      "name": "component/dropdown/icon/default",
       "type": "COLOR",
       "light": "color/icon/strong",
       "dark": "color/icon/strong",
       "scania-light": "color/icon/strong",
       "scania-dark": "color/icon/strong",
-      "confidence": "Proposed",
-      "comment": "Field trailing chevron. Open=False renders icon/shared/chevron_down; Open=True renders icon/shared/chevron_up. Color identical across both; one token covers both shapes (canvas-confirmed)."
+      "confidence": "Confirmed",
+      "comment": "Field trailing disclosure icon. Named bare per the Accordion precedent (component/accordion/icon/default, also a chevron) and convention-icon-role-not-glyph — the descriptor carries the role, never the glyph. Unambiguous because the option-row icons are scoped under item/. Open=False renders icon/shared/chevron_down, Open=True renders chevron_up; colour is identical across both, so one token covers the shape swap (canvas-confirmed). Rides Text Field's existing suffix icon slot as an instance swap; the colour override exists because -input/icon/suffix-default resolves to a text semantic while this needs an icon one."
     },
     {
-      "name": "component/dropdown/icon/item/checkmark-default",
+      "name": "component/dropdown/icon/item/selected-default",
       "type": "COLOR",
       "light": "color/icon/strong",
       "dark": "color/icon/strong",
       "scania-light": "color/icon/strong",
       "scania-dark": "color/icon/strong",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Single-select tick on Selected variants. Inner VECTORs (Traton + Scania) bound to color/icon/strong today. Outer INSTANCE has raw #ffffff fill — pre-existing canvas drift (see _divergence)."
-    },
-    {
-      "name": "component/dropdown/icon/item/nested-default",
-      "type": "COLOR",
-      "light": "color/icon/strong",
-      "dark": "color/icon/strong",
-      "scania-light": "color/icon/strong",
-      "scania-dark": "color/icon/strong",
-      "confidence": "Proposed",
-      "comment": "`>` chevron on Type=Nested item rows. Value-coincident with chevron-default today; separate token to express the different intent (\"opens sub-menu\" vs \"field open/close affordance\")."
     },
     {
       "name": "component/dropdown/border/item/divider-default",
@@ -210,8 +184,35 @@
       "dark": "color/border/discrete",
       "scania-light": "color/border/discrete",
       "scania-dark": "color/border/discrete",
-      "confidence": "Proposed",
+      "confidence": "Confirmed",
       "comment": "Per-option bottom-border. Lives on each item-row's root stroke (canvas-confirmed: variant root stroke bound to color/border/discrete directly today)."
+    },
+    {
+      "name": "component/dropdown/opacity/disabled",
+      "type": "FLOAT",
+      "light": "traton/opacity/25",
+      "dark": "traton/opacity/25",
+      "scania-light": "scania/opacity/25",
+      "scania-dark": "scania/opacity/25",
+      "confidence": "Confirmed",
+      "comment": "Disabled option row. Applied as opacity on the row with every colour binding left at its State=Default value, per Max's rule 2026-08-08 that any disabled state binds the default values and then applies an opacity token. Shape matches the ten components already shipping component/{slug}/opacity/disabled — FLOAT, brand-namespaced primitive aliases, explicit per-brand bindings. DELIBERATE DEPARTURE from both codebases, which currently express a disabled option with a distinct foreground colour rather than opacity; opacity is the system-wide format going forward and code adopting it is a dev-side follow-up, not a blocker. Two things make it safe here specifically: the row is transparent at rest, so the opacity only touches the label and the tick or checkbox; and disabled implies closed, so a disabled wrapper never renders rows and two opacities cannot compound. The nested Checkbox on multiselect rows stays on its default treatment rather than being set disabled, so component/checkbox/opacity/disabled never stacks on top. Accepted trade-off: a colour chooses the disabled result while opacity computes it, so the same value lands differently over a Secondary list than a Primary one — not a blocker, since disabled text is exempt from WCAG contrast minimums. Applies to the option row only; the wrapper's own disabled treatment comes from component/-input/opacity/disabled through the nested field, canvas-verified 2026-08-12 (wrapper opacity 1, Trigger 1, Text Field 0.25 — no compounding)."
+    },
+    {
+      "name": "component/dropdown/border/radius-default",
+      "type": "FLOAT",
+      "light": "traton/unit/4",
+      "dark": "traton/unit/4",
+      "scania-light": "scania/unit/4",
+      "scania-dark": "scania/unit/4",
+      "confidence": "Confirmed",
+      "comment": "Option list container corner radius, all four corners. Added 2026-08-12 (Max's direction) to replace an INTERNAL alias found on canvas at close-out: Dropdown/List bound INTERNAL/border__wip/UNSORTED/medium on all four corners, which the never-alias-to-INTERNAL policy forbids shipping. Value derived from the closest analogue rather than chosen — Popover is the same thing, a floating container surface, and ships traton/unit/4 with scania/unit/4; -input, block, message, toast and segmented-control agree, and the List already rendered at literal 4, so this is a like-for-like replacement with no visual change. Flat border/radius-default form per convention-border-radius-naming; the nested border/radius/default seen on badge, button and chip is legacy. Only one radius token: nothing in Dropdown needs a none or full variant. The option rows deliberately carry no radius token and sit at literal 0 — they are inside elements within the list with no overflow treatment, so square corners and a square -focus/ring/radius/none helper are correct by design rather than an omission (Max, 2026-08-12). This token covers the container only; the Trigger's radius comes from component/-input/border/radius-*."
     }
-  ]
+  ],
+  "_openQuestions": {
+    "non-colour-bindings-unswept": "OPEN, logged 2026-08-12. Every binding sweep run during this cluster examined fills, strokes and opacity only. Radius, spacing, padding, sizing and effects were never checked on any of the four Dropdown sets. That gap hid a real policy breach until the very end: Dropdown/List bound INTERNAL/border__wip/UNSORTED/medium on all four corners, which the never-alias-to-INTERNAL rule forbids shipping, and it was found by accident while chasing an a11y note about corner curvature rather than by any gate. It is now fixed via component/dropdown/border/radius-default, but the remaining non-colour surface is still unaudited, so there may be more of the same. Note the variable audit is not a substitute: it verified the tokens' own alias chains carry no INTERNAL, which was true, while the canvas binding was the thing at fault. A sweep needs to walk nodes and check every boundVariables field, not just the paint ones. Max chose to add the token and close out rather than sweep first, so this is a deliberate deferral, not an oversight.",
+    "missing-hover-border-token": "OPEN, logged 2026-08-08. Scania hovers an option by changing the bottom BORDER, not the background, and nothing in this spec carries that value. Scania core: `--tds-dropdown-option-border-hover` resolves grey-850 Light / grey-50 Dark, against an at-rest `--tds-dropdown-option-border` of grey-200 / grey-600, and the hover rule sets no background at all. The Tegel UI Library agrees byte for byte — a full layer walk of the hover variants (the option has only two layers, root plus label, so there is nowhere else to look) shows the root stroke moving grey/200 to grey/850 in Light and grey/600 to grey/50 in Dark, with the fill unchanged. Proposed token: component/dropdown/border/item/divider-hover, pairing with the existing border/item/divider-default. SECOND, RELATED FINDING: background/item/*/hover resolves Scania-Light to grey/100 (#EDEFF3), a colour neither Scania source paints for this component — so those Scania values look invented rather than observed. This is a cross-brand PATTERN divergence, not a value one: tegel-lite does paint a hover background, so TRATON hovers with fill while Scania hovers with border. Deciding it means choosing whether the brands keep different hover patterns or converge. Full evidence in tokens/audit/20260806-dropdown-variant-reduction/variant-matrix-11a.md, finding F11.",
+    "secondary-disabled-background": "ANSWERED 2026-08-08 and since made moot. Max's rule, stated as a given rather than a Dropdown decision: any disabled state binds the State=Default values and then applies an opacity token. That makes the observed color/background/base binding drift, since the Secondary at-rest value is layer-02. Moot because the Secondary variants were deleted when Mode Variant was dropped from the option set the same day, taking all 12 of those bindings with them. The rule still governs whatever disabled treatment the rebuilt set carries, and Dropdown has no opacity token to apply it with — see variant-matrix-11a.md finding F9.",
+    "five-variants-at-52px": "RESOLVED 2026-08-08. The count was wrong at authoring, not drifted: exactly ONE variant rendered 52px, not five, and the same single node reads 52 on main, on the backup branch and on the working branch. Cause: the option row hugs its content, and the tick instance on that variant was 20px against a 16px text line, so it pushed the row 4px. Max resized the icon; all rows now render on the code ladder at 56 / 48 / 40 for Large / Medium / Small."
+  },
+  "_decisionLogDraft": "HELD, not written to canvas. Draft lives at tokens/audit/20260806-dropdown-variant-reduction/decision-log-draft-11a.md with the convention pre-flight inline. Held deliberately until the outstanding canvas work lands, because the log describes a variant structure that is still changing. Max reviewed the wording; he did not approve writing it."
 }
