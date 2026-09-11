@@ -1,5 +1,5 @@
 {
-  "_description": "Reverse-engineered from Figma TRATON file (branch ceUobip0KoQIiMSDuoO6Or). Component variables use same direct alias for all 4 modes; Scania brand differentiation handled by semantic layer. INTERNAL/color__wip refs violate INTERNAL token policy — need promotion to proper semantic tokens.",
+  "_description": "Reverse-engineered from Figma TRATON file (branch BRANCH:banner-message-toast-5). Component variables use same direct alias for all 4 modes; Scania brand differentiation handled by semantic layer. INTERNAL/color__wip refs violate INTERNAL token policy — need promotion to proper semantic tokens.",
   "component": "button",
   "variables": [
     {

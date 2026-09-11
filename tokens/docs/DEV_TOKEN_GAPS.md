@@ -8,7 +8,7 @@ Evidence cited against `origin/develop` unless otherwise noted.
 
 ## Scrollbar
 
-**Status**: Figma-side aligned on branch `7XfNHOAtmNdQyxi8Ybiiho` (2026-04-24). Spec updated in [scrollbar.json](../specs/scrollbar.json). Code-side gaps below.
+**Status**: Figma-side aligned on branch `BRANCH:scrollbar` (2026-04-24). Spec updated in [scrollbar.json](../specs/scrollbar.json). Code-side gaps below.
 
 ### 1. Thumb colour — code bypasses the semantic alias layer
 
@@ -1002,7 +1002,7 @@ cells hug to 50 while one — the cell wrapping the checkbox prefix — is pinne
 **That is a side effect, so by the discriminator above it IS drift**, and it is what the design lead was
 looking at. It is a canvas-side sizing matter rather than a code gap, so it is not filed here.
 
-**Measured on branch `gpzlcNarPhjiSCUJlNydXa`:** `Table/Row`, `Type=Header`, `Compact design=False` is
+**Measured on branch `BRANCH:table-9`:** `Table/Row`, `Type=Header`, `Compact design=False` is
 **`HUG` vertically and resolves to 50**. Its text sits on `component/title/01` with a line-height of
 **18**, against **16** on the sibling `component/body/01` — both variable-driven, via
 `type/system/title/01/line-height` and `type/system/body/01/line-height` respectively. Because the row

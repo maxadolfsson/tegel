@@ -20,7 +20,10 @@ import { figmaFetch } from './lib/figma-rest.js';
 
 const API_KEY = process.env.FIGMA_API_KEY;
 const FIGMA_API = 'https://api.figma.com';
-const BRANCH_KEY = 'Qppo2Y2ZpXIwBHGmgd8WW2';
+// Branch keys are not committed — this repo's public fork would publish them.
+// Cluster #4 (Card/Overlay/Modal/Scrollbar) branch key: cluster-roadmap.md, private work repo.
+// Supply with --branch <key> or FIGMA_BRANCH_KEY.
+const BRANCH_KEY = process.env.FIGMA_BRANCH_KEY;
 
 // Mode IDs
 const TRATON_LIGHT = '68:0';
@@ -34,6 +37,13 @@ function parseArgs() {
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--branch' && args[i + 1]) parsed.branch = args[++i];
     else if (args[i] === '--push') parsed.push = true;
+  }
+  if (!parsed.branch) {
+    console.error(
+      'No branch key. Pass --branch <key> or set FIGMA_BRANCH_KEY.\n' +
+        'Cluster #4 branch key lives in cluster-roadmap.md in the private work repo.',
+    );
+    process.exit(1);
   }
   return parsed;
 }

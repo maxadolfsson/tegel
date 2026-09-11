@@ -1,4 +1,4 @@
 {
   "componentSlugs": ["folder-tabs", "inline-tabs", "navigation-tabs"],
-  "_comment": "Current cluster #15: Tabs family (CDEP-1969). Three variants — folder/inline/navigation. Combined branch xwed5ZyNB6Wt0H1rhtMQhC also covers Segmented control (CDEP-2041) as bonus. Audit script patched 2026-06-17 to derive slugs from var filenames (handles nested-directory components like components/tabs/{variant}/). Previous: cluster #16 popover (CDEP-1970); cluster #14 side-menu (CDEP-1968); cluster #10b accordion (CDEP-1949); cluster #10a block (CDEP-1949); cluster #8 header (CDEP-1947). Run: npm run audit:tokens:cluster"
+  "_comment": "Current cluster #15: Tabs family (CDEP-1969). Three variants — folder/inline/navigation. Combined branch BRANCH:tabs-15 also covers Segmented control (CDEP-2041) as bonus. Audit script patched 2026-06-17 to derive slugs from var filenames (handles nested-directory components like components/tabs/{variant}/). Previous: cluster #16 popover (CDEP-1970); cluster #14 side-menu (CDEP-1968); cluster #10b accordion (CDEP-1949); cluster #10a block (CDEP-1949); cluster #8 header (CDEP-1947). Run: npm run audit:tokens:cluster"
 }

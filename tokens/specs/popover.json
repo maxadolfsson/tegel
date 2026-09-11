@@ -1,6 +1,6 @@
 {
   "_description": "Popover component spec — cluster #16 (CDEP-1970). Container surface (Primary/Secondary mode-variant, stateless) plus menu-item content shape with full per-variant interaction states. 16 tokens: 8 background (2 container + 6 item link), 4 text/link, 2 icon/link, 1 border-radius, 1 opacity-disabled. Container shape follows Block/Message variant-axis-preservation; item shape follows Button precedent for 3-level nesting `{property}/link/{variant}-{state}`.",
-  "_figmaBranch": "https://www.figma.com/design/6osYTOfd4MgDq7LO6BCoUO/branch/9dAIfamPwrGe1gLTOUX723/TRATON-Component-Library?node-id=26693-59843",
+  "_figmaBranch": "BRANCH:popover-16 — key in cluster-roadmap.md (private work repo); TRATON Component Library, node-id=26693-59843",
   "_notes": [
     "Container vs item split: background/primary and background/secondary name the Popover Menu container surfaces (stateless, no -default suffix per Block/Message precedent). background/link/{variant}-{state} names the menu-item interaction with full per-variant split (3-level nesting per Button precedent — component/button/background/standard/primary-default).",
     "Per-variant item split (design-QA pass, 2026-05-27): items inside Primary popover surface diverge from items inside Secondary popover surface. Resolution: 3-level nesting {property}/link/{variant}-{state} matches Button's role-group naming. Primary items use one set of background/text/icon tokens; Secondary items use a parallel set. Container-context determines which set the item consumes.",

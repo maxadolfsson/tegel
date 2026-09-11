@@ -1,5 +1,5 @@
 {
-  "_description": "Reverse-engineered from Figma TRATON branch WbO2DO6He93w4CCD08hSo4 (cluster 13, CDEP-1967). Mirrors Checkbox structure minus the indeterminate variant axis — radio is always single-select. Per-row aliases use single 4-mode semantics; brand/mode swap is handled by the semantic layer.",
+  "_description": "Reverse-engineered from Figma TRATON branch BRANCH:checkbox-radio-toggle-13 (cluster 13, CDEP-1967). Mirrors Checkbox structure minus the indeterminate variant axis — radio is always single-select. Per-row aliases use single 4-mode semantics; brand/mode swap is handled by the semantic layer.",
   "_notes": [
     "Variant-axis-preservation rule applied: border + background split per variant (standard/selected) even where values are identical. Icon follows canvas evidence (no glyph on standard — the dot only appears on selected). Text label sits off the varying surface — no variant axis.",
     "Indicator has no variant axis by design: the hover overlay ring is visually identical across both radio variants. Single border/indicator-default + border/indicator-hover pair covers both.",

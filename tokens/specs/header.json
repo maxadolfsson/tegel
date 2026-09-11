@@ -1,7 +1,7 @@
 {
   "_description": "Cluster #8 header \u2014 BAR surfaces only. Scope: the header bar surface itself + the items that sit on it (nav items, profile item, icons, dividers). Derived from Figma Header Functional (38845:183926) + Header Expressive (38845:191773) and the existing SCSS bridge (tokens/scss/component/header.scss) as reference. Naming follows Semantic Bridge Framework v1.3, with 'selected' paired under 'standard' (see chip precedent).",
   "_cluster": 8,
-  "_figmaBranch": "2zP6sIJbTxI6USqaYmbLd7",
+  "_figmaBranch": "BRANCH:header-8",
   "_scope": {
     "in": [
       "Main bar surface (new tokenisation)",

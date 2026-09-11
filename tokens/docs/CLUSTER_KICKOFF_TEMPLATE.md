@@ -67,7 +67,7 @@ Close-out recipe (all must complete + verify before QA designer ping):
 | `<XX>` | `16` |
 | `<component>` | `popover` |
 | `<fileKey>` | `6osYTOfd4MgDq7LO6BCoUO` |
-| `<branchKey>` | `9dAIfamPwrGe1gLTOUX723` |
+| `<branchKey>` | `BRANCH:popover-16` |
 | `<id>` (pageId) | `26693:59843` |
 
 ## Optional cluster-specific additions

@@ -2,8 +2,8 @@
   "_description": "Cluster #15 Tabs — tokens/specs/tabs-DRAFT.json (ships as tabs.json). Family of three code components — Inline Tabs (CDEP-1969), Folder Tabs, Navigation Tabs — modelled as ONE property-first slug `component/tabs/*` (rev 6, 2026-07-04; text + border flat, background keeps item/). Standard (underline) tab shared by inline + navigation; folder is the enclosed variant. Segmented Control ships separately (component/segmented-control/*, own file/page). 4-mode universal. See _status + _notes for the rev-5 property-first restructure and _framework_extension for the superseded nesting.",
   "_cluster": 15,
   "_jira": "CDEP-1969",
-  "_figmaBranch": "xwed5ZyNB6Wt0H1rhtMQhC",
-  "_status": "SHIPPED-to-branch; close-out complete 2026-07-06 (branch xwed5ZyNB6Wt0H1rhtMQhC NOT yet merged to main). rev 8, 22 tokens, property-first, all 4-mode. Item-level colours nest under `item/` in background/border/text (Decisions 1+2, superseding the rev-6 flatten); bar/wrapper tokens stay flat; `background/item/` carries a further mode-variant scope (primary/secondary) — the system's first depth-6 (§2a framework upgrade). +2 scroll tokens promoted off INTERNAL (`background/scroll-default` + `icon/scroll-default`). Re-validation gate green: spec-validator PASS; inline architecture-verifier + variable-audit at 22 (0 INTERNAL, all names correct). Decision_log Review (Max-finalized) + FigJam SHIPPED row done. Designer handoff: folder hover top-border + Padding=T/F axis. See _notes.",
+  "_figmaBranch": "BRANCH:tabs-15",
+  "_status": "SHIPPED-to-branch; close-out complete 2026-07-06 (branch BRANCH:tabs-15 NOT yet merged to main). rev 8, 22 tokens, property-first, all 4-mode. Item-level colours nest under `item/` in background/border/text (Decisions 1+2, superseding the rev-6 flatten); bar/wrapper tokens stay flat; `background/item/` carries a further mode-variant scope (primary/secondary) — the system's first depth-6 (§2a framework upgrade). +2 scroll tokens promoted off INTERNAL (`background/scroll-default` + `icon/scroll-default`). Re-validation gate green: spec-validator PASS; inline architecture-verifier + variable-audit at 22 (0 INTERNAL, all names correct). Decision_log Review (Max-finalized) + FigJam SHIPPED row done. Designer handoff: folder hover top-border + Padding=T/F axis. See _notes.",
   "_framework_extension": {
     "extension_name": "Multi-sibling-component family namespace",
     "locked_2026_06_18": true,
@@ -20,9 +20,9 @@
   },
   "_figmaNodes": {
     "_phase_1_capture": "Captured 2026-06-17 by tokens-tegel-ui-prober pattern (manual probe; agent file at .claude/agents/tokens-tegel-ui-prober.md available for future clusters). Both files use Tabs page id 26756:59842 (coincidental match).",
-    "_reconciled_2026_07_06": "Atom names, variant counts, states_drawn, and the atom-sharing descriptors below were reconciled to shipped canvas reality (verified via get_metadata on branch xwed5ZyNB6Wt0H1rhtMQhC). Key corrections vs the Phase-1 capture: 10544:33259 is the FOLDER atom Tabs/Folder/Item (NOT a shared Inline+Folder atom — that was a Phase-1 error corrected by cluster decision #3); 10544:31469 is Tabs/Item, the shared underline atom for Inline + Navigation. Native Focus state variants were removed on both atoms (Path A focus done); states are now Default/Hover only. Navigation bar axis Viewport→Breakpoint (done 2026-07-04). Scroll Style axis values Inline/Folder→Standard/Folder (done 2026-07-05).",
+    "_reconciled_2026_07_06": "Atom names, variant counts, states_drawn, and the atom-sharing descriptors below were reconciled to shipped canvas reality (verified via get_metadata on branch BRANCH:tabs-15). Key corrections vs the Phase-1 capture: 10544:33259 is the FOLDER atom Tabs/Folder/Item (NOT a shared Inline+Folder atom — that was a Phase-1 error corrected by cluster decision #3); 10544:31469 is Tabs/Item, the shared underline atom for Inline + Navigation. Native Focus state variants were removed on both atoms (Path A focus done); states are now Default/Hover only. Navigation bar axis Viewport→Breakpoint (done 2026-07-04). Scroll Style axis values Inline/Folder→Standard/Folder (done 2026-07-05).",
     "TRATON_branch": {
-      "fileKey": "xwed5ZyNB6Wt0H1rhtMQhC (branchKey)",
+      "fileKey": "BRANCH:tabs-15 (branchKey)",
       "page_id": "26756:59842",
       "bar_level": {
         "Inline Tabs": {

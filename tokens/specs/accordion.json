@@ -1,6 +1,6 @@
 {
   "_description": "Accordion component spec — cluster #10b (CDEP-1949). Interactive component with Primary/Secondary mode-variant axis and Default/Hover/Active/Focus/Disabled state model. 13 tokens: 6 background, 4 border, 1 text, 1 icon, 1 opacity. Background and border split fully per variant × state per the variant-axis-preservation convention; text and icon collapse to a single canvas-honest token each.",
-  "_figmaBranch": "https://www.figma.com/design/6osYTOfd4MgDq7LO6BCoUO/branch/oP5qZaxKDt2s95U7ljjd9R/TRATON-Component-Library?node-id=37498-4517",
+  "_figmaBranch": "BRANCH:block-accordion-10 — key in cluster-roadmap.md (private work repo); TRATON Component Library, node-id=37498-4517",
   "_notes": [
     "Variant axis preservation: Primary/Secondary is a surface decision, so background and border tokens are split per variant × state regardless of current canvas equivalence. Each variant carries an independent brand lever from day one.",
     "Default state is transparent for both variants (canvas-confirmed: no fill on Default/Focus/Disabled variants). Tokens still exist so brands can opt into a non-transparent rest treatment without restructuring.",

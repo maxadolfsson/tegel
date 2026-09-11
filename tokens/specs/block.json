@@ -1,6 +1,6 @@
 {
   "_description": "Block component spec — cluster #10 (CDEP-1949). Surface-only component with no surface states. Two mode-variants (primary/secondary) and a nested-block alternation pattern.",
-  "_figmaBranch": "https://www.figma.com/design/6osYTOfd4MgDq7LO6BCoUO/branch/oP5qZaxKDt2s95U7ljjd9R/TRATON-Component-Library?node-id=13675-6217",
+  "_figmaBranch": "BRANCH:block-accordion-10 — key in cluster-roadmap.md (private work repo); TRATON Component Library, node-id=13675-6217",
   "_notes": [
     "Block is surface-only. Children own their own text bindings; the Block frame has no text fill in Figma. No component/block/text/* token is specified.",
     "Nested-even / nested-odd are first-class Figma alias variables of primary/secondary because the alternation pattern is real on the design side. Designers can bind these directly on alternating layers within a Block instance.",
