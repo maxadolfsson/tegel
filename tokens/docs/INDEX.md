@@ -60,7 +60,6 @@ Run commands from project root:
 |----------|---------|--------|
 | [Cluster Workflow](CLUSTER_WORKFLOW.md) | Step-by-step process for tackling component clusters | Active |
 | [Cluster Kickoff Template](CLUSTER_KICKOFF_TEMPLATE.md) | Copy-paste prompt template for starting a new cluster session — pre-loads conventions, enforces branch gate, and pins the close-out recipe | Active |
-| Dev Gaps | Running list of spec/Figma ↔ code divergences; bug-report staging for the component team | Moved out of this repo — kept as `DEV_GAPS.md` in the private `work` repo |
 | [Handover Templates](../templates/README.md) | One template per close-out artifact (Decision log, Notion handover, talking points) — drives the documentation pass in the Cluster Workflow | Active |
 
 ## Configuration

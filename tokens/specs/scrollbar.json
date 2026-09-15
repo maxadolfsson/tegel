@@ -1,6 +1,6 @@
 {
   "component": "scrollbar",
-  "_note": "Figma-as-truth for scrollbar (branch BRANCH:scrollbar). Taxonomy consolidated 2026-04-24: legacy width/radius-* renamed to size/thumb-*; redundant size/width-default dropped. Code-side gaps tracked in DEV_GAPS.md in the private work repo.",
+  "_note": "Figma-as-truth for scrollbar (branch BRANCH:scrollbar). Taxonomy consolidated 2026-04-24: legacy width/radius-* renamed to size/thumb-*; redundant size/width-default dropped. Code-side gaps tracked in the dev-gap register.",
   "variables": [
     {
       "name": "component/scrollbar/background/track-default",
@@ -20,7 +20,7 @@
       "scania-light": "color/border/subtle",
       "scania-dark": "color/border/subtle",
       "confidence": "Confirmed",
-      "comment": "Designer-reviewed remap 2026-04-24: was color/icon/discrete, now color/border/subtle. Code still consumes a grey primitive directly (var(--tds-grey-400|500)) — see DEV_GAPS.md in the private work repo."
+      "comment": "Designer-reviewed remap 2026-04-24: was color/icon/discrete, now color/border/subtle. Code still consumes a grey primitive directly (var(--tds-grey-400|500)) — see the dev-gap register."
     },
     {
       "name": "component/scrollbar/background/thumb-hover",
@@ -30,7 +30,7 @@
       "scania-light": "color/border/soft",
       "scania-dark": "color/border/soft",
       "confidence": "Confirmed",
-      "comment": "Designer-reviewed remap 2026-04-24: was color/icon/subtle, now color/border/soft. Code still consumes var(--tds-grey-500|400) directly — see DEV_GAPS.md in the private work repo."
+      "comment": "Designer-reviewed remap 2026-04-24: was color/icon/subtle, now color/border/soft. Code still consumes var(--tds-grey-500|400) directly — see the dev-gap register."
     },
     {
       "name": "component/scrollbar/border/radius-default",
@@ -40,7 +40,7 @@
       "scania-light": "scania/unit/8",
       "scania-dark": "scania/unit/8",
       "confidence": "Confirmed",
-      "comment": "Corner radius of the thumb shape. TRATON modes alias traton/unit/8; Scania modes alias scania/unit/8. Code hardcodes border-radius: 40px (fully rounded) — see DEV_GAPS.md in the private work repo."
+      "comment": "Corner radius of the thumb shape. TRATON modes alias traton/unit/8; Scania modes alias scania/unit/8. Code hardcodes border-radius: 40px (fully rounded) — see the dev-gap register."
     },
     {
       "name": "component/scrollbar/size/thumb-default",
